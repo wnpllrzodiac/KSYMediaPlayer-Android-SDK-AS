@@ -11,14 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ksy.media.widget.data.KsyConstants;
 import com.ksy.media.widget.data.MediaPlayerVideoQuality;
 import com.ksy.mediaPlayer.widget.R;
 
@@ -43,24 +41,8 @@ public class MediaPlayerQualityPopupView {
 	private void init() {
 
 		LayoutInflater inflater = LayoutInflater.from(mContext);
-		View root ;
-		
-		if (KsyConstants.SCREEN_VIEW_COLOR == 1) { //蓝色  
-			root = inflater.inflate(R.layout.blue_media_player_quality_popup_view,
-					null);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 2) { //红色
-			root = inflater.inflate(R.layout.red_media_player_quality_popup_view,
-					null);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 3) { //黄色
-			root = inflater.inflate(R.layout.orange_media_player_quality_popup_view,
-					null);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 4) { //绿色
-			root = inflater.inflate(R.layout.green_media_player_quality_popup_view,
-					null);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 5) { //粉色
-			root = inflater.inflate(R.layout.pink_media_player_quality_popup_view,
-					null);
-		}
+		View root = inflater.inflate(R.layout.blue_media_player_quality_popup_view,
+				null);
 		
 		mListView = (ListView) root.findViewById(R.id.quality_list_view);
 		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -203,20 +185,7 @@ public class MediaPlayerQualityPopupView {
 		}
 
 		private void init(Context context) {
-			
-			if (KsyConstants.SCREEN_VIEW_COLOR == 1) { //蓝色  
-				inflate(context, R.layout.blue_media_player_quality_item_view, this);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 2) { //红色
-				inflate(context, R.layout.red_media_player_quality_item_view, this);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 3) { //黄色
-				inflate(context, R.layout.orange_media_player_quality_item_view, this);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 4) { //绿色
-				inflate(context, R.layout.green_media_player_quality_item_view, this);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 5) { //粉色
-				inflate(context, R.layout.pink_media_player_quality_item_view, this);
-			}
-			
-//			inflate(context, R.layout.blue_media_player_quality_item_view, this);
+			inflate(context, R.layout.blue_media_player_quality_item_view, this);
 			mQualityTextView = (TextView) findViewById(R.id.quality_text_view);
 //			mQualityImageView = (ImageView) findViewById(R.id.quality_image_view);
 

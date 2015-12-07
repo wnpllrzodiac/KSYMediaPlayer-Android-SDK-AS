@@ -13,7 +13,6 @@ import android.view.animation.Animation.AnimationListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ksy.media.widget.data.KsyConstants;
 import com.ksy.mediaPlayer.widget.R;
 
 /**
@@ -90,27 +89,9 @@ public class MediaPlayerMovieRatioView extends RelativeLayout {
 	private void init(Context context) {
 		this.mContext = context;
 		
-		View rootView;
-		
-		if (KsyConstants.SCREEN_VIEW_COLOR == 1) { //蓝色   没有用
-			rootView = LayoutInflater.from(mContext).inflate(
-					R.layout.blue_media_player_video_ratio_view, null);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 2) { //红色
-		    rootView = LayoutInflater.from(mContext).inflate(
-					R.layout.red_media_player_video_ratio_view, null);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 3) { //黄色
-			rootView = LayoutInflater.from(mContext).inflate(
-					R.layout.orange_media_player_video_ratio_view, null);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 4) { //绿色
-			rootView = LayoutInflater.from(mContext).inflate(
-					R.layout.green_media_player_video_ratio_view, null);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 5) { //粉色
-			rootView = LayoutInflater.from(mContext).inflate(
-					R.layout.pink_media_player_video_ratio_view, null);
-		}
-		
-//		View rootView = LayoutInflater.from(mContext).inflate(
-//				R.layout.blue_media_player_video_ratio_view, null);
+		View rootView = LayoutInflater.from(mContext).inflate(
+				R.layout.blue_media_player_video_ratio_view, null);
+
 		LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT);
 		params.addRule(RelativeLayout.CENTER_IN_PARENT);

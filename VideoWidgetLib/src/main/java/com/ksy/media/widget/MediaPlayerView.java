@@ -47,7 +47,6 @@ import com.ksy.media.player.util.DRMRetrieverManager;
 import com.ksy.media.player.util.DRMRetrieverResponseHandler;
 import com.ksy.media.player.util.IDRMRetriverRequest;
 import com.ksy.media.player.util.NetworkUtil;
-import com.ksy.media.widget.data.KsyConstants;
 import com.ksy.media.widget.data.MediaPlayMode;
 import com.ksy.media.widget.data.MediaPlayerUtils;
 import com.ksy.media.widget.data.MediaPlayerVideoQuality;
@@ -213,23 +212,8 @@ public class MediaPlayerView extends RelativeLayout implements
 		}
 
 		/* 初始化UI组件 */
-		if (KsyConstants.SCREEN_VIEW_COLOR == 1) { // 蓝色
-			this.mRootView = (ViewGroup) mLayoutInflater.inflate(
-					R.layout.blue_media_player_view, null);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 2) { // 红色
-			this.mRootView = (ViewGroup) mLayoutInflater.inflate(
-					R.layout.red_media_player_view, null);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 3) { // 黄色
-			this.mRootView = (ViewGroup) mLayoutInflater.inflate(
-					R.layout.orange_media_player_view, null);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 4) { // 绿色
-			this.mRootView = (ViewGroup) mLayoutInflater.inflate(
-					R.layout.green_media_player_view, null);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 5) { // 粉色
-			this.mRootView = (ViewGroup) mLayoutInflater.inflate(
-					R.layout.pink_media_player_view, null);
-		}
-
+		this.mRootView = (ViewGroup) mLayoutInflater.inflate(
+				R.layout.blue_media_player_view, null);
 		this.layoutPop = (RelativeLayout) mRootView
 				.findViewById(R.id.layoutPop);
 

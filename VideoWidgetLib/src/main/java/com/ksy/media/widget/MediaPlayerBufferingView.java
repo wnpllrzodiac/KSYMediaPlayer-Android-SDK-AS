@@ -1,5 +1,4 @@
 package com.ksy.media.widget;
-import com.ksy.media.widget.data.KsyConstants;
 import com.ksy.mediaPlayer.widget.R;
 
 import android.content.Context;
@@ -26,19 +25,8 @@ public class MediaPlayerBufferingView extends RelativeLayout {
 
     public MediaPlayerBufferingView(Context context) {
         super(context);
-        
-        if (KsyConstants.SCREEN_VIEW_COLOR == 1) { //蓝色  这个不需要改变
-        	LayoutInflater.from(getContext()).inflate(R.layout.blue_media_player_buffering_view, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 2) { //红色
-			LayoutInflater.from(getContext()).inflate(R.layout.blue_media_player_buffering_view, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 3) { //黄色
-			LayoutInflater.from(getContext()).inflate(R.layout.blue_media_player_buffering_view, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 4) { //绿色
-			LayoutInflater.from(getContext()).inflate(R.layout.blue_media_player_buffering_view, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 5) { //粉色
-			LayoutInflater.from(getContext()).inflate(R.layout.blue_media_player_buffering_view, this);
-		}
-        
+        LayoutInflater.from(getContext()).inflate(R.layout.blue_media_player_buffering_view, this);
+
         initViews();
     }
     

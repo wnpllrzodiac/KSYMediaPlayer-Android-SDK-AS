@@ -31,7 +31,6 @@ import com.ksy.media.player.annotations.CalledByNative;
 import com.ksy.media.player.exception.Ks3ClientException;
 import com.ksy.media.player.log.LogClient;
 import com.ksy.media.player.option.AvFormatOption;
-import com.ksy.media.player.pragma.DebugLog;
 import com.ksy.media.player.util.Constants;
 import com.ksy.media.player.util.IOUtils;
 
@@ -191,7 +190,7 @@ public final class KSYMediaPlayer extends BaseMediaPlayer {
 	public void setSurface(Surface surface) {
 
 		if (mScreenOnWhilePlaying && surface != null) {
-			DebugLog.w(Constants.LOG_TAG,
+			Log.w(Constants.LOG_TAG,
 					"setScreenOnWhilePlaying(true) is ineffective for Surface");
 		}
 		mSurfaceHolder = null;
@@ -369,7 +368,7 @@ public final class KSYMediaPlayer extends BaseMediaPlayer {
 
 		if (mScreenOnWhilePlaying != screenOn) {
 			if (screenOn && mSurfaceHolder == null) {
-				DebugLog.w(Constants.LOG_TAG,
+				Log.w(Constants.LOG_TAG,
 						"setScreenOnWhilePlaying(true) is ineffective without a SurfaceHolder");
 			}
 			mScreenOnWhilePlaying = screenOn;
@@ -691,7 +690,7 @@ public final class KSYMediaPlayer extends BaseMediaPlayer {
 		public void handleMessage(Message msg) {
 			KSYMediaPlayer player = mWeakPlayer.get();
 			if (player == null || player.mNativeMediaPlayer == 0) {
-				DebugLog.w(Constants.LOG_TAG,
+				Log.w(Constants.LOG_TAG,
 						"IjkMediaPlayer went away with unhandled events");
 				return;
 			}
@@ -724,7 +723,7 @@ public final class KSYMediaPlayer extends BaseMediaPlayer {
 					percent = 100;
 				}
 
-				// DebugLog.efmt(Constants.LOG_TAG, "Buffer (%d%%) %d/%d",
+				// Log.d(Constants.LOG_TAG, "Buffer (%d%%) %d/%d",
 				// percent,
 				// bufferPosition, duration);
 				player.notifyOnBufferingUpdate((int) percent);
@@ -826,7 +825,7 @@ public final class KSYMediaPlayer extends BaseMediaPlayer {
 				if (!TextUtils.isEmpty(version)) {
 					player.notifyOnDRMRequired(msg.arg1, msg.arg2, version);
 				} else {
-					DebugLog.e(Constants.LOG_TAG, "version is null" + version);
+					Log.e(Constants.LOG_TAG, "version is null" + version);
 				}
 				break;
 			case MEDIA_PLAYBACK_STATE_CHANGED:
@@ -862,7 +861,7 @@ public final class KSYMediaPlayer extends BaseMediaPlayer {
 				// msg.arg2);
 				break;
 			default:
-				// DebugLog.e(Constants.LOG_TAG, "Unknown message type " +
+				// Log.e(Constants.LOG_TAG, "Unknown message type " +
 				// msg.what);
 				return;
 			}
@@ -914,7 +913,7 @@ public final class KSYMediaPlayer extends BaseMediaPlayer {
 	@CalledByNative
 	private static int onControlResolveSegmentCount(Object weakThiz) {
 
-		DebugLog.ifmt(Constants.LOG_TAG, "onControlResolveSegmentCount");
+		Log.d(Constants.LOG_TAG, "onControlResolveSegmentCount");
 		if (weakThiz == null || !(weakThiz instanceof WeakReference<?>))
 			return -1;
 
@@ -935,8 +934,7 @@ public final class KSYMediaPlayer extends BaseMediaPlayer {
 	private static String onControlResolveSegmentUrl(Object weakThiz,
 			int segment) {
 
-		DebugLog.ifmt(Constants.LOG_TAG, "onControlResolveSegmentUrl %d",
-				segment);
+		Log.d(Constants.LOG_TAG, "onControlResolveSegmentUrl %d" + segment);
 		if (weakThiz == null || !(weakThiz instanceof WeakReference<?>))
 			return null;
 
@@ -957,8 +955,8 @@ public final class KSYMediaPlayer extends BaseMediaPlayer {
 	private static String onControlResolveSegmentOfflineMrl(Object weakThiz,
 			int segment) {
 
-		DebugLog.ifmt(Constants.LOG_TAG,
-				"onControlResolveSegmentOfflineMrl %d", segment);
+		Log.d(Constants.LOG_TAG,
+				"onControlResolveSegmentOfflineMrl %d" + segment);
 		if (weakThiz == null || !(weakThiz instanceof WeakReference<?>))
 			return null;
 
@@ -979,8 +977,7 @@ public final class KSYMediaPlayer extends BaseMediaPlayer {
 	private static int onControlResolveSegmentDuration(Object weakThiz,
 			int segment) {
 
-		DebugLog.ifmt(Constants.LOG_TAG, "onControlResolveSegmentDuration %d",
-				segment);
+		Log.d(Constants.LOG_TAG, "onControlResolveSegmentDuration %d" + segment);
 		if (weakThiz == null || !(weakThiz instanceof WeakReference<?>))
 			return -1;
 

@@ -9,18 +9,18 @@
         <dex dex="E:\github_develop\KSYMediaPlayer-Android-SDK-AS\app\build\intermediates\pre-dexed\debug\classes-1839388f36f5c253e28e74e945bb743f70e680b7.jar" />
     </item>
     <item
+        jar="E:\github_develop\KSYMediaPlayer-Android-SDK-AS\app\build\intermediates\exploded-aar\KSYMediaPlayer-Android-SDK-AS\VideoLibs\unspecified\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="034a3ab2e516163af876151643b6d678e83b3a18">
+        <dex dex="E:\github_develop\KSYMediaPlayer-Android-SDK-AS\app\build\intermediates\pre-dexed\debug\classes-fb93cb77d550e76b4c7db07939e8b597c6512db5.jar" />
+    </item>
+    <item
         jar="E:\github_develop\KSYMediaPlayer-Android-SDK-AS\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\libs\internal_impl-23.1.0.jar"
         jumboMode="false"
         revision="23.0.2"
         sha1="8716243bf04bae8d6c9ca94d27b9a9be7236f0a3">
         <dex dex="E:\github_develop\KSYMediaPlayer-Android-SDK-AS\app\build\intermediates\pre-dexed\debug\internal_impl-23.1.0-09cf25696749d2942a981a030c4170e63936edf9.jar" />
-    </item>
-    <item
-        jar="E:\github_develop\KSYMediaPlayer-Android-SDK-AS\app\build\intermediates\exploded-aar\KSYMediaPlayer-Android-SDK-AS\VideoLibs\unspecified\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="b6b0c64995f2f391483d4f71f5c3a7d64da2c9c7">
-        <dex dex="E:\github_develop\KSYMediaPlayer-Android-SDK-AS\app\build\intermediates\pre-dexed\debug\classes-fb93cb77d550e76b4c7db07939e8b597c6512db5.jar" />
     </item>
     <item
         jar="E:\github_develop\KSYMediaPlayer-Android-SDK-AS\app\build\intermediates\exploded-aar\com.android.support\design\23.1.0\jars\classes.jar"
@@ -54,7 +54,7 @@
         jar="E:\github_develop\KSYMediaPlayer-Android-SDK-AS\app\build\intermediates\exploded-aar\KSYMediaPlayer-Android-SDK-AS\VideoWidgetLib\unspecified\jars\classes.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="a2158da4171c354cab1fedee8f881492cf7a9f8d">
+        sha1="b5bea73900a42f32006c1509b3952b4f17be5f59">
         <dex dex="E:\github_develop\KSYMediaPlayer-Android-SDK-AS\app\build\intermediates\pre-dexed\debug\classes-0728cdceed6b2db7bcd7062b3d52e7ad8185d7ed.jar" />
     </item>
 

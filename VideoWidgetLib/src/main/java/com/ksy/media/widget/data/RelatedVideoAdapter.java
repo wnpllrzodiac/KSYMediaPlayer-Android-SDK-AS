@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.ksy.mediaPlayer.widget.R;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,18 +55,7 @@ public class RelatedVideoAdapter extends BaseAdapter {
 		
 		if (convertView == null) {
 			viewHolder = new ViewHolder();
-			
-			if (KsyConstants.SCREEN_VIEW_COLOR == 1) { //蓝色
-				convertView = inflater.inflate(R.layout.blue_media_player_relate_videoinfo, null);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 2) { //红色
-				convertView = inflater.inflate(R.layout.red_media_player_relate_videoinfo, null);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 3) { //黄色
-				convertView = inflater.inflate(R.layout.orange_media_player_relate_videoinfo, null);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 4) { //绿色
-				convertView = inflater.inflate(R.layout.green_media_player_relate_videoinfo, null);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 5) { //粉色
-				convertView = inflater.inflate(R.layout.pink_media_player_relate_videoinfo, null);
-			}
+			convertView = inflater.inflate(R.layout.blue_media_player_relate_videoinfo, null);
 			
 			viewHolder.videoImage = (ImageView)convertView.findViewById(R.id.imageview_poster);
 			viewHolder.videoTextName = (TextView)convertView.findViewById(R.id.tv_movie_name);

@@ -221,12 +221,7 @@ public class MediaPlayerTexutureVideoView extends TextureView implements
 			// getHolder().setFixedSize(mSurfaceWidth, mSurfaceHeight);
 			getSurfaceTexture().setDefaultBufferSize(mSurfaceWidth,
 					mSurfaceHeight);
-			DebugLog.dfmt(
-					TAG,
-					"VIDEO: %dx%dx%f[SAR:%d:%d],Layout :%d, Surface: %dx%d, LP: %dx%d, Window: %dx%dx%f",
-					mVideoWidth, mVideoHeight, videoRatio, mVideoSarNum,
-					mVideoSarDen, layout, mSurfaceWidth, mSurfaceHeight,
-					lp.width, lp.height, windowWidth, windowHeight, windowRatio);
+
 		}
 		mVideoLayout = layout;
 	}
@@ -377,14 +372,14 @@ public class MediaPlayerTexutureVideoView extends TextureView implements
 			}
 			mCurrentState = STATE_PREPARING;
 		} catch (IOException ex) {
-			DebugLog.e(TAG, "Unable to open content: " + mUri, ex);
+			Log.e(TAG, "Unable to open content: " + mUri, ex);
 			mCurrentState = STATE_ERROR;
 			mTargetState = STATE_ERROR;
 			mErrorListener.onError(mMediaPlayer,
 					IMediaPlayer.MEDIA_ERROR_UNKNOWN, 0);
 			return;
 		} catch (IllegalArgumentException ex) {
-			DebugLog.e(TAG, "Unable to open content: " + mUri, ex);
+			Log.e(TAG, "Unable to open content: " + mUri, ex);
 			mCurrentState = STATE_ERROR;
 			mTargetState = STATE_ERROR;
 			mErrorListener.onError(mMediaPlayer,
@@ -399,7 +394,6 @@ public class MediaPlayerTexutureVideoView extends TextureView implements
 		public void onVideoSizeChanged(IMediaPlayer mp, int width, int height,
 				int sarNum, int sarDen) {
 
-			DebugLog.dfmt(TAG, "onVideoSizeChanged: (%dx%d)", width, height);
 			Log.d(Constants.LOG_TAG, "OnSizeChanged");
 			mVideoWidth = mp.getVideoWidth();
 			mVideoHeight = mp.getVideoHeight();

@@ -11,7 +11,6 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-import com.ksy.media.widget.data.KsyConstants;
 import com.ksy.media.widget.data.MediaPlayMode;
 import com.ksy.mediaPlayer.widget.R;
 
@@ -37,21 +36,9 @@ public class MediaPlayerSmallControllerView extends MediaPlayerBaseControllerVie
 	}
 
 	public MediaPlayerSmallControllerView(Context context) {
-
 		super(context);
-		
-		if (KsyConstants.SCREEN_VIEW_COLOR == 1) { //蓝色  
-			mLayoutInflater.inflate(R.layout.blue_media_player_controller_small, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 2) { //红色
-			mLayoutInflater.inflate(R.layout.red_media_player_controller_small, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 3) { //黄色
-			mLayoutInflater.inflate(R.layout.orange_media_player_controller_small, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 4) { //绿色
-			mLayoutInflater.inflate(R.layout.green_media_player_controller_small, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 5) { //粉色
-			mLayoutInflater.inflate(R.layout.pink_media_player_controller_small, this);
-		}
-//		mLayoutInflater.inflate(R.layout.blue_media_player_controller_small, this);
+		mLayoutInflater.inflate(R.layout.blue_media_player_controller_small, this);
+
 		initViews();
 		initListeners();
 	}
@@ -165,21 +152,9 @@ public class MediaPlayerSmallControllerView extends MediaPlayerBaseControllerVie
 
 		// 播放中
 		if (isStart) {
-//			mPlaybackImageView.setImageResource(R.drawable.player_controller_pause);
-			
-			if (KsyConstants.SCREEN_VIEW_COLOR == 1) { //蓝色  
-				mPlaybackImageView.setImageResource(R.drawable.blue_ksy_pause);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 2) { //红色
-				mPlaybackImageView.setImageResource(R.drawable.red_ksy_pause);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 3) { //黄色
-				mPlaybackImageView.setImageResource(R.drawable.orange_ksy_pause);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 4) { //绿色
-				mPlaybackImageView.setImageResource(R.drawable.green_ksy_pause);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 5) { //粉色
-				mPlaybackImageView.setImageResource(R.drawable.pink_ksy_pause);
-			}
-			
-//			mPlaybackImageView.setImageResource(R.drawable.blue_ksy_pause);
+
+			mPlaybackImageView.setImageResource(R.drawable.blue_ksy_pause);
+
 			if (mMediaPlayerController.canPause()) {
 				mPlaybackImageView.setEnabled(true);
 			} else {
@@ -188,20 +163,7 @@ public class MediaPlayerSmallControllerView extends MediaPlayerBaseControllerVie
 		}
 		// 未播放
 		else {
-			
-			if (KsyConstants.SCREEN_VIEW_COLOR == 1) { //蓝色  
-				mPlaybackImageView.setImageResource(R.drawable.blue_ksy_play);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 2) { //红色
-				mPlaybackImageView.setImageResource(R.drawable.red_ksy_play);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 3) { //黄色
-				mPlaybackImageView.setImageResource(R.drawable.orange_ksy_play);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 4) { //绿色
-				mPlaybackImageView.setImageResource(R.drawable.green_ksy_play);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 5) { //粉色
-				mPlaybackImageView.setImageResource(R.drawable.pink_ksy_play);
-			}
-			
-//			mPlaybackImageView.setImageResource(R.drawable.blue_ksy_play);
+			mPlaybackImageView.setImageResource(R.drawable.blue_ksy_play);
 			if (mMediaPlayerController.canStart()) {
 				mPlaybackImageView.setEnabled(true);
 			} else {

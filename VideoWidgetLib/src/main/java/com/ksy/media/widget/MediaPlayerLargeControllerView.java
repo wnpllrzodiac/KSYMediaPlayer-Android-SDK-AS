@@ -28,7 +28,6 @@ import android.widget.TextView;
 
 import com.ksy.media.player.util.Constants;
 import com.ksy.media.widget.MediaPlayerVolumeSeekBar.onScreenShowListener;
-import com.ksy.media.widget.data.KsyConstants;
 import com.ksy.media.widget.data.MediaPlayMode;
 import com.ksy.media.widget.data.MediaPlayerScreenSize;
 import com.ksy.media.widget.data.MediaPlayerUtils;
@@ -99,21 +98,9 @@ public class MediaPlayerLargeControllerView extends
 	}
 
 	public MediaPlayerLargeControllerView(Context context) {
-
 		super(context);
 		this.mContext = context;
-		
-		if (KsyConstants.SCREEN_VIEW_COLOR == 1) { //蓝色  
-			mLayoutInflater.inflate(R.layout.blue_media_player_controller_large, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 2) { //红色
-			mLayoutInflater.inflate(R.layout.red_media_player_controller_large, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 3) { //黄色
-			mLayoutInflater.inflate(R.layout.orange_media_player_controller_large, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 4) { //绿色
-			mLayoutInflater.inflate(R.layout.green_media_player_controller_large, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 5) { //粉色
-			mLayoutInflater.inflate(R.layout.pink_media_player_controller_large, this);
-		}
+		mLayoutInflater.inflate(R.layout.blue_media_player_controller_large, this);
 		
 		initViews();
 		initListeners();
@@ -464,37 +451,12 @@ public class MediaPlayerLargeControllerView extends
 		// 播放中
 		Log.i(TAG, "updateVideoPlaybackState  ----> start ? " + isStart);
 		if (isStart) {
-			
-			if (KsyConstants.SCREEN_VIEW_COLOR == 1) { //蓝色  
-				mVideoPlayImageView.setImageResource(R.drawable.blue_ksy_pause);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 2) { //红色
-				mVideoPlayImageView.setImageResource(R.drawable.red_ksy_pause);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 3) { //黄色
-				mVideoPlayImageView.setImageResource(R.drawable.orange_ksy_pause);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 4) { //绿色
-				mVideoPlayImageView.setImageResource(R.drawable.green_ksy_pause);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 5) { //粉色
-				mVideoPlayImageView.setImageResource(R.drawable.pink_ksy_pause);
-			}
-			
-//			mVideoPlayImageView.setImageResource(R.drawable.blue_ksy_pause);
+			mVideoPlayImageView.setImageResource(R.drawable.blue_ksy_pause);
 			// mVideoPlayImageView.setSelected(true);
 		}
 		// 未播放
 		else {
-			if (KsyConstants.SCREEN_VIEW_COLOR == 1) { //蓝色  
-				mVideoPlayImageView.setImageResource(R.drawable.blue_ksy_play);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 2) { //红色
-				mVideoPlayImageView.setImageResource(R.drawable.red_ksy_play);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 3) { //黄色
-				mVideoPlayImageView.setImageResource(R.drawable.orange_ksy_play);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 4) { //绿色
-				mVideoPlayImageView.setImageResource(R.drawable.green_ksy_play);
-			} else if (KsyConstants.SCREEN_VIEW_COLOR == 5) { //粉色
-				mVideoPlayImageView.setImageResource(R.drawable.pink_ksy_play);
-			}
-			
-//			mVideoPlayImageView.setImageResource(R.drawable.blue_ksy_play);
+			mVideoPlayImageView.setImageResource(R.drawable.blue_ksy_play);
 			// mVideoPlayImageView.setSelected(false);
 		}
 	}

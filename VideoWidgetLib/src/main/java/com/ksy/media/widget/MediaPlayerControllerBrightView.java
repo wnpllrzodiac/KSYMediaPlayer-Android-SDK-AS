@@ -18,7 +18,6 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.ksy.media.player.util.Constants;
 import com.ksy.media.widget.MediaPlayerVolumeSeekBar.onScreenShowListener;
-import com.ksy.media.widget.data.KsyConstants;
 import com.ksy.mediaPlayer.widget.R;
 
 /**
@@ -71,24 +70,8 @@ public class MediaPlayerControllerBrightView extends RelativeLayout {
 
 	public void init(final Context context) {
 		this.mContext = context;
-		View root;
-
-		if (KsyConstants.SCREEN_VIEW_COLOR == 1) { // 蓝色
-			root = LayoutInflater.from(context).inflate(
-					R.layout.blue_media_player_controller_bright_view, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 2) { // 红色
-			root = LayoutInflater.from(context).inflate(
-					R.layout.red_media_player_controller_bright_view, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 3) { // 黄色
-			root = LayoutInflater.from(context).inflate(
-					R.layout.orange_media_player_controller_bright_view, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 4) { // 绿色
-			root = LayoutInflater.from(context).inflate(
-					R.layout.green_media_player_controller_bright_view, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 5) { // 粉色
-			root = LayoutInflater.from(context).inflate(
-					R.layout.pink_media_player_controller_bright_view, this);
-		}
+		View root = LayoutInflater.from(context).inflate(
+				R.layout.blue_media_player_controller_bright_view, this);
 
 		mSeekBrightProgress = (MediaPlayerBrightSeekBar) root
 				.findViewById(R.id.seekbar_bright_progress);

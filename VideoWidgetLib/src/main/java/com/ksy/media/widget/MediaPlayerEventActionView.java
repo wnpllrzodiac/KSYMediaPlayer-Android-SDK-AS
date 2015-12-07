@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ksy.media.player.util.Constants;
-import com.ksy.media.widget.data.KsyConstants;
 import com.ksy.mediaPlayer.widget.R;
 
 public class MediaPlayerEventActionView extends RelativeLayout {
@@ -47,20 +46,8 @@ public class MediaPlayerEventActionView extends RelativeLayout {
 	}
 
 	public MediaPlayerEventActionView(Context context) {
-
 		super(context);
-		
-		if (KsyConstants.SCREEN_VIEW_COLOR == 1) { //蓝色  
-			LayoutInflater.from(getContext()).inflate(R.layout.blue_media_player_event_action_view, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 2) { //红色
-			LayoutInflater.from(getContext()).inflate(R.layout.red_media_player_event_action_view, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 3) { //黄色
-			LayoutInflater.from(getContext()).inflate(R.layout.orange_media_player_event_action_view, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 4) { //绿色
-			LayoutInflater.from(getContext()).inflate(R.layout.green_media_player_event_action_view, this);
-		} else if (KsyConstants.SCREEN_VIEW_COLOR == 5) { //粉色
-			LayoutInflater.from(getContext()).inflate(R.layout.pink_media_player_event_action_view, this);
-		}
+		LayoutInflater.from(getContext()).inflate(R.layout.blue_media_player_event_action_view, this);
 		
 		initViews();
 	}

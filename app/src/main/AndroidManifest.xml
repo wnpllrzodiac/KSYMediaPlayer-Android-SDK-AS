@@ -56,27 +56,27 @@
         <activity
             android:name=".live.PhoneLiveActivity"
             android:label="@string/title_activity_phone_live"
-            android:theme="@style/AppBaseTheme.NoActionBar" />
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".livereplay.PhoneLiveReplayActivity"
             android:label="@string/title_activity_phone_live_replay"
-            android:theme="@style/AppBaseTheme.NoActionBar" />
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".shortvideo.ShortVideoActivity"
             android:label="@string/title_activity_short_movie"
-            android:theme="@style/AppBaseTheme.NoActionBar" />
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".stream.StreamVideoActivity"
             android:label="@string/title_activity_stream_video"
-            android:theme="@style/AppBaseTheme.NoActionBar" />
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".streamreplay.StreamReplayActivity"
             android:label="@string/title_activity_stream_replay"
-            android:theme="@style/AppBaseTheme.NoActionBar" />
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".video.OnlineVideoActivity"
             android:label="@string/title_activity_online_video"
-            android:theme="@style/AppBaseTheme.NoActionBar"></activity>
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>

@@ -23,8 +23,8 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.ksy.media.player.util.Constants;
-import com.ksy.media.widget.IPowerStateListener;
-import com.ksy.media.widget.MediaPlayerView;
+import com.ksy.media.widget.util.IPowerStateListener;
+import com.ksy.media.widget.ui.MediaPlayerView;
 
 public class VideoPlayerActivity extends Activity implements
 		MediaPlayerView.PlayerViewCallback {

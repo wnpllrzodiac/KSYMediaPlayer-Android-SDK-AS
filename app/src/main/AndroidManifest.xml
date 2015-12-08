@@ -42,19 +42,41 @@
         </activity>
         <activity
             android:name=".TestActivity"
-            android:configChanges="orientation">
-
-        </activity>
+            android:configChanges="orientation" />
         <activity
             android:name=".main.DemoActivity"
-            android:theme="@style/FullscreenTheme"
-            android:label="@string/title_activity_main">
+            android:label="@string/title_activity_main"
+            android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".live.PhoneLiveActivity"
+            android:label="@string/title_activity_phone_live"
+            android:theme="@style/AppBaseTheme.NoActionBar" />
+        <activity
+            android:name=".livereplay.PhoneLiveReplayActivity"
+            android:label="@string/title_activity_phone_live_replay"
+            android:theme="@style/AppBaseTheme.NoActionBar" />
+        <activity
+            android:name=".shortvideo.ShortVideoActivity"
+            android:label="@string/title_activity_short_movie"
+            android:theme="@style/AppBaseTheme.NoActionBar" />
+        <activity
+            android:name=".stream.StreamVideoActivity"
+            android:label="@string/title_activity_stream_video"
+            android:theme="@style/AppBaseTheme.NoActionBar" />
+        <activity
+            android:name=".streamreplay.StreamReplayActivity"
+            android:label="@string/title_activity_stream_replay"
+            android:theme="@style/AppBaseTheme.NoActionBar" />
+        <activity
+            android:name=".video.OnlineVideoActivity"
+            android:label="@string/title_activity_online_video"
+            android:theme="@style/AppBaseTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

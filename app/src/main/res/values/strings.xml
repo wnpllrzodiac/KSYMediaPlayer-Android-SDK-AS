@@ -7,5 +7,11 @@
 
     <string name="buffering">buffering</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_phone_live">PhoneLiveActivity</string>
+    <string name="title_activity_phone_live_replay">PhoneLiveReplayActivity</string>
+    <string name="title_activity_short_movie">ShortMovieActivity</string>
+    <string name="title_activity_stream_video">StreamVideoActivity</string>
+    <string name="title_activity_stream_replay">StreamReplayActivity</string>
+    <string name="title_activity_online_video">OnlineVideoActivity</string>
 
 </resources>

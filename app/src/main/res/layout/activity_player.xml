@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#0099cc" >
 
-    <com.ksy.media.widget.MediaPlayerView
+    <com.ksy.media.widget.ui.MediaPlayerView
         android:id="@+id/player_view"
         android:layout_width="fill_parent"
         android:layout_height="260dp"

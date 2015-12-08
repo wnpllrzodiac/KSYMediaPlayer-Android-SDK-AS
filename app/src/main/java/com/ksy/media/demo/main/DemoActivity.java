@@ -1,21 +1,31 @@
 package com.ksy.media.demo.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
 import com.ksy.media.demo.R;
+import com.ksy.media.demo.live.PhoneLiveActivity;
+import com.ksy.media.demo.livereplay.PhoneLiveReplayActivity;
+import com.ksy.media.demo.shortvideo.ShortVideoActivity;
+import com.ksy.media.demo.stream.StreamVideoActivity;
+import com.ksy.media.demo.streamreplay.StreamReplayActivity;
+import com.ksy.media.demo.video.OnlineVideoActivity;
 
 import java.util.ArrayList;
 
-public class DemoActivity extends AppCompatActivity {
+public class DemoActivity extends AppCompatActivity implements DemoListAdapter.DemoListClickListener {
 
+    private static final int PHONE_LIVE = 0;
+    private static final int PHONE_LIVE_REPLAY = 1;
+    private static final int ONLINE_VIDEO = 2;
+    private static final int ONLINE_STREAM = 3;
+    private static final int ONLINE_STREAM_REPLAY = 4;
+    private static final int SHORT_VIDEO = 5;
     private RecyclerView mRecycleView;
     private ArrayList<DemoContent> demoList;
     private DemoListAdapter mAdapter;
@@ -31,9 +41,12 @@ public class DemoActivity extends AppCompatActivity {
 
     private void setupDemoContent() {
         demoList = new ArrayList<>();
-        demoList.add(new DemoContent("PhoneLive"));
-        demoList.add(new DemoContent("PhoneLive"));
-        demoList.add(new DemoContent("PhoneLive"));
+        demoList.add(new DemoContent("PHONE_LIVE"));
+        demoList.add(new DemoContent("PHONE_LIVE_REPLAY"));
+        demoList.add(new DemoContent("ONLINE_VIDEO"));
+        demoList.add(new DemoContent("ONLINE_STREAM"));
+        demoList.add(new DemoContent("ONLINE_STREAM_REPLAY"));
+        demoList.add(new DemoContent("SHORT_VIDEO"));
     }
 
     private void setupViews() {
@@ -58,12 +71,30 @@ public class DemoActivity extends AppCompatActivity {
         mRecycleView.setAdapter(mAdapter);
         mRecycleView.addItemDecoration(new DemoListItemSpaceDecoration(getResources().getDimensionPixelSize(R.dimen.demo_card_hori_margin)));
 //      mRecycleView.setItemAnimator(new SlideInOutBottomItemAnimator(mRecycleView));
-        mAdapter.setDemoListClickListener(new DemoListAdapter.DemoListClickListener() {
-            @Override
-            public void onDemoListClicked(int position, DemoContent demoContent) {
-                Toast.makeText(DemoActivity.this, "demo=" + demoContent.name, Toast.LENGTH_SHORT).show();
-            }
-        });
+        mAdapter.setDemoListClickListener(this);
     }
 
+    @Override
+    public void onDemoListClicked(int position, DemoContent demoContent) {
+        switch (position) {
+            case DemoActivity.PHONE_LIVE:
+                startActivity(new Intent(DemoActivity.this,PhoneLiveActivity.class));
+                break;
+            case DemoActivity.PHONE_LIVE_REPLAY:
+                startActivity(new Intent(DemoActivity.this,PhoneLiveReplayActivity.class));
+                break;
+            case DemoActivity.ONLINE_VIDEO:
+                startActivity(new Intent(DemoActivity.this,OnlineVideoActivity.class));
+                break;
+            case DemoActivity.ONLINE_STREAM:
+                startActivity(new Intent(DemoActivity.this,StreamVideoActivity.class));
+                break;
+            case DemoActivity.ONLINE_STREAM_REPLAY:
+                startActivity(new Intent(DemoActivity.this,StreamReplayActivity.class));
+                break;
+            case DemoActivity.SHORT_VIDEO:
+                startActivity(new Intent(DemoActivity.this,ShortVideoActivity.class));
+                break;
+        }
+    }
 }

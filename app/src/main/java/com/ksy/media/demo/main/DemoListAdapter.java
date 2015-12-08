@@ -61,7 +61,7 @@ public class DemoListAdapter extends RecyclerView.Adapter<DemoContentViewHolder>
 
     @Override
     public int getItemCount() {
-        return 3;
+        return mDemoList.size();
     }
 
     @Override

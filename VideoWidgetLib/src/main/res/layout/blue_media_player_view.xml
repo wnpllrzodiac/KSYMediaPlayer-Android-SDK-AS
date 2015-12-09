@@ -63,6 +63,17 @@
             android:layout_height="match_parent"
             layout="@layout/blue_media_player_controller_small" />
     </com.ksy.media.widget.controller.MediaPlayerSmallControllerView>
+
+    <com.ksy.media.widget.controller.MediaPlayerLiveReplayControllerView
+        android:id="@+id/media_player_controller_view_live_replay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/blue_media_player_controller_live_replay" />
+    </com.ksy.media.widget.controller.MediaPlayerLiveReplayControllerView>
     
     <!-- 截图成功layout -->
     <RelativeLayout

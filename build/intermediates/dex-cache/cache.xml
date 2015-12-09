@@ -2,11 +2,19 @@
 <items version="2" >
 
     <item
+<<<<<<< HEAD
         jar="/Users/eflakemac/Documents/AndroidStudioGit/KSYMediaPlayer-Android-SDK-AS/app/build/intermediates/exploded-aar/KSYMediaPlayer-Android-SDK-AS/VideoWidgetLib/unspecified/jars/classes.jar"
         jumboMode="false"
         revision="23.0.2"
         sha1="df8c91a28da1f20f2281b20dd4cae38a85a9dcac">
         <dex dex="/Users/eflakemac/Documents/AndroidStudioGit/KSYMediaPlayer-Android-SDK-AS/app/build/intermediates/pre-dexed/debug/classes-d17283f5d8e0ff6fe97635eab924341cc8d0a6ef.jar" />
+=======
+        jar="E:\github_develop\KSYMediaPlayer-Android-SDK-AS\app\build\intermediates\exploded-aar\KSYMediaPlayer-Android-SDK-AS\VideoWidgetLib\unspecified\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8ee5a91a4bdb5c3e7bce9c234ac3c2ace819a5f5">
+        <dex dex="E:\github_develop\KSYMediaPlayer-Android-SDK-AS\app\build\intermediates\pre-dexed\debug\classes-0728cdceed6b2db7bcd7062b3d52e7ad8185d7ed.jar" />
+>>>>>>> origin/master
     </item>
 
 </items>

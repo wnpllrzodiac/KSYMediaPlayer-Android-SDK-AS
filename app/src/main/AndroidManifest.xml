@@ -73,6 +73,10 @@
             android:theme="@style/FullscreenTheme" />
 
         <activity
+            android:name=".streamreplay.StreamReplayActivity"
+            android:label="@string/title_activity_stream_replay"
+            android:theme="@style/FullscreenTheme" />
+        <activity
             android:name=".video.OnlineVideoActivity"
             android:screenOrientation="nosensor"
             android:configChanges="orientation|keyboardHidden|screenSize"

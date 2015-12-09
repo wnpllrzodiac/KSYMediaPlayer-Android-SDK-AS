@@ -13,7 +13,6 @@ import com.ksy.media.demo.live.PhoneLiveActivity;
 import com.ksy.media.demo.livereplay.PhoneLiveReplayActivity;
 import com.ksy.media.demo.shortvideo.ShortVideoActivity;
 import com.ksy.media.demo.stream.StreamVideoActivity;
-import com.ksy.media.demo.streamreplay.StreamReplayActivity;
 import com.ksy.media.demo.video.OnlineVideoActivity;
 
 import java.util.ArrayList;
@@ -24,8 +23,7 @@ public class DemoActivity extends AppCompatActivity implements DemoListAdapter.D
     private static final int PHONE_LIVE_REPLAY = 1;
     private static final int ONLINE_VIDEO = 2;
     private static final int ONLINE_STREAM = 3;
-    private static final int ONLINE_STREAM_REPLAY = 4;
-    private static final int SHORT_VIDEO = 5;
+    private static final int SHORT_VIDEO = 4;
     private RecyclerView mRecycleView;
     private ArrayList<DemoContent> demoList;
     private DemoListAdapter mAdapter;
@@ -45,7 +43,6 @@ public class DemoActivity extends AppCompatActivity implements DemoListAdapter.D
         demoList.add(new DemoContent("PHONE_LIVE_REPLAY"));
         demoList.add(new DemoContent("ONLINE_VIDEO"));
         demoList.add(new DemoContent("ONLINE_STREAM"));
-        demoList.add(new DemoContent("ONLINE_STREAM_REPLAY"));
         demoList.add(new DemoContent("SHORT_VIDEO"));
     }
 
@@ -88,9 +85,6 @@ public class DemoActivity extends AppCompatActivity implements DemoListAdapter.D
                 break;
             case DemoActivity.ONLINE_STREAM:
                 startActivity(new Intent(DemoActivity.this,StreamVideoActivity.class));
-                break;
-            case DemoActivity.ONLINE_STREAM_REPLAY:
-                startActivity(new Intent(DemoActivity.this,StreamReplayActivity.class));
                 break;
             case DemoActivity.SHORT_VIDEO:
                 startActivity(new Intent(DemoActivity.this,ShortVideoActivity.class));

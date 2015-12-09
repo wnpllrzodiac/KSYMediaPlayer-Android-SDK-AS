@@ -1,34 +1,31 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:player="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.ksy.media.demo.video.OnlineVideoActivity">
+    android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
+    <com.ksy.media.widget.ui.MediaPlayerView
+        android:id="@+id/player_view"
+        android:layout_width="fill_parent"
+        android:layout_height="260dp"
+        player:playmode="window" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppBaseTheme.AppBarOverlay">
+        android:layout_below="@id/player_view"
+        app:tabGravity="center"
+        app:tabIndicatorColor="@color/gray_primary_dark"
+        app:tabMode="scrollable"
+        app:tabMinWidth="100dp"
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextColor="@color/gray_primary_dark" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppBaseTheme.PopupOverlay" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tab_layout"></android.support.v4.view.ViewPager>
 
-    </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_online_video" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
-
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

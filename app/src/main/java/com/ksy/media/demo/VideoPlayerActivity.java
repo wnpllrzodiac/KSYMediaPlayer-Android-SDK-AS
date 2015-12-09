@@ -39,7 +39,6 @@ public class VideoPlayerActivity extends Activity implements
 
 		Intent intent = getIntent();
 		delay = intent.getBooleanExtra("is_delay", false);
-		VideoView view = new VideoView(this);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		// 设置全屏

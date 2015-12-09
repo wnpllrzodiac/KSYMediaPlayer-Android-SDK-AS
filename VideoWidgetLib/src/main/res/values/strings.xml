@@ -35,6 +35,9 @@
     <string name="consumption_flow">消耗流量: </string>
     <string name="play_net">所用网络: </string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
 
 

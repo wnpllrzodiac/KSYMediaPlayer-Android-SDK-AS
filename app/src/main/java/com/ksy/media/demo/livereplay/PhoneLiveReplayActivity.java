@@ -25,9 +25,6 @@ import com.ksy.media.player.util.Constants;
 import com.ksy.media.widget.ui.livereplay.MediaPlayerViewLiveReplay;
 import com.ksy.media.widget.util.IPowerStateListener;
 
-/**
- * ÊÖ»úÖ±²¥»Ø¿´
- */
 public class PhoneLiveReplayActivity extends AppCompatActivity implements MediaPlayerViewLiveReplay.PlayerViewCallback{
 
     MediaPlayerViewLiveReplay playerViewLiveReplay;
@@ -240,7 +237,7 @@ public class PhoneLiveReplayActivity extends AppCompatActivity implements MediaP
     }
 
     /**
-     * ·µ»Ø¼üÍË³ö
+     * ï¿½ï¿½ï¿½Ø¼ï¿½ï¿½Ë³ï¿½
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

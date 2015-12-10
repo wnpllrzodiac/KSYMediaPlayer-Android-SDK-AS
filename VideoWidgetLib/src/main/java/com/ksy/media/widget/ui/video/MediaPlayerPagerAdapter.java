@@ -14,9 +14,15 @@ public class MediaPlayerPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        if (position == 0) {
-            return ListFragment.newInstance(position + "", "");
+        switch (position) {
+            case 0:
+                return VideoCommentListFragment.newInstance(position + "", "");
+            case 1:
+                return VideoDetailFragment.newInstance(position + "", "");
+            case 2:
+                return VideoRecommendListFragment.newInstance(position + "", "");
         }
+
         return BlankFragment.newInstance(position + "", "");
     }
 

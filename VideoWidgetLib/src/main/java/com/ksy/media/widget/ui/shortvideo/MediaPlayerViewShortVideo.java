@@ -52,6 +52,7 @@ import com.ksy.media.widget.ui.MediaPlayerLoadingView;
 import com.ksy.media.widget.ui.MediaPlayerMovieRatioView;
 import com.ksy.media.widget.util.ControlDelay;
 import com.ksy.media.widget.util.IPowerStateListener;
+import com.ksy.media.widget.videoview.MediaPlayerTextureVideoViewShortVideo;
 import com.ksy.media.widget.videoview.MediaPlayerVideoView;
 import com.ksy.media.widget.videoview.MediaPlayerVideoViewShortVideo;
 import com.ksy.mediaPlayer.widget.R;
@@ -75,9 +76,7 @@ public class MediaPlayerViewShortVideo extends RelativeLayout implements
     private Window mWindow;
 
     private ViewGroup mRootView;
-    // private MediaPlayerVideoView mMediaPlayerVideoView;
-//	private MediaPlayerTexutureVideoView mMediaPlayerVideoView;
-    private MediaPlayerVideoViewShortVideo mMediaPlayerVideoView;
+    private MediaPlayerTextureVideoViewShortVideo mMediaPlayerVideoView;
 
     private MediaPlayerSmallControllerView mMediaPlayerSmallControllerView;
     private MediaPlayerBufferingView mMediaPlayerBufferingView;
@@ -232,7 +231,7 @@ public class MediaPlayerViewShortVideo extends RelativeLayout implements
         // mRootView.findViewById(R.id.player_total);
         // mTextViewNet = (TextView) mRootView.findViewById(R.id.player_net);
 
-        this.mMediaPlayerVideoView = (MediaPlayerVideoViewShortVideo) mRootView
+        this.mMediaPlayerVideoView = (MediaPlayerTextureVideoViewShortVideo) mRootView
                 .findViewById(R.id.ks_camera_video_view);
         this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
                 .findViewById(R.id.ks_camera_buffering_view);
@@ -263,6 +262,42 @@ public class MediaPlayerViewShortVideo extends RelativeLayout implements
         this.mMediaPlayerVideoView.setFocusable(false);
         this.mMediaPlayerVideoView.setCallBack(mStop);
         setPowerStateListener(this.mMediaPlayerVideoView);
+
+
+        /* 设置playerVideoView UI 参数 */
+        LayoutParams mediaPlayerVideoViewParams = new LayoutParams(
+                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        mediaPlayerVideoViewParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+
+		/* 设置playerVideoView UI 参数 */
+        LayoutParams mediaPlayerBufferingViewParams = new LayoutParams(
+                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        mediaPlayerBufferingViewParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+        this.mMediaPlayerBufferingView.hide();
+
+		/* 设置loading UI 参数 */
+        LayoutParams mediaPlayerLoadingViewParams = new LayoutParams(
+                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        mediaPlayerLoadingViewParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+        this.mMediaPlayerLoadingView.hide();
+
+        // 截图成功layout
+        // RelativeLayout.LayoutParams mediaPlayerPopViewParams = new
+        // LayoutParams(
+        // LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+
+        LayoutParams mediaPlayerPopViewParams = new LayoutParams(
+                240, 230);
+        mediaPlayerPopViewParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+
+		/* 设置eventActionView UI 参数 */
+        LayoutParams mediaPlayereventActionViewParams = new LayoutParams(
+                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        mediaPlayereventActionViewParams
+                .addRule(RelativeLayout.CENTER_IN_PARENT);
+
+        this.mMediaPlayerControllerViewSmallParams = new LayoutParams(
+                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
 		/* 设置eventActionView callback */
         this.mMediaPlayerEventActionView
@@ -337,6 +372,31 @@ public class MediaPlayerViewShortVideo extends RelativeLayout implements
         this.mMediaPlayerSmallControllerView.setNeedGestureAction(false, false,
                 false);
 
+        removeAllViews();
+        mRootView.removeView(mMediaPlayerVideoView);
+        mRootView.removeView(mMediaPlayerBufferingView);
+        mRootView.removeView(mMediaPlayerLoadingView);
+        mRootView.removeView(mMediaPlayerEventActionView);
+        mRootView.removeView(mMediaPlayerSmallControllerView);
+        mRootView.removeView(layoutPop);
+        mRootView.removeView(mTextViewSpeed);
+        // mRootView.removeView(mTextViewDemux);
+        // mRootView.removeView(mTextViewDecode);
+        // mRootView.removeView(mTextViewTime);
+
+        // mRootView.removeView(mTextViewTotal);
+        // mRootView.removeView(mTextViewNet);
+
+		/* 添加全屏或者是窗口模式初始状态下所需的view */
+        addView(mMediaPlayerVideoView, mediaPlayerVideoViewParams);
+        addView(mMediaPlayerBufferingView, mediaPlayerBufferingViewParams);
+        addView(mMediaPlayerLoadingView, mediaPlayerLoadingViewParams);
+        addView(mMediaPlayerEventActionView, mediaPlayereventActionViewParams);
+        addView(layoutPop, mediaPlayerPopViewParams);
+        addView(mTextViewSpeed);
+        addView(mMediaPlayerSmallControllerView,
+                mMediaPlayerControllerViewSmallParams);
+        mMediaPlayerSmallControllerView.hide();
         mMediaPlayerSmallControllerView.hide();
         mMediaPlayerBufferingView.hide();
         mMediaPlayerLoadingView.hide();
@@ -442,6 +502,7 @@ public class MediaPlayerViewShortVideo extends RelativeLayout implements
         }
 
         if (mVideoReady && !mMediaPlayerEventActionView.isShowing()) {
+            Log.d("eflake", "touch");
             return mMediaPlayerSmallControllerView.dispatchTouchEvent(ev);
         }
         return true;

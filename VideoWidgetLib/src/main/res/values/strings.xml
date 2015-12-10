@@ -34,9 +34,19 @@
     <string name="net_speed">网速: </string>
     <string name="consumption_flow">消耗流量: </string>
     <string name="play_net">所用网络: </string>
+    <string name="short_video_play_title">播放99 赞153 踩223 分享1002 评论23</string>
+    <string name="short_video_item_comment">评评论内容评论内容评论内容评论</string>
+    <string name="short_video_item_fav">22</string>
+    <string name="short_video_item_info">用户名  评论时间 ：1分钟之前</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="short_video_fav_title">赞</string>
+    <string name="short_video_comment_hint">发表评论</string>
+    <string name="short_video_comment_commit">评论</string>
+    <string name="video_commment_item_comment">评论评论评论评论评论评论评论评论评论评论</string>
+    <string name="video_comment_item_time">4:09 PM</string>
+    <string name="video_comment_item_user">用户名ID</string>
 
 </resources>
 

@@ -235,9 +235,6 @@ public class PhoneLiveActivity extends AppCompatActivity implements MediaPlayerV
 
     }
 
-    /**
-     * ·µ»Ø¼üÍË³ö
-     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {

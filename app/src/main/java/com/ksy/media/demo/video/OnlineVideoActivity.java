@@ -10,19 +10,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -30,12 +25,12 @@ import com.ksy.media.demo.R;
 import com.ksy.media.player.util.Constants;
 import com.ksy.media.widget.ui.MediaPlayerView;
 import com.ksy.media.widget.ui.video.BlankFragment;
-import com.ksy.media.widget.ui.video.ListFragment;
+import com.ksy.media.widget.ui.video.VideoCommentListFragment;
 import com.ksy.media.widget.ui.video.MediaPlayerPagerAdapter;
 import com.ksy.media.widget.util.IPowerStateListener;
 
 public class OnlineVideoActivity extends AppCompatActivity implements
-        MediaPlayerView.PlayerViewCallback, BlankFragment.OnFragmentInteractionListener, ListFragment.OnFragmentInteractionListener {
+        MediaPlayerView.PlayerViewCallback, BlankFragment.OnFragmentInteractionListener, VideoCommentListFragment.OnFragmentInteractionListener {
     MediaPlayerView playerView;
     private boolean delay;
     private IPowerStateListener powerStateListener;

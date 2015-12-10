@@ -51,4 +51,9 @@
 
     <style name="AppBaseTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="popAnimStyle">
+            <item name="android:windowEnterAnimation">@anim/pop_show</item>
+            <item name="android:windowExitAnimation">@anim/pop_hidden</item>
+    </style>
+
 </resources>

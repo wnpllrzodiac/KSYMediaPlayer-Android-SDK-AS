@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/player_view"
         app:tabGravity="center"
-        app:tabIndicatorColor="@color/gray_primary_dark"
+        app:tabIndicatorColor="@color/cyan_500"
         app:tabMode="scrollable"
         app:tabMinWidth="100dp"
         app:tabSelectedTextColor="@color/black"

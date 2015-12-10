@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/controller_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/controller_large_top"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" >
+
+        <TextView
+            android:id="@+id/live_replay_information_switch"
+            android:layout_width="40dp"
+            android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/live_info_switch"
+            android:gravity="center_horizontal|center_horizontal"
+            android:background="@color/deepgray"
+            android:textColor="@color/balck"
+            android:layout_marginRight="@dimen/small_margin_left" />
+
+        <EditText
+            android:id="@+id/video_comment_text"
+            android:layout_width="264dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/live_comment"
+            android:layout_toRightOf="@+id/live_replay_information_switch"
+            android:layout_marginRight="@dimen/small_margin_left" />
+
+        <TextView
+            android:id="@+id/live_replay_share_text"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:text="@string/live_share"
+            android:gravity="center_horizontal|center_horizontal"
+            android:background="@color/deepgray"
+            android:textColor="@color/balck"
+            android:layout_marginLeft="@dimen/small_margin_left"
+            android:layout_marginRight="@dimen/small_margin_left" />
+
+    </RelativeLayout>
+</RelativeLayout>

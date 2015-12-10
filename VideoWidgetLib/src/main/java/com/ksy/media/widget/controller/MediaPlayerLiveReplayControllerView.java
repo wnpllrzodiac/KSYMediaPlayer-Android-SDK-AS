@@ -118,15 +118,15 @@ public class MediaPlayerLiveReplayControllerView extends MediaPlayerBaseControll
 	@Override
 	void onShow() {
 
-		mControllerTopView.setVisibility(VISIBLE);
-		mControllerBottomView.setVisibility(VISIBLE);
+//		mControllerTopView.setVisibility(VISIBLE);
+//		mControllerBottomView.setVisibility(VISIBLE);
 	}
 
 	@Override
 	void onHide() {
 
-		mControllerTopView.setVisibility(INVISIBLE);
-		mControllerBottomView.setVisibility(INVISIBLE);
+//		mControllerTopView.setVisibility(INVISIBLE);
+//		mControllerBottomView.setVisibility(INVISIBLE);
 	}
 
 	public void updateVideoTitle(String title) {

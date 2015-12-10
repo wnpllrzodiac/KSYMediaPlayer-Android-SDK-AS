@@ -3,101 +3,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <RelativeLayout
-        android:id="@+id/controller_top_layout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/controller_large_top"
-        android:layout_alignParentTop="true"
-        android:alpha="0.6"
-        android:background="@color/balck" >
+    <include layout="@layout/live_replay_top" />
 
-        <RelativeLayout
-            android:id="@+id/back_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/controller_large_top"
-            android:layout_alignParentLeft="true"
-            android:clickable="true" >
-
-            <ImageView
-                android:id="@+id/image_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/small_margin_left"
-                android:layout_marginRight="@dimen/small_margin_left"
-                android:src="@drawable/blue_ksy_back" />
-
-            <ImageView
-                android:id="@+id/image_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/image_back"
-                android:layout_alignTop="@id/image_back"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/small_margin_left"
-                android:layout_toRightOf="@id/image_back"
-                android:src="@drawable/player_controller_loading_logo" />
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/title_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/small_margin_left"
-            android:layout_marginRight="@dimen/small_margin_left"
-            android:layout_toRightOf="@id/back_layout"
-            android:ellipsize="end"
-            android:gravity="left|center_vertical"
-            android:singleLine="true"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
-    </RelativeLayout>
+    <ListView
+        android:id="@+id/live_list"
+        android:layout_above="@+id/live_replay_person_list"
+        android:scrollbars="none"
+        android:headerDividersEnabled="false"
+        android:dividerHeight="20dp"
+        android:paddingBottom="38dp"
+        android:layout_width="200dp"
+        android:layout_height="300dp">
+    </ListView>
 
     <RelativeLayout
-        android:id="@+id/controller_bottom_layout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/controller_large_top"
+        android:id="@+id/live_replay_person_list"
+        android:paddingBottom="48dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/balck"
-        android:alpha="0.6"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp" >
-
+        android:layout_above="@+id/controller_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <ImageView
-            android:id="@+id/video_playback_image_view"
+            android:id="@+id/live_replay_person_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/small_margin_left"
-            android:layout_marginRight="@dimen/small_margin_left"
-            android:src="@drawable/blue_ksy_pause" />
-
+            android:src="@drawable/live_replay_head_portrait"/>
+        <com.ksy.media.widget.ui.common.HorizontalListView
+            android:id="@+id/live_replay_horizon"
+            android:layout_toRightOf="@+id/live_replay_person_image"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content" />
         <ImageView
-            android:id="@+id/video_fullscreen_image_view"
+            android:id="@+id/live_replay_image_heart"
+            android:layout_toRightOf="@+id/live_replay_horizon"
+            android:src="@drawable/live_replay_head_portrait"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/small_margin_left"
-            android:layout_marginRight="@dimen/small_margin_left"
-            android:src="@drawable/blue_ksy_changeover_big" />
-
-        <com.ksy.media.widget.ui.MediaPlayerVideoSeekBar
-            android:id="@+id/seekbar_video_progress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/video_fullscreen_image_view"
-            android:layout_toRightOf="@id/video_playback_image_view"
-            android:maxHeight="@dimen/controller_seekbar_margin"
-            android:minHeight="@dimen/controller_seekbar_margin"
-            android:paddingLeft="@dimen/small_margin_left"
-            android:paddingRight="@dimen/small_margin_left"
-            android:thumbOffset="16dp"
-            android:progressDrawable="@drawable/blue_ksy_video_progress_seekbar_style_selector"
-            android:thumb="@drawable/blue_ksy_video_progress_seekbar_thumb_selector" />
+            android:layout_height="wrap_content" />
     </RelativeLayout>
+
+    <include layout="@layout/live_replay_bottom" />
 
 </RelativeLayout>

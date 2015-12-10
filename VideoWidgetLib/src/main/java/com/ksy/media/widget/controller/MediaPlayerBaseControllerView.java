@@ -134,7 +134,7 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
 
 	public void show() {
 
-		show(HIDE_TIMEOUT_DEFAULT);
+//		show(HIDE_TIMEOUT_DEFAULT);
 	}
 
 	public void show(int timeout) {
@@ -149,7 +149,7 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
 
 	public void hide() {
 
-		mHandler.sendEmptyMessage(MSG_HIDE);
+//		mHandler.sendEmptyMessage(MSG_HIDE);
 	}
 
 	public void toggle() {

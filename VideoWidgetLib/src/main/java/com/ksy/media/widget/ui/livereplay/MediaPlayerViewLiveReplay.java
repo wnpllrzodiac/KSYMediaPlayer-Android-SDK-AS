@@ -72,7 +72,6 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 	private Activity mActivity;
 	private LayoutInflater mLayoutInflater;
 	private Window mWindow;
-
 	private ViewGroup mRootView;
 //	private MediaPlayerTexutureVideoView mMediaPlayerVideoView;
 	private MediaPlayerVideoView mMediaPlayerVideoView;
@@ -98,13 +97,9 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 	private volatile boolean mScreenshotPreparing = false;
 
 	private boolean mVideoReady = false;
-
-	private boolean mStartAfterPause = false;
-
 	private int mPausePosition = 0;
 
 	private OrientationEventListener mOrientationEventListener;
-
 	private ViewGroup.LayoutParams mLayoutParamWindowMode;
 	private LayoutParams mMediaPlayerControllerViewLargeParams;
 	private LayoutParams mMediaPlayerControllerViewSmallParams;
@@ -134,12 +129,9 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 
 	private RelativeLayout layoutPop;
 	private Handler mHandler = new Handler();
-	private TextView mTextViewSpeed;
+//	private TextView mTextViewSpeed;
 
 	private ControlDelay controlDelay = ControlDelay.getInstance();
-	private Timer totalTimer;
-	long uidSizeTemp;
-	private volatile boolean mStart = false;
 	private Context mContext;
 	private IPowerStateListener powerStateListener;
 
@@ -207,7 +199,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 				R.layout.blue_media_player_view, null);
 		this.layoutPop = (RelativeLayout) mRootView
 				.findViewById(R.id.layoutPop);
-		mTextViewSpeed = (TextView) mRootView.findViewById(R.id.player_speed);
+//		mTextViewSpeed = (TextView) mRootView.findViewById(R.id.player_speed);
 		this.mMediaPlayerVideoView = (MediaPlayerVideoView) mRootView
 				.findViewById(R.id.ks_camera_video_view);
 		this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
@@ -314,7 +306,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 							Log.i(Constants.LOG_TAG,
 									"event action  view action error");
 							mMediaPlayerEventActionView.hide();
-							mMediaPlayerLiveReplayControllerView.hide();
+//							mMediaPlayerLiveReplayControllerView.hide();
 							mMediaPlayerLoadingView.show();
 							mMediaPlayerVideoView.setVideoPath(url);
 						} else {
@@ -347,7 +339,6 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 			} else if (mDeviceNavigationType == MediaPlayerUtils.DEVICE_NAVIGATION_TYPE_TABLET) {
 				mMediaPlayerControllerViewLargeParams.bottomMargin = mFullScreenNavigationBarHeight;
 			}
-
 		}
 
 		/* 初始化:ControllerViewLarge */
@@ -370,7 +361,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 		mRootView.removeView(mMediaPlayerEventActionView);
 		mRootView.removeView(mMediaPlayerLiveReplayControllerView);
 		mRootView.removeView(layoutPop);
-		mRootView.removeView(mTextViewSpeed);
+//		mRootView.removeView(mTextViewSpeed);
 
 		/* 添加全屏或者是窗口模式初始状态下所需的view */
 		addView(mMediaPlayerVideoView, mediaPlayerVideoViewParams);
@@ -378,12 +369,12 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 		addView(mMediaPlayerLoadingView, mediaPlayerLoadingViewParams);
 		addView(mMediaPlayerEventActionView, mediaPlayereventActionViewParams);
 		addView(layoutPop, mediaPlayerPopViewParams);
-		addView(mTextViewSpeed);
+//		addView(mTextViewSpeed);
 
 		if (MediaPlayerUtils.isWindowMode(mPlayMode)) {
 			addView(mMediaPlayerLiveReplayControllerView,
 					mMediaPlayerControllerViewSmallParams);
-			mMediaPlayerLiveReplayControllerView.hide();
+//			mMediaPlayerLiveReplayControllerView.hide();
 		}
 
 		mMediaPlayerBufferingView.hide();
@@ -463,8 +454,6 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 			}
 		};
 
-		// int uid = getUid();
-		// getTotalBytes(uid);
 	}
 
 	private String url = null;
@@ -513,19 +502,9 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 			if (mScreenLockMode) {
 				return true;
 			}
-			if (MediaPlayerUtils.isFullScreenMode(mPlayMode)) {
-				if (mLockMode) {
-					if (mPlayerViewCallback != null)
-						mPlayerViewCallback.onFinish(mPlayMode);
-				} else {
-					mMediaPlayerController
-							.onRequestPlayMode(MediaPlayMode.PLAYMODE_WINDOW);
-				}
-				return true;
-			} else if (MediaPlayerUtils.isWindowMode(mPlayMode)) {
-
-				if (mPlayerViewCallback != null)
-					mPlayerViewCallback.onFinish(mPlayMode);
+			if (MediaPlayerUtils.isWindowMode(mPlayMode)) {
+//				if (mPlayerViewCallback != null)
+//					mPlayerViewCallback.onFinish(mPlayMode);
 				return true;
 			}
 
@@ -566,7 +545,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 			addView(mMediaPlayerLiveReplayControllerView,
 					mMediaPlayerControllerViewSmallParams);
 			this.setLayoutParams(mLayoutParamWindowMode);
-			mMediaPlayerLiveReplayControllerView.hide();
+//			mMediaPlayerLiveReplayControllerView.hide();
 
 			if (mPlayerViewCallback != null) {
 				mPlayerViewCallback.restoreViews();
@@ -604,7 +583,6 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 
 		if (mMediaPlayerController.isPlaying()) {
 			mMediaPlayerController.pause();
-			mStartAfterPause = true;
 		}
 		WakeLocker.release();
 	}
@@ -711,11 +689,11 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 				this.mDeviceNavigationType = MediaPlayerUtils
 						.getDeviceNavigationType(mWindow);
 				if (mCanLayoutSystemUI && mFullScreenNavigationBarHeight > 0) {
-					if (mDeviceNavigationType == MediaPlayerUtils.DEVICE_NAVIGATION_TYPE_HANDSET) {
-						mMediaPlayerControllerViewLargeParams.rightMargin = mFullScreenNavigationBarHeight;
-					} else if (mDeviceNavigationType == MediaPlayerUtils.DEVICE_NAVIGATION_TYPE_TABLET) {
-						mMediaPlayerControllerViewLargeParams.bottomMargin = mFullScreenNavigationBarHeight;
-					}
+//					if (mDeviceNavigationType == MediaPlayerUtils.DEVICE_NAVIGATION_TYPE_HANDSET) {
+//						mMediaPlayerControllerViewLargeParams.rightMargin = mFullScreenNavigationBarHeight;
+//					} else if (mDeviceNavigationType == MediaPlayerUtils.DEVICE_NAVIGATION_TYPE_TABLET) {
+//						mMediaPlayerControllerViewLargeParams.bottomMargin = mFullScreenNavigationBarHeight;
+//					}
 				}
 			}
 			break;
@@ -734,11 +712,11 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 				this.mDeviceNavigationType = MediaPlayerUtils
 						.getDeviceNavigationType(mWindow);
 				if (mCanLayoutSystemUI && mFullScreenNavigationBarHeight > 0) {
-					if (mDeviceNavigationType == MediaPlayerUtils.DEVICE_NAVIGATION_TYPE_HANDSET) {
-						mMediaPlayerControllerViewLargeParams.rightMargin = mFullScreenNavigationBarHeight;
-					} else if (mDeviceNavigationType == MediaPlayerUtils.DEVICE_NAVIGATION_TYPE_TABLET) {
-						mMediaPlayerControllerViewLargeParams.bottomMargin = mFullScreenNavigationBarHeight;
-					}
+//					if (mDeviceNavigationType == MediaPlayerUtils.DEVICE_NAVIGATION_TYPE_HANDSET) {
+//						mMediaPlayerControllerViewLargeParams.rightMargin = mFullScreenNavigationBarHeight;
+//					} else if (mDeviceNavigationType == MediaPlayerUtils.DEVICE_NAVIGATION_TYPE_TABLET) {
+//						mMediaPlayerControllerViewLargeParams.bottomMargin = mFullScreenNavigationBarHeight;
+//					}
 				}
 			}
 			break;
@@ -788,7 +766,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 				duration = mMediaPlayerController.getDuration();
 
 			if (mIsComplete) {
-				mMediaPlayerLiveReplayControllerView.hide();
+//				mMediaPlayerLiveReplayControllerView.hide();
 				mMediaPlayerEventActionView
 						.updateEventMode(
 								MediaPlayerEventActionView.EVENT_ACTION_VIEW_MODE_COMPLETE,
@@ -840,7 +818,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 				}
 			} else {
 				mIsComplete = true;
-				mMediaPlayerLiveReplayControllerView.hide();
+//				mMediaPlayerLiveReplayControllerView.hide();
 				mMediaPlayerEventActionView
 						.updateEventMode(
 								MediaPlayerEventActionView.EVENT_ACTION_VIEW_MODE_COMPLETE,
@@ -963,8 +941,8 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 		@Override
 		public void onNetSpeedUpdate(IMediaPlayer mp, int arg1, int arg2) {
 			// arg2 = arg2 / 1024 / 8; KB/s
-			mTextViewSpeed.setText(getResources().getString(R.string.net_speed)
-					+ " " + arg2 + " bit/s");
+//			mTextViewSpeed.setText(getResources().getString(R.string.net_speed)
+//					+ " " + arg2 + " bit/s");
 		}
 	};
 
@@ -990,7 +968,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 
 			Log.e(Constants.LOG_TAG, "On Native Error,what :" + what
 					+ " , extra :" + extra);
-			mMediaPlayerLiveReplayControllerView.hide();
+//			mMediaPlayerLiveReplayControllerView.hide();
 			mMediaPlayerBufferingView.hide();
 			mMediaPlayerLoadingView.hide();
 			mMediaPlayerEventActionView.updateEventMode(
@@ -1008,7 +986,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 
 			Log.i(Constants.LOG_TAG, "surfaceDestroyed");
 			mVideoReady = false;
-			mMediaPlayerLiveReplayControllerView.hide();
+//			mMediaPlayerLiveReplayControllerView.hide();
 			mMediaPlayerBufferingView.hide();
 			mMediaPlayerLoadingView.hide();
 		}
@@ -1407,95 +1385,6 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 		}
 	}
 
-	// start get total bytes
-	public void getTotalBytes(final int id) {
-		if (mStart) {
-			return;
-		}
-		mStart = true;
-
-		totalTimer = new Timer();
-		totalTimer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				try {
-
-					uidSizeTemp = TrafficStats.getUidRxBytes(id);
-					Log.d(Constants.LOG_TAG, "uidSizeTemp=" + uidSizeTemp);
-					String totalSize = convertFileSize(uidSizeTemp);
-					Log.d(Constants.LOG_TAG, "totalSize==" + totalSize);
-					// mTextViewTotal.setText(getResources().getString(R.string.consumption_flow)
-					// + " " + totalSize);
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}, 1000, 1000);
-	}
-
-	// stop timer
-	public void stopTotalTimer() {
-		if (!mStart) {
-			return;
-		}
-
-		if (null != totalTimer) {
-			totalTimer.cancel();
-		}
-
-		mStart = false;
-	}
-
-	// convert size
-	public static String convertFileSize(long size) {
-		long kb = 1024;
-		long mb = kb * 1024;
-		long gb = mb * 1024;
-
-		if (size >= gb) {
-			return String.format("%.1f GB", (float) size / gb);
-		} else if (size >= mb) {
-			float f = (float) size / mb;
-			return String.format(f > 100 ? "%.0f MB" : "%.1f MB", f);
-		} else if (size >= kb) {
-			float f = (float) size / kb;
-			return String.format(f > 100 ? "%.0f KB" : "%.1f KB", f);
-		} else {
-			return String.format("%d B", size);
-		}
-	}
-
-	public interface IStop {
-		void stopTimer();
-	}
-
-	// stop timer
-	IStop mStop = new IStop() {
-		@Override
-		public void stopTimer() {
-			stopTotalTimer();
-
-			uidSizeTemp = 0;
-		}
-	};
-
-	// get app uid
-	public int getUid() {
-		int uid;
-
-		try {
-			PackageManager pm = mContext.getPackageManager();
-			ApplicationInfo ai = pm.getApplicationInfo("com.ksy.media.demo",
-					PackageManager.GET_ACTIVITIES);
-			uid = ai.uid;
-		} catch (NameNotFoundException e) {
-			e.printStackTrace();
-			uid = -1;
-		}
-
-		return uid;
-	}
 
 	@Override
 	public void onPowerState(int state) {

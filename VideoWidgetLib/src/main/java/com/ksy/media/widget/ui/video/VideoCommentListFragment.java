@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.ksy.media.widget.ui.video.dummy.VideoAdapter;
+import com.ksy.media.widget.ui.video.dummy.VideoListAdapter;
 import com.ksy.mediaPlayer.widget.R;
 import com.ksy.media.widget.ui.video.dummy.DummyContent;
 
@@ -28,7 +28,7 @@ public class VideoCommentListFragment extends Fragment implements AbsListView.On
 
     private OnFragmentInteractionListener mListener;
     private ListView mListView;
-    private VideoAdapter mVideoAdapter;
+    private VideoListAdapter mVideoAdapter;
     private ArrayList<VideoCommentItem> items;
 
     public VideoCommentListFragment() {
@@ -58,9 +58,7 @@ public class VideoCommentListFragment extends Fragment implements AbsListView.On
             item.setUser(getString(R.string.video_comment_item_user));
             items.add(item);
         }
-//        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-//                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
-        mVideoAdapter = new VideoAdapter(getActivity(), items);
+        mVideoAdapter = new VideoListAdapter(getActivity(), items);
     }
 
     @Override

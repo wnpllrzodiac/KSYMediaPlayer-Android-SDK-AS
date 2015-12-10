@@ -2,7 +2,6 @@ package com.ksy.media.widget.ui.shortvideo;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -10,7 +9,6 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Color;
-import android.hardware.SensorManager;
 import android.net.TrafficStats;
 import android.os.Build;
 import android.os.Environment;
@@ -25,7 +23,6 @@ import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +38,6 @@ import com.ksy.media.widget.controller.MediaPlayerBaseControllerView;
 import com.ksy.media.widget.controller.MediaPlayerSmallControllerView;
 import com.ksy.media.widget.data.MediaPlayMode;
 import com.ksy.media.widget.data.MediaPlayerUtils;
-import com.ksy.media.widget.data.MediaPlayerVideoQuality;
 import com.ksy.media.widget.data.NetReceiver;
 import com.ksy.media.widget.data.NetReceiver.NetState;
 import com.ksy.media.widget.data.NetReceiver.NetStateChangedListener;
@@ -53,15 +49,11 @@ import com.ksy.media.widget.ui.MediaPlayerMovieRatioView;
 import com.ksy.media.widget.util.ControlDelay;
 import com.ksy.media.widget.util.IPowerStateListener;
 import com.ksy.media.widget.videoview.MediaPlayerTextureVideoViewShortVideo;
-import com.ksy.media.widget.videoview.MediaPlayerVideoView;
-import com.ksy.media.widget.videoview.MediaPlayerVideoViewShortVideo;
 import com.ksy.mediaPlayer.widget.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Timer;
@@ -215,7 +207,7 @@ public class MediaPlayerViewShortVideo extends RelativeLayout implements
 
 		/* 初始化UI组件 */
         this.mRootView = (ViewGroup) mLayoutInflater.inflate(
-                R.layout.blue_media_player_view_short_video, null);
+                R.layout.short_video_blue_media_player_view, null);
 
         this.layoutPop = (RelativeLayout) mRootView
                 .findViewById(R.id.layoutPop);

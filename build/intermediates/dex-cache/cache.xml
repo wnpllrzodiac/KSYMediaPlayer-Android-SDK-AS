@@ -40,15 +40,8 @@
         jar="/Users/eflakemac/Documents/AndroidStudioGit/KSYMediaPlayer-Android-SDK-AS/app/build/intermediates/exploded-aar/KSYMediaPlayer-Android-SDK-AS/VideoWidgetLib/unspecified/jars/classes.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="44969418a5cfa70c6f33d051b234515fd1aa104f">
+        sha1="9c0ba677764997fe5c7481d26fb98e9c2f5d4980">
         <dex dex="/Users/eflakemac/Documents/AndroidStudioGit/KSYMediaPlayer-Android-SDK-AS/app/build/intermediates/pre-dexed/debug/classes-d17283f5d8e0ff6fe97635eab924341cc8d0a6ef.jar" />
-    </item>
-    <item
-        jar="/Users/eflakemac/Documents/AndroidStudioGit/KSYMediaPlayer-Android-SDK-AS/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.1.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="d96886efea7cc74fbb3abd0e3b51d5638fc57be0">
-        <dex dex="/Users/eflakemac/Documents/AndroidStudioGit/KSYMediaPlayer-Android-SDK-AS/app/build/intermediates/pre-dexed/debug/classes-99ca5c12fb0c524954db6122797d9670fcf1f07c.jar" />
     </item>
     <item
         jar="/Users/eflakemac/Documents/AndroidStudioGit/KSYMediaPlayer-Android-SDK-AS/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars/libs/internal_impl-23.1.0.jar"
@@ -58,10 +51,17 @@
         <dex dex="/Users/eflakemac/Documents/AndroidStudioGit/KSYMediaPlayer-Android-SDK-AS/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.0-8d4c21789d91c53cfedc263adf2e777f5847ecb3.jar" />
     </item>
     <item
+        jar="/Users/eflakemac/Documents/AndroidStudioGit/KSYMediaPlayer-Android-SDK-AS/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="d96886efea7cc74fbb3abd0e3b51d5638fc57be0">
+        <dex dex="/Users/eflakemac/Documents/AndroidStudioGit/KSYMediaPlayer-Android-SDK-AS/app/build/intermediates/pre-dexed/debug/classes-99ca5c12fb0c524954db6122797d9670fcf1f07c.jar" />
+    </item>
+    <item
         jar="/Users/eflakemac/Documents/AndroidStudioGit/KSYMediaPlayer-Android-SDK-AS/app/build/intermediates/exploded-aar/KSYMediaPlayer-Android-SDK-AS/VideoLibs/unspecified/jars/classes.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="b0dd9b2e4cefc1c51adad071b8bdb09121f5d74c">
+        sha1="6b82a2f81bfe315d34635b79292bf63335572775">
         <dex dex="/Users/eflakemac/Documents/AndroidStudioGit/KSYMediaPlayer-Android-SDK-AS/app/build/intermediates/pre-dexed/debug/classes-8aad7057d5dab00f25ae0d537c9ae1b71c04c542.jar" />
     </item>
 

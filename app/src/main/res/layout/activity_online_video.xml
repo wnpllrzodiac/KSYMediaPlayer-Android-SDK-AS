@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.ksy.media.widget.ui.MediaPlayerView
-        android:id="@+id/player_view"
+    <com.ksy.media.widget.ui.video.MediaPlayerViewVideo
+        android:id="@+id/video_player_view"
         android:layout_width="fill_parent"
         android:layout_height="260dp"
         player:playmode="window" />
@@ -14,7 +14,7 @@
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/player_view"
+        android:layout_below="@+id/video_player_view"
         app:tabGravity="center"
         app:tabIndicatorColor="@color/cyan_500"
         app:tabMode="scrollable"

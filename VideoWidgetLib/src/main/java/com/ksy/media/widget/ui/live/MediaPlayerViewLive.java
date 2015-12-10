@@ -206,7 +206,7 @@ public class MediaPlayerViewLive extends RelativeLayout implements
 
 		/* 初始化UI组件 */
 		this.mRootView = (ViewGroup) mLayoutInflater.inflate(
-				R.layout.blue_media_player_view, null);
+				R.layout.live_blue_media_player_view, null);
 
 		this.layoutPop = (RelativeLayout) mRootView
 				.findViewById(R.id.layoutPop);

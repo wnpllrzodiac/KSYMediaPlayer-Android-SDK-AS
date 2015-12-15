@@ -6,7 +6,7 @@
     <dimen name="buffer_height">60dp</dimen>
     <dimen name="controller_bright_width">31dp</dimen>
     <dimen name="controller_bright_height">157dp</dimen>
-    <dimen name="controller_large_top">43dp</dimen>
+    <dimen name="controller_large_top">60dp</dimen>
     <dimen name="controller_large_top_margin">13dp</dimen>
     <dimen name="controller_large_bottom_bg">67dp</dimen>
     <dimen name="controller_large_bottom">44dp</dimen>

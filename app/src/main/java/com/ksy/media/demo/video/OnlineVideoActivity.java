@@ -23,19 +23,18 @@ import android.widget.Toast;
 
 import com.ksy.media.demo.R;
 import com.ksy.media.player.util.Constants;
-import com.ksy.media.widget.ui.video.BlankFragment;
-import com.ksy.media.widget.ui.video.MediaPlayerViewVideo;
-import com.ksy.media.widget.ui.video.VideoCommentListFragment;
-import com.ksy.media.widget.ui.video.MediaPlayerPagerAdapter;
+import com.ksy.media.widget.ui.video.fragment.CommentListFragment;
+import com.ksy.media.widget.ui.video.VideoMediaPlayerView;
+import com.ksy.media.widget.ui.video.VideoMediaPlayerPagerAdapter;
 import com.ksy.media.widget.util.IPowerStateListener;
 
 public class OnlineVideoActivity extends AppCompatActivity implements
-        MediaPlayerViewVideo.PlayerViewCallback, BlankFragment.OnFragmentInteractionListener, VideoCommentListFragment.OnFragmentInteractionListener {
-    MediaPlayerViewVideo playerView;
+        VideoMediaPlayerView.PlayerViewCallback, CommentListFragment.OnFragmentInteractionListener {
+    VideoMediaPlayerView playerView;
     private boolean delay;
     private IPowerStateListener powerStateListener;
     private ViewPager pager;
-    private MediaPlayerPagerAdapter pagerAdapter;
+    private VideoMediaPlayerPagerAdapter pagerAdapter;
     private TabLayout tabLayout;
 
     @Override
@@ -48,7 +47,7 @@ public class OnlineVideoActivity extends AppCompatActivity implements
     }
 
     private void setupViews() {
-        playerView = (MediaPlayerViewVideo) findViewById(R.id.video_player_view);
+        playerView = (VideoMediaPlayerView) findViewById(R.id.video_player_view);
         registerPowerReceiver();
         setPowerStateListener(playerView);
         setupDialog();
@@ -57,7 +56,7 @@ public class OnlineVideoActivity extends AppCompatActivity implements
 
     private void setUpPagerAndTabs() {
         pager = (ViewPager) findViewById(R.id.pager);
-        pagerAdapter = new MediaPlayerPagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new VideoMediaPlayerPagerAdapter(OnlineVideoActivity.this,getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setTabsFromPagerAdapter(pagerAdapter);
@@ -225,11 +224,6 @@ public class OnlineVideoActivity extends AppCompatActivity implements
 
     public void setPowerStateListener(IPowerStateListener powerStateListener) {
         this.powerStateListener = powerStateListener;
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 
     @Override

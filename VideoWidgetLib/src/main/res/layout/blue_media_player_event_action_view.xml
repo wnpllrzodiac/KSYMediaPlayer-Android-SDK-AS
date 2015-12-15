@@ -3,16 +3,16 @@
     android:id="@+id/event_action_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent" >
+    android:background="@android:color/transparent">
 
     <RelativeLayout
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/controller_large_top"
         android:layout_alignParentTop="true"
+        android:alpha="0.9"
         android:background="@color/balck"
-        android:alpha="0.6"
-        android:visibility="visible" >
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/back_image_view"
@@ -25,12 +25,12 @@
 
         <ImageView
             android:id="@+id/image_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/small_margin_left"
             android:layout_toRightOf="@id/back_image_view"
-            android:src="@drawable/player_controller_loading_logo" />
+            android:src="@drawable/ic_movie_white_48dp" />
 
         <TextView
             android:id="@+id/title_text_view"
@@ -41,7 +41,7 @@
             android:ellipsize="end"
             android:gravity="left|center_vertical"
             android:singleLine="true"
-            android:text="@string/king_cloud"
+            android:text="@string/video_small_title_tv_default"
             android:textColor="@color/white"
             android:textSize="14sp" />
     </RelativeLayout>
@@ -51,7 +51,7 @@
         android:id="@+id/action_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/title_layout" >
+        android:layout_below="@id/title_layout">
 
         <!-- Wait -->
 
@@ -60,8 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:background="@drawable/player_controller_action_play" >
-        </RelativeLayout>
+            android:background="@drawable/player_controller_action_play"></RelativeLayout>
 
         <!-- Complete -->
 
@@ -70,14 +69,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="gone" >
+            android:visibility="gone">
 
             <!-- Complete Normal -->
-            <LinearLayout
+
+            <LinearLayout
                 android:id="@+id/complete_replay_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/player_controller_action_bg"
+                android:alpha="0.9"
+                android:background="@color/black"
                 android:clickable="true"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -85,7 +86,7 @@
                 android:paddingLeft="@dimen/event_action_padding"
                 android:paddingRight="@dimen/event_action_padding"
                 android:paddingTop="@dimen/small_margin_left"
-                android:visibility="visible" >
+                android:visibility="visible">
 
                 <ImageView
                     android:id="@+id/complete_replay_image_view"
@@ -115,7 +116,7 @@
             android:layout_centerInParent="true"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:visibility="gone" >
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/error_info_title_text_view"
@@ -133,14 +134,15 @@
                 android:id="@+id/error_replay_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/player_controller_action_bg"
+                android:alpha="0.5"
+                android:background="@color/black"
                 android:clickable="true"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/small_margin_left"
                 android:paddingLeft="@dimen/event_action_padding"
                 android:paddingRight="@dimen/event_action_padding"
-                android:paddingTop="@dimen/small_margin_left" >
+                android:paddingTop="@dimen/small_margin_left">
 
                 <ImageView
                     android:id="@+id/error_replay_image_view"

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="http://maichang.kssws.ks-cdn.com/upload20150716161913.mp4"
+        android:text="http://sfvbook.bj.bcebos.com/movie/Street%20Fighter%20V%20Announcement%20Trailer%20-%20Exclusive%20to%20PS4%20%26%20PC.mp4"
         android:hint="Please Input Video Path or URL..." >
 
         <requestFocus />
@@ -26,4 +26,5 @@
 
         <requestFocus />
     </EditText> -->
-</RelativeLayout>
+
+</RelativeLayout>

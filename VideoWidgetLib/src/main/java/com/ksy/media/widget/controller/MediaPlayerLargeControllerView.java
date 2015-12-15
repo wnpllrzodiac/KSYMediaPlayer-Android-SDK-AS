@@ -122,7 +122,7 @@ public class MediaPlayerLargeControllerView extends
 		// mVideoRatioBackView = (ImageView) findViewById(R.id.video_fast_back_view);
 		// mVideoRatioForwardView = (ImageView)findViewById(R.id.video_fast_forward_view);
 		
-		mVideoCropView = (ImageView) findViewById(R.id.crop_view); // 截屏
+//		mVideoCropView = (ImageView) findViewById(R.id.crop_view); // 截屏
 
 		mQualityLayout = (LinearLayout) findViewById(R.id.video_quality_layout); // 分辨率切换layout
 		mQualityTextView = (TextView) findViewById(R.id.tv_definition); // 分辨率切换
@@ -174,7 +174,7 @@ public class MediaPlayerLargeControllerView extends
 	protected void initListeners() {
 
 		mScreenModeImageView.setOnClickListener(this);
-		mVideoCropView.setOnClickListener(this);
+//		mVideoCropView.setOnClickListener(this);
 		// mVideoRatioBackView.setOnClickListener(this);
 		// mVideoRatioForwardView.setOnClickListener(this);
 		mBackLayout.setOnClickListener(this);
@@ -510,10 +510,10 @@ public class MediaPlayerLargeControllerView extends
 			 * (id == mVideoRatioBackView.getId()) {//快退按钮
 			 * mMediaPlayerController.onMoviePlayRatioDown(); show();
 			 */
-		} else if (id == mVideoCropView.getId()) {// 截图
+		} /*else if (id == mVideoCropView.getId()) {// 截图
 			mMediaPlayerController.onMovieCrop();
 //			show();
-		} else if (id == mScreenModeImageView.getId()) { // 切换大小屏幕
+		}*/ else if (id == mScreenModeImageView.getId()) { // 切换大小屏幕
 			mMediaPlayerController
 					.onRequestPlayMode(MediaPlayMode.PLAYMODE_WINDOW);
 			

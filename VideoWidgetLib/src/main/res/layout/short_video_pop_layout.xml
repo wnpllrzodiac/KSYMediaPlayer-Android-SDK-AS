@@ -2,24 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/comment_layout"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="48dp"
     android:layout_alignParentBottom="true"
     android:background="@color/white"
     android:orientation="horizontal">
 
     <EditText
         android:layout_width="0dp"
-        android:layout_weight="5"
         android:layout_height="60dp"
         android:layout_gravity="center_vertical"
-        android:hint="@string/short_video_comment_hint" />
+        android:layout_weight="5"
+        android:hint="@string/short_video_comment_hint"
+        android:singleLine="true" />
 
     <Button
         android:layout_width="0dp"
-        android:layout_weight="1"
         android:layout_height="60dp"
-        android:background="@color/white"
-        android:textSize="18sp"
         android:layout_gravity="center_vertical"
-        android:text="@string/short_video_comment_commit" />
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:text="@string/short_video_comment_commit"
+        android:textSize="18sp" />
 </LinearLayout>

@@ -19,7 +19,7 @@
             android:id="@+id/loading_logo_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/player_controller_loading_logo" />
+            android:src="@drawable/ic_movie_white_48dp" />
 
         <TextView
             android:id="@+id/loading_title_text_view"

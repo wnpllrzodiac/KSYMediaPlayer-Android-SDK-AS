@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <include layout="@layout/live_top" />
+
+    <ListView
+        android:id="@+id/live_list"
+        android:layout_above="@+id/live_person_list"
+        android:scrollbars="none"
+        android:headerDividersEnabled="false"
+        android:dividerHeight="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_width="230dp"
+        android:layout_height="400dp">
+    </ListView>
+
+    <RelativeLayout
+        android:id="@+id/live_person_list"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@+id/controller_bottom_layout"
+        android:layout_width="300dp"
+        android:layout_height="100dp">
+        <ImageView
+            android:id="@+id/live_person_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/live_person_grey"/>
+        <com.ksy.media.widget.ui.common.HorizontalListView
+            android:id="@+id/live_horizon"
+            android:layout_toRightOf="@+id/live_person_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/live_layout_bottom_heart"
+        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/controller_bottom_layout"
+        android:layout_toRightOf="@+id/live_person_list"
+        android:layout_marginBottom="45dp"
+        android:layout_width="150dp"
+        android:layout_height="350dp">
+
+        <com.ksy.media.widget.ui.common.HeartLayout
+            android:id="@+id/live_image_heart"
+            android:layout_width="150dp"
+            android:layout_height="300dp" />
+
+        <ImageView
+            android:id="@+id/live_image_heart_bt"
+            android:src="@drawable/heart"
+            android:layout_below="@+id/live_image_heart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <include layout="@layout/live_bottom" />
+
+</RelativeLayout>

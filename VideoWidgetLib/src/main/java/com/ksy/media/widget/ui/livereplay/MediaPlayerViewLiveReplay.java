@@ -13,15 +13,11 @@ import java.util.TimerTask;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Color;
 import android.hardware.SensorManager;
-import android.net.TrafficStats;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
@@ -32,12 +28,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.OrientationEventListener;
 import android.view.SurfaceHolder;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ksy.media.player.IMediaPlayer;
@@ -47,9 +41,7 @@ import com.ksy.media.player.util.DRMRetrieverManager;
 import com.ksy.media.player.util.DRMRetrieverResponseHandler;
 import com.ksy.media.player.util.IDRMRetriverRequest;
 import com.ksy.media.player.util.NetworkUtil;
-import com.ksy.media.widget.controller.MediaPlayerSmallControllerView;
 import com.ksy.media.widget.ui.MediaPlayerBufferingView;
-import com.ksy.media.widget.ui.MediaPlayerEventActionView;
 import com.ksy.media.widget.ui.MediaPlayerLoadingView;
 import com.ksy.media.widget.ui.MediaPlayerMovieRatioView;
 import com.ksy.media.widget.util.ControlDelay;
@@ -79,7 +71,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 
 	private MediaPlayerBufferingView mMediaPlayerBufferingView;
 	private MediaPlayerLoadingView mMediaPlayerLoadingView;
-	private MediaPlayerEventActionView mMediaPlayerEventActionView;
+	private MediaPlayerEventActionViewLiveReplay mMediaPlayerEventActionViewLiveReplay;
 
 	private PlayerViewCallback mPlayerViewCallback;
 
@@ -127,9 +119,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 	private DRMRetrieverManager mDrmManager;
 	private DRMRetrieverResponseHandler mDrmHandler;
 
-	private RelativeLayout layoutPop;
 	private Handler mHandler = new Handler();
-//	private TextView mTextViewSpeed;
 
 	private ControlDelay controlDelay = ControlDelay.getInstance();
 	private Context mContext;
@@ -159,8 +149,9 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 	private void init(Context context, AttributeSet attrs, int defStyle)
 			throws IllegalArgumentException, NullPointerException {
 
-		if (null == context)
+		if (null == context) {
 			throw new NullPointerException("Context can not be null !");
+		}
 
 		TypedArray typedArray = context.obtainStyledAttributes(attrs,
 				R.styleable.PlayerView);
@@ -197,18 +188,15 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 		/* 初始化UI组件 */
 		this.mRootView = (ViewGroup) mLayoutInflater.inflate(
 				R.layout.live_replay_blue_media_player_view, null);
-		this.layoutPop = (RelativeLayout) mRootView
-				.findViewById(R.id.layoutPop);
-//		mTextViewSpeed = (TextView) mRootView.findViewById(R.id.player_speed);
 		this.mMediaPlayerVideoView = (MediaPlayerVideoView) mRootView
 				.findViewById(R.id.ks_camera_video_view);
 		this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
 				.findViewById(R.id.ks_camera_buffering_view);
 		this.mMediaPlayerLoadingView = (MediaPlayerLoadingView) mRootView
 				.findViewById(R.id.ks_camera_loading_view);
-		this.mMediaPlayerEventActionView = (MediaPlayerEventActionView) mRootView
-				.findViewById(R.id.ks_camera_event_action_view);
-
+		//TODO
+		this.mMediaPlayerEventActionViewLiveReplay = (MediaPlayerEventActionViewLiveReplay) mRootView
+				.findViewById(R.id.ks_camera_event_action_view_live_replay);
 		this.mMediaPlayerLiveReplayControllerView = (MediaPlayerLiveReplayControllerView) mRootView
 				.findViewById(R.id.media_player_controller_view_live_replay);
 
@@ -248,11 +236,6 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 		mediaPlayerLoadingViewParams.addRule(RelativeLayout.CENTER_IN_PARENT);
 		this.mMediaPlayerLoadingView.hide();
 
-		// 截图成功layout
-		// RelativeLayout.LayoutParams mediaPlayerPopViewParams = new
-		// LayoutParams(
-		// LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-
 		LayoutParams mediaPlayerPopViewParams = new LayoutParams(
 				240, 230);
 		mediaPlayerPopViewParams.addRule(RelativeLayout.CENTER_IN_PARENT);
@@ -264,15 +247,15 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 				.addRule(RelativeLayout.CENTER_IN_PARENT);
 
 		/* 设置eventActionView callback */
-		this.mMediaPlayerEventActionView
-				.setCallback(new MediaPlayerEventActionView.EventActionViewCallback() {
+		this.mMediaPlayerEventActionViewLiveReplay
+				.setCallback(new MediaPlayerEventActionViewLiveReplay.EventActionViewCallback() {
 					@Override
 					public void onActionPlay() {
 						if (NetworkUtil.isNetworkAvailable(mContext)) {
 							mIsComplete = false;
 							Log.i(Constants.LOG_TAG,
 									"event action  view action play");
-							mMediaPlayerEventActionView.hide();
+							mMediaPlayerEventActionViewLiveReplay.hide();
 							mMediaPlayerLoadingView.hide();
 							mMediaPlayerVideoView.start();
 						} else {
@@ -286,7 +269,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 						if (NetworkUtil.isNetworkAvailable(mContext)) {
 							Log.i(Constants.LOG_TAG,
 									"event action  view action replay");
-							mMediaPlayerEventActionView.hide();
+							mMediaPlayerEventActionViewLiveReplay.hide();
 							mIsComplete = false;
 							if (mMediaPlayerController != null) {
 								mMediaPlayerController.start();
@@ -305,8 +288,8 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 							mIsComplete = false;
 							Log.i(Constants.LOG_TAG,
 									"event action  view action error");
-							mMediaPlayerEventActionView.hide();
-//							mMediaPlayerLiveReplayControllerView.hide();
+							mMediaPlayerEventActionViewLiveReplay.hide();
+							mMediaPlayerLiveReplayControllerView.hide();
 							mMediaPlayerLoadingView.show();
 							mMediaPlayerVideoView.setVideoPath(url);
 						} else {
@@ -358,18 +341,14 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 		mRootView.removeView(mMediaPlayerVideoView);
 		mRootView.removeView(mMediaPlayerBufferingView);
 		mRootView.removeView(mMediaPlayerLoadingView);
-		mRootView.removeView(mMediaPlayerEventActionView);
+		mRootView.removeView(mMediaPlayerEventActionViewLiveReplay);
 		mRootView.removeView(mMediaPlayerLiveReplayControllerView);
-		mRootView.removeView(layoutPop);
-//		mRootView.removeView(mTextViewSpeed);
 
 		/* 添加全屏或者是窗口模式初始状态下所需的view */
 		addView(mMediaPlayerVideoView, mediaPlayerVideoViewParams);
 		addView(mMediaPlayerBufferingView, mediaPlayerBufferingViewParams);
 		addView(mMediaPlayerLoadingView, mediaPlayerLoadingViewParams);
-		addView(mMediaPlayerEventActionView, mediaPlayereventActionViewParams);
-		addView(layoutPop, mediaPlayerPopViewParams);
-//		addView(mTextViewSpeed);
+		addView(mMediaPlayerEventActionViewLiveReplay, mediaPlayereventActionViewParams);
 
 		if (MediaPlayerUtils.isWindowMode(mPlayMode)) {
 			addView(mMediaPlayerLiveReplayControllerView,
@@ -379,7 +358,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 
 		mMediaPlayerBufferingView.hide();
 		mMediaPlayerLoadingView.hide();
-		mMediaPlayerEventActionView.hide();
+		mMediaPlayerEventActionViewLiveReplay.hide();
 
 		post(new Runnable() {
 			@Override
@@ -475,11 +454,11 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
 
-		if (mMediaPlayerEventActionView.isShowing()) {
-			return mMediaPlayerEventActionView.dispatchTouchEvent(ev);
+		if (mMediaPlayerEventActionViewLiveReplay.isShowing()) {
+			return mMediaPlayerEventActionViewLiveReplay.dispatchTouchEvent(ev);
 		}
 
-		if (mVideoReady && !mMediaPlayerEventActionView.isShowing()) {
+		if (mVideoReady && !mMediaPlayerEventActionViewLiveReplay.isShowing()) {
 			if (MediaPlayerUtils.isWindowMode(mPlayMode)) {
 				return mMediaPlayerLiveReplayControllerView.dispatchTouchEvent(ev);
 			}
@@ -742,8 +721,8 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 
 	private void updateVideoInfo2Controller() {
 
-		mMediaPlayerLiveReplayControllerView.updateVideoTitle(url);
-		mMediaPlayerEventActionView.updateVideoTitle(url);
+//		mMediaPlayerLiveReplayControllerView.updateVideoTitle(url);
+		mMediaPlayerEventActionViewLiveReplay.updateVideoTitle(url);
 	}
 
 	private void changeMovieRatio() {
@@ -766,12 +745,12 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 				duration = mMediaPlayerController.getDuration();
 
 			if (mIsComplete) {
-//				mMediaPlayerLiveReplayControllerView.hide();
-				mMediaPlayerEventActionView
+				mMediaPlayerLiveReplayControllerView.hide();
+				mMediaPlayerEventActionViewLiveReplay
 						.updateEventMode(
-								MediaPlayerEventActionView.EVENT_ACTION_VIEW_MODE_COMPLETE,
+								MediaPlayerEventActionViewLiveReplay.EVENT_ACTION_VIEW_MODE_COMPLETE,
 								null);
-				mMediaPlayerEventActionView.show();
+				mMediaPlayerEventActionViewLiveReplay.show();
 				WakeLocker.release();
 			}
 			if (mPausePosition > 0 && duration > 0) {
@@ -806,11 +785,10 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 
 		@Override
 		public void onCompletion(IMediaPlayer mp) {
-
 			Log.i(Constants.LOG_TAG, "================onCompletion============");
 			if (mRecyclePlay) {
 				Log.i(Constants.LOG_TAG, "==replay==");
-				mMediaPlayerEventActionView.hide();
+				mMediaPlayerEventActionViewLiveReplay.hide();
 				if (mMediaPlayerController != null) {
 					mMediaPlayerController.start();
 				} else {
@@ -818,12 +796,12 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 				}
 			} else {
 				mIsComplete = true;
-//				mMediaPlayerLiveReplayControllerView.hide();
-				mMediaPlayerEventActionView
+				mMediaPlayerLiveReplayControllerView.hide();
+				mMediaPlayerEventActionViewLiveReplay
 						.updateEventMode(
-								MediaPlayerEventActionView.EVENT_ACTION_VIEW_MODE_COMPLETE,
+								MediaPlayerEventActionViewLiveReplay.EVENT_ACTION_VIEW_MODE_COMPLETE,
 								null);
-				mMediaPlayerEventActionView.show();
+				mMediaPlayerEventActionViewLiveReplay.show();
 				WakeLocker.release();
 			}
 		}
@@ -971,10 +949,10 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 //			mMediaPlayerLiveReplayControllerView.hide();
 			mMediaPlayerBufferingView.hide();
 			mMediaPlayerLoadingView.hide();
-			mMediaPlayerEventActionView.updateEventMode(
-					MediaPlayerEventActionView.EVENT_ACTION_VIEW_MODE_ERROR,
+			mMediaPlayerEventActionViewLiveReplay.updateEventMode(
+					MediaPlayerEventActionViewLiveReplay.EVENT_ACTION_VIEW_MODE_ERROR,
 					what + "," + extra);
-			mMediaPlayerEventActionView.show();
+			mMediaPlayerEventActionViewLiveReplay.show();
 			return true;
 		}
 	};
@@ -1211,7 +1189,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 		@Override
 		public void onPlay() {
 			Log.i(Constants.LOG_TAG, "on play called");
-			mMediaPlayerEventActionView.hide();
+			mMediaPlayerEventActionViewLiveReplay.hide();
 			mMediaPlayerLiveReplayControllerView.updateVideoPlaybackState(true);
 
 		}
@@ -1219,7 +1197,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 		@Override
 		public void onPause() {
 			Log.i(Constants.LOG_TAG, "on pause called");
-			mMediaPlayerEventActionView.hide();
+			mMediaPlayerEventActionViewLiveReplay.hide();
 			mMediaPlayerLiveReplayControllerView.updateVideoPlaybackState(false);
 
 		}
@@ -1284,13 +1262,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 					mMediaPlayerVideoView.getCurrentFrame(bitmap);
 					compressAndSaveBitmapToSDCard(bitmap, getCurrentTime(),
 							MediaPlayerViewLiveReplay.QUALITY_BEST);
-					/*
-					 * Toast.makeText( getContext(),
-					 * "screenshoot saved in path :/storage/emulated/0/KSY_SDK_SCREENSHOT"
-					 * , Toast.LENGTH_SHORT).show();
-					 */
 
-					layoutPop.setVisibility(View.VISIBLE);
 					mHandler.postDelayed(runnableCrop, 1000);
 
 					mScreenshotPreparing = false;
@@ -1298,7 +1270,6 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 					Log.d(Constants.LOG_TAG, "bitmap is null");
 				}
 			}
-
 		}
 
 		@Override
@@ -1343,7 +1314,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 	Runnable runnableCrop = new Runnable() {
 		@Override
 		public void run() {
-			layoutPop.setVisibility(View.GONE);
+//			layoutPop.setVisibility(View.GONE);
 		}
 	};
 

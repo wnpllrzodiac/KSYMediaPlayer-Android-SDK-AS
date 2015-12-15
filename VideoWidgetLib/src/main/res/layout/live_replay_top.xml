@@ -18,7 +18,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="@dimen/small_margin_left"
             android:layout_marginRight="@dimen/small_margin_left"
-            android:src="@drawable/live_replay_head_portrait" />
+            android:src="@drawable/live_person_grey" />
 
         <TextView
             android:id="@+id/text_live_replay"

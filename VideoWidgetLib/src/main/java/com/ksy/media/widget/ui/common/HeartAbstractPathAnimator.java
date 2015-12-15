@@ -90,7 +90,7 @@ public abstract class HeartAbstractPathAnimator {
             config.xPointFactor = (int) typedArray.getDimension(R.styleable.HeartLayout_xPointFactor,
                     res.getDimensionPixelOffset(R.dimen.heart_anim_x_point_factor));
             config.heartWidth = (int) typedArray.getDimension(R.styleable.HeartLayout_heart_width,
-                    res.getDimensionPixelOffset(R.dimen.heart_size_width));
+                    res.getDimensionPixelOffset(R.dimen.heart_size_width)); // res.getDimensionPixelOffset(R.dimen.heart_size_width)
             config.heartHeight = (int) typedArray.getDimension(R.styleable.HeartLayout_heart_height,
                     res.getDimensionPixelOffset(R.dimen.heart_size_height));
             config.animDuration = typedArray.getInteger(R.styleable.HeartLayout_anim_duration,

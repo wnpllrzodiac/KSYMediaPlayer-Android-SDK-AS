@@ -44,6 +44,7 @@ public class PhoneLiveReplayActivity extends AppCompatActivity implements MediaP
 
         playerViewLiveReplay = (MediaPlayerViewLiveReplay) findViewById(R.id.player_view_live_replay);
         setPowerStateListener(playerViewLiveReplay);
+
         final View dialogView = LayoutInflater.from(this).inflate(
                 R.layout.dialog_input, null);
         final EditText editInput = (EditText) dialogView

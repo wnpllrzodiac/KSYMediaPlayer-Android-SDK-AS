@@ -40,7 +40,7 @@
 
 
     <dimen name="heart_anim_bezier_x_rand">40.0dp</dimen>
-    <dimen name="heart_anim_init_x">50.0dp</dimen>
+    <dimen name="heart_anim_init_x">15.0dp</dimen> <!--50-->
     <dimen name="heart_anim_init_y">25.0dp</dimen>
     <dimen name="heart_anim_length">100.0dp</dimen>
     <dimen name="heart_anim_length_rand">150.0dp</dimen>

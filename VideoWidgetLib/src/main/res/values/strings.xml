@@ -52,10 +52,30 @@
     <string name="live_report">举报</string>
     <string name="live_close">关闭</string>
     <string name="live_loading">加载中</string>
+    <string name="live_ing">直播中</string>
+    <string name="live_time">01:02:03</string>
     <string name="live_share">分享</string>
     <string name="live_info_switch">信息开关</string>
     <string name="live_comment">发表评论</string>
     <string name="live_comment_content">评论评论评论评论评论评论评论评论评论评论</string>
+    <string name="live_info_quiet">安静模式</string>
+    <string name="live_username_one">用户名123</string>
+    <string name="live_fans_praise">1.2w 赞   1.2w粉丝</string>
+    <string name="live_attention">关注</string>
+    <string name="live_attention_person">关注播主</string>
+    <string name="live_finish">直播已经结束</string>
+    <string name="live_is_report">确定举报该直播？</string>
+    <string name="live_yse">是</string>
+    <string name="live_no">否</string>
+    <string name="live_praise">1.2w 赞</string>
+    <string name="live">直播</string>
+    <string name="live_signature_line">签名档签名档签名档签名档签名档</string>
+    <string name="live_fans">粉丝</string>
+    <string name="live_replay">重新播放</string>
+    <string name="live_replay_finish">直播回放已经结束</string>
+
+
+
     <string name="video_detail_focus">+关注</string>
     <string name="video_detail_title">直播间信息</string>
     <string name="video_detail_content">As far as I know this is the method you would use for LOCAL dependencies, ie dependencies where the code is actually in the project structure. In my example I\'m using remote dependencies pulled from mavencentral and a custom maven repo. My goal is to avoid local code in my project so that I don\'t need submodules to update them</string>

@@ -1,5 +1,6 @@
 package com.ksy.media.demo.shortvideo;
 
+import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
@@ -9,7 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,17 +18,14 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AbsListView;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -35,7 +33,7 @@ import android.widget.Toast;
 
 import com.ksy.media.demo.R;
 import com.ksy.media.player.util.Constants;
-import com.ksy.media.widget.ui.shortvideo.MediaPlayerViewShortVideo;
+import com.ksy.media.widget.ui.shortvideo.ShortVideoMediaPlayerView;
 import com.ksy.media.widget.ui.shortvideo.ShortMovieItem;
 import com.ksy.media.widget.ui.shortvideo.ShortVideoListAdapter;
 import com.ksy.media.widget.util.IPowerStateListener;
@@ -43,10 +41,10 @@ import com.ksy.media.widget.util.IPowerStateListener;
 import java.util.ArrayList;
 
 public class ShortVideoActivity extends AppCompatActivity implements
-        MediaPlayerViewShortVideo.PlayerViewCallback, AbsListView.OnScrollListener {
+        ShortVideoMediaPlayerView.PlayerViewCallback, AbsListView.OnScrollListener {
     private static final int STATE_UP = 1;
     private static final int STATE_DOWN = 0;
-    MediaPlayerViewShortVideo playerViewShortMovie;
+    ShortVideoMediaPlayerView playerViewShortMovie;
     private boolean delay;
     private IPowerStateListener powerStateListener;
     private View headView;
@@ -62,13 +60,14 @@ public class ShortVideoActivity extends AppCompatActivity implements
     private PopupWindow popupWindow;
     private RelativeLayout container;
     private int mWidth;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_short_movie);
-        setupViews();
         setupScreenSize();
+        setupViews();
     }
 
     private void setupScreenSize() {
@@ -83,14 +82,34 @@ public class ShortVideoActivity extends AppCompatActivity implements
 
     private void setupViews() {
         container = (RelativeLayout) findViewById(R.id.container);
-        container.setLayoutAnimation(new LayoutAnimationController(AnimationUtils.loadAnimation(ShortVideoActivity.this, R.anim.pop_show)));
-        container.startLayoutAnimation();
+//        container.setLayoutAnimation(new LayoutAnimationController(AnimationUtils.loadAnimation(ShortVideoActivity.this, R.anim.pop_show)));
+//        container.startLayoutAnimation();
         headView = LayoutInflater.from(ShortVideoActivity.this).inflate(R.layout.short_movie_head_view, null);
+//        container.addView(headView);
         listView = (ListView) findViewById(R.id.short_video_list);
 //        commentLayout = (LinearLayout) findViewById(R.id.comment_layout);
         commentLayout = LayoutInflater.from(ShortVideoActivity.this).inflate(
                 R.layout.short_video_pop_layout, null);
         items = new ArrayList<>();
+        makeContents();
+        adapter = new ShortVideoListAdapter(ShortVideoActivity.this, items);
+        listView.addHeaderView(headView);
+        listView.setAdapter(adapter);
+        listView.setOnScrollListener(this);
+        playerViewShortMovie = (ShortVideoMediaPlayerView) findViewById(R.id.player_view_short_movie);
+        registerPowerReceiver();
+        setPowerStateListener(playerViewShortMovie);
+        setupDialog();
+        LayoutTransition transition = new LayoutTransition();
+        container.setLayoutTransition(transition);
+        ObjectAnimator enter_animator = ObjectAnimator.ofInt(commentLayout, "y", mHeight, mHeight - commentLayout.getHeight());
+        ObjectAnimator exit_animator = ObjectAnimator.ofInt(commentLayout, "y", mHeight - commentLayout.getHeight(), mHeight);
+        transition.setAnimator(LayoutTransition.APPEARING, enter_animator);
+        transition.setAnimator(LayoutTransition.DISAPPEARING, exit_animator);
+        setupToolbar();
+    }
+
+    private void makeContents() {
         for (int i = 0; i < 15; i++) {
             ShortMovieItem item = new ShortMovieItem();
             item.setComment(getString(R.string.short_video_item_comment));
@@ -98,22 +117,15 @@ public class ShortVideoActivity extends AppCompatActivity implements
             item.setInfo(getString(R.string.short_video_item_info));
             items.add(item);
         }
-        adapter = new ShortVideoListAdapter(ShortVideoActivity.this, items);
-        listView.addHeaderView(headView);
-        listView.setAdapter(adapter);
-        listView.setOnScrollListener(this);
-        playerViewShortMovie = (MediaPlayerViewShortVideo) findViewById(R.id.player_view_short_movie);
-        registerPowerReceiver();
-        setPowerStateListener(playerViewShortMovie);
-        setupDialog();
-        setupToolbar();
     }
 
     private void setupToolbar() {
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) {
 //            mToolbar.setNavigationIcon(getResources().getDrawable(R.mipmap.ksy_logo));
             setSupportActionBar(mToolbar);
+            mToolbar.setTitle(getResources().getString(R.string.short_video_title));
+            mToolbar.setTitleTextColor(Color.BLACK);
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -154,8 +166,8 @@ public class ShortVideoActivity extends AppCompatActivity implements
 
     @Override
     protected void onResume() {
-        powerStateListener.onPowerState(Constants.APP_SHOWN);
         super.onResume();
+        powerStateListener.onPowerState(Constants.APP_SHOWN);
         playerViewShortMovie.onResume();
     }
 

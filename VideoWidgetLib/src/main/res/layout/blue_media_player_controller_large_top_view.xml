@@ -42,14 +42,14 @@
             android:textColor="@color/white"
             android:textSize="14sp" />
 
-        <ImageView
+<!--        <ImageView
             android:id="@+id/crop_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/controller_large_top_margin"
-            android:src="@drawable/blue_ksy_screen_shot" />
+            android:src="@drawable/blue_ksy_screen_shot" />-->
     </RelativeLayout>
 
 </RelativeLayout>

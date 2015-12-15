@@ -23,20 +23,19 @@ import android.widget.Toast;
 
 import com.ksy.media.demo.R;
 import com.ksy.media.player.util.Constants;
-import com.ksy.media.widget.ui.MediaPlayerView;
-import com.ksy.media.widget.ui.video.BlankFragment;
-import com.ksy.media.widget.ui.video.VideoCommentListFragment;
-import com.ksy.media.widget.ui.video.MediaPlayerPagerAdapter;
+import com.ksy.media.widget.ui.Stream.StreamMediaPlayerPagerAdapter;
+import com.ksy.media.widget.ui.Stream.StreamMediaPlayerView;
+import com.ksy.media.widget.ui.video.fragment.CommentListFragment;
 import com.ksy.media.widget.util.IPowerStateListener;
 
 public class StreamVideoActivity extends AppCompatActivity implements
-        MediaPlayerView.PlayerViewCallback, BlankFragment.OnFragmentInteractionListener, VideoCommentListFragment.OnFragmentInteractionListener{
+        StreamMediaPlayerView.PlayerViewCallback, CommentListFragment.OnFragmentInteractionListener {
 
-    MediaPlayerView playerView;
+    StreamMediaPlayerView playerView;
     private boolean delay;
     private IPowerStateListener powerStateListener;
     private ViewPager pager;
-    private MediaPlayerPagerAdapter pagerAdapter;
+    private StreamMediaPlayerPagerAdapter pagerAdapter;
     private TabLayout tabLayout;
 
     @Override
@@ -49,7 +48,7 @@ public class StreamVideoActivity extends AppCompatActivity implements
     }
 
     private void setupViews() {
-        playerView = (MediaPlayerView) findViewById(R.id.player_view);
+        playerView = (StreamMediaPlayerView) findViewById(R.id.stream_player_view);
         registerPowerReceiver();
         setPowerStateListener(playerView);
         setupDialog();
@@ -58,7 +57,7 @@ public class StreamVideoActivity extends AppCompatActivity implements
 
     private void setUpPagerAndTabs() {
         pager = (ViewPager) findViewById(R.id.pager);
-        pagerAdapter = new MediaPlayerPagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new StreamMediaPlayerPagerAdapter(StreamVideoActivity.this, getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setTabsFromPagerAdapter(pagerAdapter);
@@ -226,11 +225,6 @@ public class StreamVideoActivity extends AppCompatActivity implements
 
     public void setPowerStateListener(IPowerStateListener powerStateListener) {
         this.powerStateListener = powerStateListener;
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 
     @Override

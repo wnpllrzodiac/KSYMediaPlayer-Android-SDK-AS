@@ -8,4 +8,9 @@
     <dimen name="list_margin">8dp</dimen>
     <dimen name="list_small_margin">4dp</dimen>
     <dimen name="card_height">100dp</dimen>
+    <dimen name="stream_pop_widget">150dp</dimen>
+    <dimen name="stream_pop_width">150dp</dimen>
+    <dimen name="stream_pop_height">120dp</dimen>
+    <dimen name="stream_pop_offset">5dp</dimen>
+    <dimen name="video_comment_distance">60dp</dimen>
 </resources>

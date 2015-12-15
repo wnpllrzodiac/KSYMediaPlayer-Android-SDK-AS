@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:clipChildren="false" >
 
-    <com.ksy.media.widget.videoview.MediaPlayerTextureVideoViewShortVideo
+    <com.ksy.media.widget.videoview.ShortVideoMediaPlayerTextureVideoView
         android:id="@+id/ks_camera_video_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -42,7 +42,7 @@
             layout="@layout/blue_media_player_event_action_view" />
     </com.ksy.media.widget.ui.MediaPlayerEventActionView>
 
-    <com.ksy.media.widget.controller.MediaPlayerSmallControllerView
+    <com.ksy.media.widget.controller.ShortVideoMediaPlayerControllerView
         android:id="@+id/media_player_controller_view_small"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -50,8 +50,8 @@
         <include
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            layout="@layout/blue_media_player_controller_small" />
-    </com.ksy.media.widget.controller.MediaPlayerSmallControllerView>
+            layout="@layout/short_video_blue_media_player_controller_small" />
+    </com.ksy.media.widget.controller.ShortVideoMediaPlayerControllerView>
     
     <!-- 截图成功layout -->
     <RelativeLayout

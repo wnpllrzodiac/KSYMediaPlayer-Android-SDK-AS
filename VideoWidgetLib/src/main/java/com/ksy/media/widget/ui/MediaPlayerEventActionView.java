@@ -15,183 +15,183 @@ import com.ksy.mediaPlayer.widget.R;
 
 public class MediaPlayerEventActionView extends RelativeLayout {
 
-	public static final int EVENT_ACTION_VIEW_MODE_COMPLETE = 0X00;
-	public static final int EVENT_ACTION_VIEW_MODE_WAIT = 0X01;
-	public static final int EVENT_ACTION_VIEW_MODE_ERROR = 0X02;
+    public static final int EVENT_ACTION_VIEW_MODE_COMPLETE = 0X00;
+    public static final int EVENT_ACTION_VIEW_MODE_WAIT = 0X01;
+    public static final int EVENT_ACTION_VIEW_MODE_ERROR = 0X02;
 
-	private RelativeLayout mRootView;
+    private RelativeLayout mRootView;
 
-	private ImageView mBackImageView;
-	private TextView mTitleTextView;
+    private ImageView mBackImageView;
+    private TextView mTitleTextView;
 
-	private RelativeLayout mWaitLayout;
+    private RelativeLayout mWaitLayout;
 
-	private RelativeLayout mxCompleteLayout;
-	private LinearLayout mCompeteReplayLayout;
+    private RelativeLayout mxCompleteLayout;
+    private LinearLayout mCompeteReplayLayout;
 
-	private LinearLayout mErrorLayout;
-	private LinearLayout mErrorReplayLayout;
-	private TextView mErrorTextView;
+    private LinearLayout mErrorLayout;
+    private LinearLayout mErrorReplayLayout;
+    private TextView mErrorTextView;
 
-	private EventActionViewCallback mCallback;
+    private EventActionViewCallback mCallback;
 
-	public MediaPlayerEventActionView(Context context, AttributeSet attrs, int defStyle) {
+    public MediaPlayerEventActionView(Context context, AttributeSet attrs, int defStyle) {
 
-		super(context, attrs, defStyle);
-	}
+        super(context, attrs, defStyle);
+    }
 
-	public MediaPlayerEventActionView(Context context, AttributeSet attrs) {
+    public MediaPlayerEventActionView(Context context, AttributeSet attrs) {
 
-		super(context, attrs);
-	}
+        super(context, attrs);
+    }
 
-	public MediaPlayerEventActionView(Context context) {
-		super(context);
-		LayoutInflater.from(getContext()).inflate(R.layout.blue_media_player_event_action_view, this);
-		
-		initViews();
-	}
+    public MediaPlayerEventActionView(Context context) {
+        super(context);
+        LayoutInflater.from(getContext()).inflate(R.layout.blue_media_player_event_action_view, this);
 
-	@Override
-	public void onWindowFocusChanged(boolean hasWindowFocus) {
+        initViews();
+    }
 
-		super.onWindowFocusChanged(hasWindowFocus);
-	}
+    @Override
+    public void onWindowFocusChanged(boolean hasWindowFocus) {
 
-	private void initViews() {
+        super.onWindowFocusChanged(hasWindowFocus);
+    }
 
-		mRootView = (RelativeLayout) findViewById(R.id.event_action_layout);
+    private void initViews() {
 
-		mBackImageView = (ImageView) findViewById(R.id.back_image_view);
-		mTitleTextView = (TextView) findViewById(R.id.title_text_view);
+        mRootView = (RelativeLayout) findViewById(R.id.event_action_layout);
 
-		mWaitLayout = (RelativeLayout) findViewById(R.id.wait_layout);
+        mBackImageView = (ImageView) findViewById(R.id.back_image_view);
+        mTitleTextView = (TextView) findViewById(R.id.title_text_view);
 
-		mxCompleteLayout = (RelativeLayout) findViewById(R.id.complete_layout);
-		mCompeteReplayLayout = (LinearLayout) findViewById(R.id.complete_replay_layout);
+        mWaitLayout = (RelativeLayout) findViewById(R.id.wait_layout);
 
-		mErrorLayout = (LinearLayout) findViewById(R.id.error_layout);
-		mErrorReplayLayout = (LinearLayout) findViewById(R.id.error_replay_layout);
-		mErrorTextView = (TextView) findViewById(R.id.error_info_title_text_view);
+        mxCompleteLayout = (RelativeLayout) findViewById(R.id.complete_layout);
+        mCompeteReplayLayout = (LinearLayout) findViewById(R.id.complete_replay_layout);
 
-		mBackImageView.setOnClickListener(new OnClickListener() {
+        mErrorLayout = (LinearLayout) findViewById(R.id.error_layout);
+        mErrorReplayLayout = (LinearLayout) findViewById(R.id.error_replay_layout);
+        mErrorTextView = (TextView) findViewById(R.id.error_info_title_text_view);
 
-			@Override
-			public void onClick(View v) {
+        mBackImageView.setOnClickListener(new OnClickListener() {
 
-				if (mCallback != null)
-					mCallback.onActionBack();
-			}
-		});
+            @Override
+            public void onClick(View v) {
 
-		mWaitLayout.setOnClickListener(new OnClickListener() {
+                if (mCallback != null)
+                    mCallback.onActionBack();
+            }
+        });
 
-			@Override
-			public void onClick(View v) {
+        mWaitLayout.setOnClickListener(new OnClickListener() {
 
-				if (mCallback != null)
-					mCallback.onActionPlay();
-			}
-		});
+            @Override
+            public void onClick(View v) {
 
-		mCompeteReplayLayout.setOnClickListener(new OnClickListener() {
+                if (mCallback != null)
+                    mCallback.onActionPlay();
+            }
+        });
 
-			@Override
-			public void onClick(View v) {
+        mCompeteReplayLayout.setOnClickListener(new OnClickListener() {
 
-				if (mCallback != null)
-					mCallback.onActionReplay();
-			}
-		});
+            @Override
+            public void onClick(View v) {
 
-		mErrorReplayLayout.setOnClickListener(new OnClickListener() {
+                if (mCallback != null)
+                    mCallback.onActionReplay();
+            }
+        });
 
-			@Override
-			public void onClick(View v) {
+        mErrorReplayLayout.setOnClickListener(new OnClickListener() {
 
-				if (mCallback != null)
-					mCallback.onActionError();
-			}
-		});
+            @Override
+            public void onClick(View v) {
 
-	}
+                if (mCallback != null)
+                    mCallback.onActionError();
+            }
+        });
 
-	@Override
-	protected void onFinishInflate() {
+    }
 
-		super.onFinishInflate();
-		initViews();
-	}
+    @Override
+    protected void onFinishInflate() {
 
-	public void updateEventMode(int coverViewMode, String extraMessage) {
+        super.onFinishInflate();
+        initViews();
+    }
 
-		switch (coverViewMode) {
-		case EVENT_ACTION_VIEW_MODE_COMPLETE:
-			mxCompleteLayout.setVisibility(View.VISIBLE);
-			mWaitLayout.setVisibility(View.GONE);
-			mErrorLayout.setVisibility(View.GONE);
-			break;
-		case EVENT_ACTION_VIEW_MODE_WAIT:
-			mWaitLayout.setVisibility(View.VISIBLE);
-			mxCompleteLayout.setVisibility(View.GONE);
-			mErrorLayout.setVisibility(View.GONE);
-			break;
-		case EVENT_ACTION_VIEW_MODE_ERROR:
-			mErrorLayout.setVisibility(View.VISIBLE);
-			if (!TextUtils.isEmpty(extraMessage)) {
-				mErrorTextView.setText(getResources().getString(R.string.player_error) + ",错误码（" + extraMessage + "）");
-			} else {
-				mErrorTextView.setText(getResources().getString(R.string.player_error));
-			}
-			mWaitLayout.setVisibility(View.GONE);
-			mxCompleteLayout.setVisibility(View.GONE);
-			break;
-		default:
-			break;
-		}
-		show();
-	}
+    public void updateEventMode(int coverViewMode, String extraMessage) {
 
-	public void updateVideoTitle(String title) {
+        switch (coverViewMode) {
+            case EVENT_ACTION_VIEW_MODE_COMPLETE:
+                mxCompleteLayout.setVisibility(View.VISIBLE);
+                mWaitLayout.setVisibility(View.GONE);
+                mErrorLayout.setVisibility(View.GONE);
+                break;
+            case EVENT_ACTION_VIEW_MODE_WAIT:
+                mWaitLayout.setVisibility(View.VISIBLE);
+                mxCompleteLayout.setVisibility(View.GONE);
+                mErrorLayout.setVisibility(View.GONE);
+                break;
+            case EVENT_ACTION_VIEW_MODE_ERROR:
+                mErrorLayout.setVisibility(View.VISIBLE);
+                if (!TextUtils.isEmpty(extraMessage)) {
+                    mErrorTextView.setText(getResources().getString(R.string.player_error) + ",错误码（" + extraMessage + "）");
+                } else {
+                    mErrorTextView.setText(getResources().getString(R.string.player_error));
+                }
+                mWaitLayout.setVisibility(View.GONE);
+                mxCompleteLayout.setVisibility(View.GONE);
+                break;
+            default:
+                break;
+        }
+        show();
+    }
 
-		if (!TextUtils.isEmpty(title)) {
-			mTitleTextView.setText(title);
-		}
-	}
+    public void updateVideoTitle(String title) {
 
-	public void show() {
+        if (!TextUtils.isEmpty(title)) {
+            mTitleTextView.setText(title);
+        }
+    }
 
-		if (!isShowing()) {
-			setVisibility(View.VISIBLE);
-		}
-	}
+    public void show() {
 
-	public void hide() {
+        if (!isShowing()) {
+            setVisibility(View.VISIBLE);
+        }
+    }
 
-		if (isShowing()) {
-			setVisibility(View.GONE);
-		}
-	}
+    public void hide() {
 
-	public boolean isShowing() {
+        if (isShowing()) {
+            setVisibility(View.GONE);
+        }
+    }
 
-		return (getVisibility() == View.VISIBLE ? true : false);
-	}
+    public boolean isShowing() {
 
-	public void setCallback(EventActionViewCallback callback) {
+        return (getVisibility() == View.VISIBLE ? true : false);
+    }
 
-		this.mCallback = callback;
-	}
+    public void setCallback(EventActionViewCallback callback) {
 
-	public interface EventActionViewCallback {
+        this.mCallback = callback;
+    }
 
-		void onActionPlay();
+    public interface EventActionViewCallback {
 
-		void onActionReplay();
+        void onActionPlay();
 
-		void onActionBack();
+        void onActionReplay();
 
-		void onActionError();
-	}
+        void onActionBack();
+
+        void onActionError();
+    }
 
 }

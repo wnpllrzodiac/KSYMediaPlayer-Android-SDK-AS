@@ -64,7 +64,7 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
 
 	protected volatile boolean mScreenLock = false;
 	protected MediaPlayerScreenSizePopupView mScreenPopup; //屏幕尺寸
-	
+
 	//亮度调节
 //	protected MediaPlayerBrightView mWidgetLightView;
 	protected MediaPlayerControllerBrightView mControllerBrightView; // 新添加亮度调节
@@ -91,7 +91,7 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
 		init();
 	}
 
-	private void startTimerTicker() {
+	protected void startTimerTicker() {
 
 		if (mIsTickerStarted)
 			return;
@@ -100,7 +100,7 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
 		mHandler.sendEmptyMessage(MSG_TICKE);
 	}
 
-	private void stopTimerTicker() {
+	protected void stopTimerTicker() {
 
 		if (!mIsTickerStarted)
 			return;
@@ -122,7 +122,7 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
 			/*if (mWidgetLightView != null && mWidgetLightView.isShowing()) {
 				mWidgetLightView.hide(true);
 			}*/
-			
+
 			/*
 			 * if (mWidgetVolumeView != null && mWidgetVolumeView.isShowing()) {
 			 * mWidgetVolumeView.hide(true); }
@@ -134,7 +134,7 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
 
 	public void show() {
 
-//		show(HIDE_TIMEOUT_DEFAULT);
+		show(HIDE_TIMEOUT_DEFAULT);
 	}
 
 	public void show(int timeout) {
@@ -149,7 +149,7 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
 
 	public void hide() {
 
-//		mHandler.sendEmptyMessage(MSG_HIDE);
+		mHandler.sendEmptyMessage(MSG_HIDE);
 	}
 
 	public void toggle() {
@@ -192,12 +192,12 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
 	}
 
 	public void setMediaPlayerController(MediaPlayerController mediaPlayerController) {
-       
+
 		mMediaPlayerController = mediaPlayerController;
-		
+
 		mScreenPopup = new MediaPlayerScreenSizePopupView(getContext(), mMediaPlayerController);
 	}
-	
+
 	public void setHostWindow(Window window) {
 
 		if (window != null) {
@@ -280,7 +280,7 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
 
 		return true;
 	}
-			
+
 
 	private void init() {
 
@@ -316,7 +316,7 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
 						int selfWidth = getMeasuredWidth();
 						final double radius = distanceY / distance;
 
-						// 当角度值大于设置值时,当做垂直方向处理,反之当做水平方向处理 
+						// 当角度值大于设置值时,当做垂直方向处理,反之当做水平方向处理
 						if (Math.abs(radius) > RADIUS_SLOP) {
 							// 处理声音
 							if (oldX > selfWidth / 2) {
@@ -400,7 +400,7 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
 								// }
 								/*if (mWidgetLightView != null)
 									mWidgetLightView.hide(true);*/
-								
+
 								float totalSeekDistance = getMeasuredWidth();
 								if (totalSeekDistance <= 0)
 									totalSeekDistance = MediaPlayerUtils
@@ -459,7 +459,7 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
 				return true;
 			}
 		});
-		
+
 	}
 
 	protected Handler mHandler = new Handler() {
@@ -476,7 +476,7 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
 				stopTimerTicker();
 				hideGestureView();
 				setVisibility(View.GONE);
-				// onHide();
+				 onHide();
 				break;
 			case MSG_TICKE:
 				if (mEnnableTicker) {
@@ -500,13 +500,13 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
 
 		return this.mCurrentQuality;
 	}
-	
+
 	public void setScreenSize(MediaPlayerScreenSize screensize) {
 		this.mCurrentScreenSize = screensize;
 	}
-	
+
 	public MediaPlayerScreenSize getScreenSize() {
-		
+
 		return this.mCurrentScreenSize;
 	}
 

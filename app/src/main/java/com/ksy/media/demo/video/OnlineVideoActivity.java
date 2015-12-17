@@ -1,14 +1,7 @@
 package com.ksy.media.demo.video;
 
-import android.app.ActivityManager;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -23,16 +16,13 @@ import android.widget.Toast;
 
 import com.ksy.media.demo.R;
 import com.ksy.media.player.util.Constants;
-import com.ksy.media.widget.ui.video.fragment.CommentListFragment;
-import com.ksy.media.widget.ui.video.VideoMediaPlayerView;
 import com.ksy.media.widget.ui.video.VideoMediaPlayerPagerAdapter;
-import com.ksy.media.widget.util.IPowerStateListener;
+import com.ksy.media.widget.ui.video.VideoMediaPlayerView;
+import com.ksy.media.widget.ui.video.fragment.CommentListFragment;
 
 public class OnlineVideoActivity extends AppCompatActivity implements
         VideoMediaPlayerView.PlayerViewCallback, CommentListFragment.OnFragmentInteractionListener {
     VideoMediaPlayerView playerView;
-    private boolean delay;
-    private IPowerStateListener powerStateListener;
     private ViewPager pager;
     private VideoMediaPlayerPagerAdapter pagerAdapter;
     private TabLayout tabLayout;
@@ -40,23 +30,20 @@ public class OnlineVideoActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Intent intent = getIntent();
-//        delay = intent.getBooleanExtra("is_delay", false);
         setContentView(R.layout.activity_online_video);
         setupViews();
     }
 
     private void setupViews() {
         playerView = (VideoMediaPlayerView) findViewById(R.id.video_player_view);
-        registerPowerReceiver();
-        setPowerStateListener(playerView);
+
         setupDialog();
         setUpPagerAndTabs();
     }
 
     private void setUpPagerAndTabs() {
         pager = (ViewPager) findViewById(R.id.pager);
-        pagerAdapter = new VideoMediaPlayerPagerAdapter(OnlineVideoActivity.this,getSupportFragmentManager());
+        pagerAdapter = new VideoMediaPlayerPagerAdapter(OnlineVideoActivity.this, getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setTabsFromPagerAdapter(pagerAdapter);
@@ -94,14 +81,12 @@ public class OnlineVideoActivity extends AppCompatActivity implements
 
     @Override
     protected void onResume() {
-        powerStateListener.onPowerState(Constants.APP_SHOWN);
         super.onResume();
         playerView.onResume();
     }
 
     @Override
     protected void onPause() {
-        powerStateListener.onPowerState(Constants.APP_HIDEN);
         super.onPause();
         playerView.onPause();
     }
@@ -111,7 +96,6 @@ public class OnlineVideoActivity extends AppCompatActivity implements
 
         Log.d(Constants.LOG_TAG, "VideoPlayerActivity ....onDestroy()......");
         super.onDestroy();
-        unregisterPowerReceiver();
         playerView.onDestroy();
     }
 
@@ -119,7 +103,7 @@ public class OnlineVideoActivity extends AppCompatActivity implements
     private void startPlayer(String url) {
         Log.d(Constants.LOG_TAG, "input url = " + url);
         playerView.setPlayerViewCallback(this);
-        playerView.play(url, delay);
+        playerView.play(url, false);
     }
 
     @Override
@@ -144,8 +128,6 @@ public class OnlineVideoActivity extends AppCompatActivity implements
 
     @Override
     public void onFinish(int playMode) {
-        Log.i(Constants.LOG_TAG, "activity on finish ===========");
-        // this.onBackPressed();
         this.finish();
     }
 
@@ -163,68 +145,6 @@ public class OnlineVideoActivity extends AppCompatActivity implements
         return super.onKeyDown(keyCode, event);
     }
 
-    /*
-    *
-    * For power state
-    * */
-    public void registerPowerReceiver() {
-        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
-        filter.addAction(Intent.ACTION_SCREEN_ON);
-        filter.addAction(Intent.ACTION_USER_PRESENT);
-        registerReceiver(mBatInfoReceiver, filter);
-    }
-
-    public void unregisterPowerReceiver() {
-        if (mBatInfoReceiver != null) {
-            try {
-                unregisterReceiver(mBatInfoReceiver);
-            } catch (Exception e) {
-                Log.e(Constants.LOG_TAG,
-                        "unregisterReceiver mBatInfoReceiver failure :"
-                                + e.getCause());
-            }
-        }
-    }
-
-    private final BroadcastReceiver mBatInfoReceiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(final Context context, final Intent intent) {
-            final String action = intent.getAction();
-            if (Intent.ACTION_SCREEN_OFF.equals(action)) {
-                Log.d(Constants.LOG_TAG, "screen off");
-                if (powerStateListener != null) {
-                    powerStateListener.onPowerState(Constants.POWER_OFF);
-                }
-            } else if (Intent.ACTION_SCREEN_ON.equals(action)) {
-                Log.d(Constants.LOG_TAG, "screen on");
-                if (powerStateListener != null) {
-                    if (isAppOnForeground()) {
-                        powerStateListener.onPowerState(Constants.POWER_ON);
-                    }
-                }
-            } else if (Intent.ACTION_USER_PRESENT.equals(action)) {
-                if (isAppOnForeground()) {
-                    powerStateListener.onPowerState(Constants.USER_PRESENT);
-                }
-            }
-        }
-    };
-
-    public boolean isAppOnForeground() {
-        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        ComponentName cn = am.getRunningTasks(1).get(0).topActivity;
-        String currentPackageName = cn.getPackageName();
-        if (!TextUtils.isEmpty(currentPackageName)
-                && currentPackageName.equals(getPackageName())) {
-            return true;
-        }
-        return false;
-    }
-
-    public void setPowerStateListener(IPowerStateListener powerStateListener) {
-        this.powerStateListener = powerStateListener;
-    }
 
     @Override
     public void onFragmentInteraction(String id) {

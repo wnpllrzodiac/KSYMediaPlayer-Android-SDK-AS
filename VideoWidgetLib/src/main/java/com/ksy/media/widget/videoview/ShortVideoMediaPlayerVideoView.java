@@ -40,7 +40,7 @@ import com.ksy.media.player.option.AvFourCC;
 import com.ksy.media.player.option.format.AvFormatOption_HttpDetectRangeSupport;
 import com.ksy.media.player.util.Constants;
 import com.ksy.media.widget.controller.MediaPlayerBaseControllerView.MediaPlayerController;
-import com.ksy.media.widget.ui.MediaPlayerMovieRatioView;
+import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
 
 import com.ksy.media.widget.ui.shortvideo.ShortVideoMediaPlayerView;
 import com.ksy.media.widget.util.ControlDelay;
@@ -577,7 +577,6 @@ public class ShortVideoMediaPlayerVideoView extends SurfaceView implements
 			if (mMediaPlayer != null) {
 				mMediaPlayer.setDisplay(mSurfaceHolder);
 			}
-
 			mSurfaceWidth = w;
 			mSurfaceHeight = h;
 			if (mOnSurfaceListener != null)

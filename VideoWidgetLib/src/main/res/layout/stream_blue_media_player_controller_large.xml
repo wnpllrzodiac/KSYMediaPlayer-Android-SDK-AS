@@ -131,27 +131,27 @@
 
     <!-- 新添加亮度调节 -->
 <!--
-    <com.ksy.media.widget.ui.MediaPlayerControllerBrightView
+    <com.ksy.media.widget.ui.common.MediaPlayerControllerBrightView
         android:id="@+id/widge_control_light_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerInParent="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/bright_margin_left"></com.ksy.media.widget.ui.MediaPlayerControllerBrightView>-->
+        android:layout_marginLeft="@dimen/bright_margin_left"></com.ksy.media.widget.ui.common.MediaPlayerControllerBrightView>-->
 
-<!--    <com.ksy.media.widget.ui.MediaPlayerMovieRatioView
+<!--    <com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView
         android:id="@+id/widget_video_ratio_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:background="#CCCCCC"
         android:padding="@dimen/bright_padding"
-        android:visibility="gone"></com.ksy.media.widget.ui.MediaPlayerMovieRatioView>-->
+        android:visibility="gone"></com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView>-->
 
     <!-- 进度调节 -->
 
-    <com.ksy.media.widget.ui.MediaPlayerSeekView
+    <com.ksy.media.widget.ui.common.MediaPlayerSeekView
         android:id="@+id/widget_seek_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -164,7 +164,7 @@
 
     <!-- 屏幕锁 -->
 
-    <com.ksy.media.widget.ui.MediaPlayerLockView
+    <com.ksy.media.widget.ui.common.MediaPlayerLockView
         android:id="@+id/widget_lock_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -182,17 +182,17 @@
             android:layout_centerVertical="true"
             android:duplicateParentState="true"
             android:src="@drawable/blue_ksy_lock_selector" />
-    </com.ksy.media.widget.ui.MediaPlayerLockView>
+    </com.ksy.media.widget.ui.common.MediaPlayerLockView>
 
     <!-- 音量 -->
 
-<!--    <com.ksy.media.widget.ui.MediaPlayerControllerVolumeView
+<!--    <com.ksy.media.widget.ui.common.MediaPlayerControllerVolumeView
         android:id="@+id/widget_controller_volume"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/bright_margin_left"></com.ksy.media.widget.ui.MediaPlayerControllerVolumeView>-->
+        android:layout_marginRight="@dimen/bright_margin_left"></com.ksy.media.widget.ui.common.MediaPlayerControllerVolumeView>-->
 
     <!-- 相关 -->
 

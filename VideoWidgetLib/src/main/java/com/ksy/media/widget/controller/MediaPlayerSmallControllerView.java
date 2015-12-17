@@ -10,7 +10,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-import com.ksy.media.widget.ui.MediaPlayerVideoSeekBar;
+import com.ksy.media.widget.ui.common.MediaPlayerVideoSeekBar;
 import com.ksy.media.widget.data.MediaPlayMode;
 import com.ksy.mediaPlayer.widget.R;
 

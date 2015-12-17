@@ -74,8 +74,8 @@
 
         <ImageView
             android:id="@+id/stream_watch_img"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/small_margin_left"
             android:layout_toRightOf="@id/video_playback_image_view"

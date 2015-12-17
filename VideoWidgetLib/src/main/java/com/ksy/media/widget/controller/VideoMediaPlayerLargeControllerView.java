@@ -17,19 +17,19 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.ksy.media.widget.data.MediaPlayMode;
-import com.ksy.media.widget.data.MediaPlayerScreenSize;
+import com.ksy.media.widget.data.MediaPlayerMovieRatio;
 import com.ksy.media.widget.data.MediaPlayerUtils;
 import com.ksy.media.widget.data.MediaPlayerVideoQuality;
 import com.ksy.media.widget.data.RelateVideoInfo;
 import com.ksy.media.widget.data.RelatedVideoAdapter;
-import com.ksy.media.widget.ui.MediaPlayerControllerBrightView;
-import com.ksy.media.widget.ui.MediaPlayerControllerVolumeView;
-import com.ksy.media.widget.ui.MediaPlayerLockView;
-import com.ksy.media.widget.ui.MediaPlayerMovieRatioView;
-import com.ksy.media.widget.ui.MediaPlayerQualityPopupView;
-import com.ksy.media.widget.ui.MediaPlayerSeekView;
-import com.ksy.media.widget.ui.MediaPlayerVideoSeekBar;
-import com.ksy.media.widget.ui.MediaPlayerVolumeSeekBar.onScreenShowListener;
+import com.ksy.media.widget.ui.common.MediaPlayerControllerBrightView;
+import com.ksy.media.widget.ui.common.MediaPlayerControllerVolumeView;
+import com.ksy.media.widget.ui.common.MediaPlayerLockView;
+import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
+import com.ksy.media.widget.ui.common.MediaPlayerQualityPopupView;
+import com.ksy.media.widget.ui.common.MediaPlayerSeekView;
+import com.ksy.media.widget.ui.common.MediaPlayerVideoSeekBar;
+import com.ksy.media.widget.ui.common.MediaPlayerVolumeSeekBar.onScreenShowListener;
 import com.ksy.mediaPlayer.widget.R;
 
 import java.util.ArrayList;
@@ -575,9 +575,9 @@ public class VideoMediaPlayerLargeControllerView extends
 	 */
 	private void displayScreenSizePopupWindow() {
 		
-		List<MediaPlayerScreenSize> screenList = new ArrayList<MediaPlayerScreenSize>();
-		screenList.add(MediaPlayerScreenSize.BIG);
-		screenList.add(MediaPlayerScreenSize.SMALL);
+		List<MediaPlayerMovieRatio> screenList = new ArrayList<MediaPlayerMovieRatio>();
+		screenList.add(MediaPlayerMovieRatio.WIDESCREEN);
+		screenList.add(MediaPlayerMovieRatio.NORMAL);
 		int widthExtra = MediaPlayerUtils.dip2px(getContext(), 5);
 		
 //		int width = mVideoSizeLayout.getMeasuredWidth() + widthExtra;
@@ -591,7 +591,7 @@ public class VideoMediaPlayerLargeControllerView extends
 		int x = MediaPlayerUtils.getXLocationOnScreen(mVideoSizeLayout)
 				- widthExtra / 2;
 		int y = MediaPlayerUtils.getYLocationOnScreen(mVideoSizeLayout) - height;
-		mScreenPopup.show(mVideoSizeLayout, screenList, this.mCurrentScreenSize,
+		mScreenPopup.show(mVideoSizeLayout, screenList, this.mCurrentMovieRatio,
 				x, y, width, height);
 		mVideoSizeLayout.setSelected(true);
 		show(0);

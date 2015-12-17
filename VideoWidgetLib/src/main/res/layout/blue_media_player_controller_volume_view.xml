@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/blue_ksy_volume_no" />
 
-   <!--  <com.ksy.media.widget.ui.MediaPlayerVolumeSeekBar
+   <!--  <com.ksy.media.widget.ui.common.MediaPlayerVolumeSeekBar
         android:id="@+id/seekbar_volume_progress"
         android:layout_width="26dp"
         android:layout_height="match_parent"

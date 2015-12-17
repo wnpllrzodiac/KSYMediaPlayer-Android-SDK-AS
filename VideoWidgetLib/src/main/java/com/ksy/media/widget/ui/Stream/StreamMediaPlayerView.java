@@ -1,7 +1,12 @@
 package com.ksy.media.widget.ui.Stream;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -15,6 +20,7 @@ import android.net.TrafficStats;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -38,8 +44,6 @@ import com.ksy.media.player.util.DRMRetrieverResponseHandler;
 import com.ksy.media.player.util.IDRMRetriverRequest;
 import com.ksy.media.player.util.NetworkUtil;
 import com.ksy.media.widget.controller.MediaPlayerBaseControllerView;
-import com.ksy.media.widget.controller.MediaPlayerLargeControllerView;
-import com.ksy.media.widget.controller.MediaPlayerSmallControllerView;
 import com.ksy.media.widget.controller.StreamMediaPlayerLargeControllerView;
 import com.ksy.media.widget.controller.StreamMediaPlayerSmallControllerView;
 import com.ksy.media.widget.data.MediaPlayMode;
@@ -49,14 +53,13 @@ import com.ksy.media.widget.data.NetReceiver;
 import com.ksy.media.widget.data.NetReceiver.NetState;
 import com.ksy.media.widget.data.NetReceiver.NetStateChangedListener;
 import com.ksy.media.widget.data.WakeLocker;
-import com.ksy.media.widget.ui.MediaPlayerBufferingView;
-import com.ksy.media.widget.ui.MediaPlayerEventActionView;
-import com.ksy.media.widget.ui.MediaPlayerLoadingView;
-import com.ksy.media.widget.ui.MediaPlayerMovieRatioView;
+import com.ksy.media.widget.ui.common.MediaPlayerBufferingView;
+import com.ksy.media.widget.ui.common.MediaPlayerEventActionView;
+import com.ksy.media.widget.ui.common.MediaPlayerLoadingView;
+import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
 import com.ksy.media.widget.util.ControlDelay;
 import com.ksy.media.widget.util.IPowerStateListener;
 import com.ksy.media.widget.videoview.StreamMediaPlayerTexutureVideoView;
-import com.ksy.media.widget.videoview.StreamMediaPlayerVideoView;
 import com.ksy.mediaPlayer.widget.R;
 
 import java.io.File;
@@ -78,8 +81,6 @@ public class StreamMediaPlayerView extends RelativeLayout implements
     private Window mWindow;
 
     private ViewGroup mRootView;
-    // private MediaPlayerVideoView mMediaPlayerVideoView;
-//	private MediaPlayerTexutureVideoView mMediaPlayerVideoView;
     private StreamMediaPlayerTexutureVideoView mMediaPlayerVideoView;
 
     private StreamMediaPlayerLargeControllerView mMediaPlayerLargeControllerView;
@@ -152,7 +153,6 @@ public class StreamMediaPlayerView extends RelativeLayout implements
     private TextView mTextViewDemux;
     private TextView mTextViewDecode;
     private TextView mTextViewTime;
-
     private TextView mTextViewTotal;
     private TextView mTextViewNet;
 
@@ -191,6 +191,10 @@ public class StreamMediaPlayerView extends RelativeLayout implements
 
         if (null == context)
             throw new NullPointerException("Context can not be null !");
+
+        // For power btn pressed
+        registerPowerReceiver();
+        setPowerStateListener(this);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs,
                 R.styleable.PlayerView);
@@ -717,6 +721,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
     }
 
     public void onResume() {
+        powerStateListener.onPowerState(Constants.APP_SHOWN);
 
         mWindowActived = true;
 
@@ -726,6 +731,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
     }
 
     public void onPause() {
+        powerStateListener.onPowerState(Constants.APP_HIDEN);
 
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
         mNetReceiver.unRegistNetBroadCast(getContext());
@@ -742,6 +748,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
     }
 
     public void onDestroy() {
+        unregisterPowerReceiver();
         mIsComplete = false;
         Log.d(Constants.LOG_TAG, "MediaPlayerView   onDestroy....");
     }
@@ -916,12 +923,12 @@ public class StreamMediaPlayerView extends RelativeLayout implements
                 .updateVideoQualityState(MediaPlayerVideoQuality.HD);
         mMediaPlayerLargeControllerView.updateVideoVolumeState();
 
-        mMediaPlayerEventActionView.updateVideoTitle(url);
+        mMediaPlayerEventActionView.updateVideoTitle(getResources().getString(R.string.stream_small_controller_title));
     }
 
     private void changeMovieRatio() {
         /*
-		 * if (mDisplaySizeMode >
+         * if (mDisplaySizeMode >
 		 * MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_ORIGIN) { mDisplaySizeMode
 		 * = MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_16_9; }
 		 */
@@ -1488,8 +1495,8 @@ public class StreamMediaPlayerView extends RelativeLayout implements
                     mMediaPlayerVideoView.getCurrentFrame(bitmap);
                     compressAndSaveBitmapToSDCard(bitmap, getCurrentTime(),
                             StreamMediaPlayerView.QUALITY_BEST);
-					/*
-					 * Toast.makeText( getContext(),
+                    /*
+                     * Toast.makeText( getContext(),
 					 * "screenshoot saved in path :/storage/emulated/0/KSY_SDK_SCREENSHOT"
 					 * , Toast.LENGTH_SHORT).show();
 					 */
@@ -1685,5 +1692,65 @@ public class StreamMediaPlayerView extends RelativeLayout implements
             this.powerStateListener.onPowerState(state);
         }
     }
+
+    /*
+*
+* For power state
+* */
+    public void registerPowerReceiver() {
+        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+        filter.addAction(Intent.ACTION_SCREEN_ON);
+        filter.addAction(Intent.ACTION_USER_PRESENT);
+        mContext.registerReceiver(mBatInfoReceiver, filter);
+    }
+
+    public void unregisterPowerReceiver() {
+        if (mBatInfoReceiver != null) {
+            try {
+                mContext.unregisterReceiver(mBatInfoReceiver);
+            } catch (Exception e) {
+                Log.e(Constants.LOG_TAG,
+                        "unregisterReceiver mBatInfoReceiver failure :"
+                                + e.getCause());
+            }
+        }
+    }
+
+    private final BroadcastReceiver mBatInfoReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+            final String action = intent.getAction();
+            if (Intent.ACTION_SCREEN_OFF.equals(action)) {
+                Log.d(Constants.LOG_TAG, "screen off");
+                if (powerStateListener != null) {
+                    powerStateListener.onPowerState(Constants.POWER_OFF);
+                }
+            } else if (Intent.ACTION_SCREEN_ON.equals(action)) {
+                Log.d(Constants.LOG_TAG, "screen on");
+                if (powerStateListener != null) {
+                    if (isAppOnForeground()) {
+                        powerStateListener.onPowerState(Constants.POWER_ON);
+                    }
+                }
+            } else if (Intent.ACTION_USER_PRESENT.equals(action)) {
+                if (isAppOnForeground()) {
+                    powerStateListener.onPowerState(Constants.USER_PRESENT);
+                }
+            }
+        }
+    };
+
+    public boolean isAppOnForeground() {
+        ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        ComponentName cn = am.getRunningTasks(1).get(0).topActivity;
+        String currentPackageName = cn.getPackageName();
+        if (!TextUtils.isEmpty(currentPackageName)
+                && currentPackageName.equals(mContext.getPackageName())) {
+            return true;
+        }
+        return false;
+    }
+
 
 }

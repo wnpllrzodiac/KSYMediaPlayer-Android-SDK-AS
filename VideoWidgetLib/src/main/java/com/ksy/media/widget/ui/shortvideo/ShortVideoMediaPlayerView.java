@@ -1,7 +1,12 @@
 package com.ksy.media.widget.ui.shortvideo;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -12,6 +17,7 @@ import android.graphics.Color;
 import android.net.TrafficStats;
 import android.os.Environment;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -33,7 +39,6 @@ import com.ksy.media.player.util.DRMRetrieverResponseHandler;
 import com.ksy.media.player.util.IDRMRetriverRequest;
 import com.ksy.media.player.util.NetworkUtil;
 import com.ksy.media.widget.controller.MediaPlayerBaseControllerView;
-import com.ksy.media.widget.controller.MediaPlayerSmallControllerView;
 import com.ksy.media.widget.controller.ShortVideoMediaPlayerControllerView;
 import com.ksy.media.widget.data.MediaPlayMode;
 import com.ksy.media.widget.data.MediaPlayerUtils;
@@ -41,13 +46,12 @@ import com.ksy.media.widget.data.NetReceiver;
 import com.ksy.media.widget.data.NetReceiver.NetState;
 import com.ksy.media.widget.data.NetReceiver.NetStateChangedListener;
 import com.ksy.media.widget.data.WakeLocker;
-import com.ksy.media.widget.ui.MediaPlayerBufferingView;
-import com.ksy.media.widget.ui.MediaPlayerEventActionView;
-import com.ksy.media.widget.ui.MediaPlayerLoadingView;
-import com.ksy.media.widget.ui.MediaPlayerMovieRatioView;
+import com.ksy.media.widget.ui.common.MediaPlayerBufferingView;
+import com.ksy.media.widget.ui.common.MediaPlayerEventActionView;
+import com.ksy.media.widget.ui.common.MediaPlayerLoadingView;
+import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
 import com.ksy.media.widget.util.IPowerStateListener;
 import com.ksy.media.widget.videoview.ShortVideoMediaPlayerTextureVideoView;
-import com.ksy.media.widget.videoview.ShortVideoMediaPlayerVideoView;
 import com.ksy.mediaPlayer.widget.R;
 
 import java.io.File;
@@ -153,7 +157,8 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
 
         if (null == context)
             throw new NullPointerException("Context can not be null !");
-
+        registerPowerReceiver();
+        setPowerStateListener(this);
         TypedArray typedArray = context.obtainStyledAttributes(attrs,
                 R.styleable.PlayerView);
 
@@ -514,13 +519,15 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
     }
 
     public void onResume() {
+
         mWindowActived = true;
+        powerStateListener.onPowerState(Constants.APP_SHOWN);
         mNetReceiver.registNetBroadCast(getContext());
         mNetReceiver.addNetStateChangeListener(mNetChangedListener);
     }
 
     public void onPause() {
-
+        powerStateListener.onPowerState(Constants.APP_HIDEN);
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
         mNetReceiver.unRegistNetBroadCast(getContext());
         mWindowActived = false;
@@ -536,12 +543,13 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
 
     public void onDestroy() {
         mIsComplete = false;
-        Log.d(Constants.LOG_TAG, "MediaPlayerView   onDestroy....");
+        unregisterPowerReceiver();
     }
 
     private void updateVideoInfo2Controller() {
 
         mMediaPlayerSmallControllerView.updateVideoTitle(getResources().getString(R.string.short_video_title));
+        mMediaPlayerEventActionView.updateVideoTitle(getResources().getString(R.string.short_video_title));
         mMediaPlayerEventActionView.updateVideoTitle(getResources().getString(R.string.short_video_title));
     }
 
@@ -945,7 +953,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
 
         @Override
         public void onRequestPlayMode(int requestPlayMode) {
-            Log.d("eflake","onRequestPlayMode"+requestPlayMode);
+            Log.d("eflake", "onRequestPlayMode" + requestPlayMode);
         }
 
         @Override
@@ -1275,6 +1283,65 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         if (powerStateListener != null) {
             this.powerStateListener.onPowerState(state);
         }
+    }
+
+    /*
+    *
+    * For power state
+    * */
+    public void registerPowerReceiver() {
+        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+        filter.addAction(Intent.ACTION_SCREEN_ON);
+        filter.addAction(Intent.ACTION_USER_PRESENT);
+        mContext.registerReceiver(mBatInfoReceiver, filter);
+    }
+
+    public void unregisterPowerReceiver() {
+        if (mBatInfoReceiver != null) {
+            try {
+                mContext.unregisterReceiver(mBatInfoReceiver);
+            } catch (Exception e) {
+                Log.e(Constants.LOG_TAG,
+                        "unregisterReceiver mBatInfoReceiver failure :"
+                                + e.getCause());
+            }
+        }
+    }
+
+    private final BroadcastReceiver mBatInfoReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+            final String action = intent.getAction();
+            if (Intent.ACTION_SCREEN_OFF.equals(action)) {
+                Log.d(Constants.LOG_TAG, "screen off");
+                if (powerStateListener != null) {
+                    powerStateListener.onPowerState(Constants.POWER_OFF);
+                }
+            } else if (Intent.ACTION_SCREEN_ON.equals(action)) {
+                Log.d(Constants.LOG_TAG, "screen on");
+                if (powerStateListener != null) {
+                    if (isAppOnForeground()) {
+                        powerStateListener.onPowerState(Constants.POWER_ON);
+                    }
+                }
+            } else if (Intent.ACTION_USER_PRESENT.equals(action)) {
+                if (isAppOnForeground()) {
+                    powerStateListener.onPowerState(Constants.USER_PRESENT);
+                }
+            }
+        }
+    };
+
+    public boolean isAppOnForeground() {
+        ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        ComponentName cn = am.getRunningTasks(1).get(0).topActivity;
+        String currentPackageName = cn.getPackageName();
+        if (!TextUtils.isEmpty(currentPackageName)
+                && currentPackageName.equals(mContext.getPackageName())) {
+            return true;
+        }
+        return false;
     }
 
 }

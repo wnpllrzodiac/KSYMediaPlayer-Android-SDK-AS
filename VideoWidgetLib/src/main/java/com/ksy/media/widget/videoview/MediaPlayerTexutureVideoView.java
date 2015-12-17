@@ -44,7 +44,7 @@ import com.ksy.media.widget.util.ControlDelay;
 import com.ksy.media.widget.util.IMediaPlayerControl;
 import com.ksy.media.widget.util.IPowerStateListener;
 import com.ksy.media.widget.controller.MediaPlayerBaseControllerView.MediaPlayerController;
-import com.ksy.media.widget.ui.MediaPlayerMovieRatioView;
+import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
 import com.ksy.media.widget.ui.MediaPlayerView.IStop;
 import com.ksy.media.widget.util.ScreenResolution;
 

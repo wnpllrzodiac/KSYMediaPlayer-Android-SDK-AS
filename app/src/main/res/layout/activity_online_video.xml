@@ -8,7 +8,7 @@
     <com.ksy.media.widget.ui.video.VideoMediaPlayerView
         android:id="@+id/video_player_view"
         android:layout_width="fill_parent"
-        android:layout_height="260dp"
+        android:layout_height="230dp"
         player:playmode="window" />
 
     <android.support.design.widget.TabLayout

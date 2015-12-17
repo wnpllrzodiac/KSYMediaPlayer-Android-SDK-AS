@@ -33,35 +33,22 @@ public class DemoActivity extends AppCompatActivity implements DemoListAdapter.D
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setupDemoContent();
+        setupDemoTitle();
         setupViews();
     }
 
-    private void setupDemoContent() {
-        demoList = new ArrayList<>();
-        demoList.add(new DemoContent("PHONE_LIVE"));
-        demoList.add(new DemoContent("PHONE_LIVE_REPLAY"));
-        demoList.add(new DemoContent("ONLINE_VIDEO"));
-        demoList.add(new DemoContent("ONLINE_STREAM"));
-        demoList.add(new DemoContent("SHORT_VIDEO"));
-    }
 
     private void setupViews() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) {
-//            mToolbar.setNavigationIcon(getResources().getDrawable(R.mipmap.ksy_logo));
             setSupportActionBar(mToolbar);
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Handle your drawable state here
                 }
             });
         }
         mRecycleView = (RecyclerView) findViewById(R.id.demo_list);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DemoActivity.this);
-//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//        GridLayoutManager gridLayoutManager = new GridLayoutManager(DemoActivity.this,2);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecycleView.setLayoutManager(staggeredGridLayoutManager);
         mAdapter = new DemoListAdapter(DemoActivity.this, demoList);
@@ -71,23 +58,32 @@ public class DemoActivity extends AppCompatActivity implements DemoListAdapter.D
         mAdapter.setDemoListClickListener(this);
     }
 
+    private void setupDemoTitle() {
+        demoList = new ArrayList<>();
+        demoList.add(new DemoContent("PHONE_LIVE"));
+        demoList.add(new DemoContent("PHONE_LIVE_REPLAY"));
+        demoList.add(new DemoContent("ONLINE_VIDEO"));
+        demoList.add(new DemoContent("ONLINE_STREAM"));
+        demoList.add(new DemoContent("SHORT_VIDEO"));
+    }
+
     @Override
     public void onDemoListClicked(int position, DemoContent demoContent) {
         switch (position) {
             case DemoActivity.PHONE_LIVE:
-                startActivity(new Intent(DemoActivity.this,PhoneLiveActivity.class));
+                startActivity(new Intent(DemoActivity.this, PhoneLiveActivity.class));
                 break;
             case DemoActivity.PHONE_LIVE_REPLAY:
-                startActivity(new Intent(DemoActivity.this,PhoneLiveReplayActivity.class));
+                startActivity(new Intent(DemoActivity.this, PhoneLiveReplayActivity.class));
                 break;
             case DemoActivity.ONLINE_VIDEO:
-                startActivity(new Intent(DemoActivity.this,OnlineVideoActivity.class));
+                startActivity(new Intent(DemoActivity.this, OnlineVideoActivity.class));
                 break;
             case DemoActivity.ONLINE_STREAM:
-                startActivity(new Intent(DemoActivity.this,StreamVideoActivity.class));
+                startActivity(new Intent(DemoActivity.this, StreamVideoActivity.class));
                 break;
             case DemoActivity.SHORT_VIDEO:
-                startActivity(new Intent(DemoActivity.this,ShortVideoActivity.class));
+                startActivity(new Intent(DemoActivity.this, ShortVideoActivity.class));
                 break;
         }
     }

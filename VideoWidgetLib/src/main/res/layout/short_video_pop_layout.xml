@@ -9,9 +9,12 @@
 
     <EditText
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="32dp"
         android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/list_margin"
         android:layout_weight="5"
+        android:background="@drawable/short_video_edittext_bg"
+        android:textCursorDrawable="@null"
         android:hint="@string/short_video_comment_hint"
         android:singleLine="true" />
 

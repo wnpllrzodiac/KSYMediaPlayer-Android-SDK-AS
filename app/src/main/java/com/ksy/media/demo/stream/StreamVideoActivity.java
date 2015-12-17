@@ -1,14 +1,7 @@
 package com.ksy.media.demo.stream;
 
-import android.app.ActivityManager;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -26,14 +19,11 @@ import com.ksy.media.player.util.Constants;
 import com.ksy.media.widget.ui.Stream.StreamMediaPlayerPagerAdapter;
 import com.ksy.media.widget.ui.Stream.StreamMediaPlayerView;
 import com.ksy.media.widget.ui.video.fragment.CommentListFragment;
-import com.ksy.media.widget.util.IPowerStateListener;
 
 public class StreamVideoActivity extends AppCompatActivity implements
         StreamMediaPlayerView.PlayerViewCallback, CommentListFragment.OnFragmentInteractionListener {
 
     StreamMediaPlayerView playerView;
-    private boolean delay;
-    private IPowerStateListener powerStateListener;
     private ViewPager pager;
     private StreamMediaPlayerPagerAdapter pagerAdapter;
     private TabLayout tabLayout;
@@ -41,16 +31,13 @@ public class StreamVideoActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Intent intent = getIntent();
-//        delay = intent.getBooleanExtra("is_delay", false);
         setContentView(R.layout.activity_stream_video);
         setupViews();
     }
 
     private void setupViews() {
         playerView = (StreamMediaPlayerView) findViewById(R.id.stream_player_view);
-        registerPowerReceiver();
-        setPowerStateListener(playerView);
+
         setupDialog();
         setUpPagerAndTabs();
     }
@@ -95,24 +82,19 @@ public class StreamVideoActivity extends AppCompatActivity implements
 
     @Override
     protected void onResume() {
-        powerStateListener.onPowerState(Constants.APP_SHOWN);
         super.onResume();
         playerView.onResume();
     }
 
     @Override
     protected void onPause() {
-        powerStateListener.onPowerState(Constants.APP_HIDEN);
         super.onPause();
         playerView.onPause();
     }
 
     @Override
     protected void onDestroy() {
-
-        Log.d(Constants.LOG_TAG, "VideoPlayerActivity ....onDestroy()......");
         super.onDestroy();
-        unregisterPowerReceiver();
         playerView.onDestroy();
     }
 
@@ -120,7 +102,7 @@ public class StreamVideoActivity extends AppCompatActivity implements
     private void startPlayer(String url) {
         Log.d(Constants.LOG_TAG, "input url = " + url);
         playerView.setPlayerViewCallback(this);
-        playerView.play(url, delay);
+        playerView.play(url, true);
     }
 
     @Override
@@ -145,8 +127,6 @@ public class StreamVideoActivity extends AppCompatActivity implements
 
     @Override
     public void onFinish(int playMode) {
-        Log.i(Constants.LOG_TAG, "activity on finish ===========");
-        // this.onBackPressed();
         this.finish();
     }
 
@@ -164,72 +144,9 @@ public class StreamVideoActivity extends AppCompatActivity implements
         return super.onKeyDown(keyCode, event);
     }
 
-    /*
-    *
-    * For power state
-    * */
-    public void registerPowerReceiver() {
-        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
-        filter.addAction(Intent.ACTION_SCREEN_ON);
-        filter.addAction(Intent.ACTION_USER_PRESENT);
-        registerReceiver(mBatInfoReceiver, filter);
-    }
-
-    public void unregisterPowerReceiver() {
-        if (mBatInfoReceiver != null) {
-            try {
-                unregisterReceiver(mBatInfoReceiver);
-            } catch (Exception e) {
-                Log.e(Constants.LOG_TAG,
-                        "unregisterReceiver mBatInfoReceiver failure :"
-                                + e.getCause());
-            }
-        }
-    }
-
-    private final BroadcastReceiver mBatInfoReceiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(final Context context, final Intent intent) {
-            final String action = intent.getAction();
-            if (Intent.ACTION_SCREEN_OFF.equals(action)) {
-                Log.d(Constants.LOG_TAG, "screen off");
-                if (powerStateListener != null) {
-                    powerStateListener.onPowerState(Constants.POWER_OFF);
-                }
-            } else if (Intent.ACTION_SCREEN_ON.equals(action)) {
-                Log.d(Constants.LOG_TAG, "screen on");
-                if (powerStateListener != null) {
-                    if (isAppOnForeground()) {
-                        powerStateListener.onPowerState(Constants.POWER_ON);
-                    }
-                }
-            } else if (Intent.ACTION_USER_PRESENT.equals(action)) {
-                if (isAppOnForeground()) {
-                    powerStateListener.onPowerState(Constants.USER_PRESENT);
-                }
-            }
-        }
-    };
-
-    public boolean isAppOnForeground() {
-        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        ComponentName cn = am.getRunningTasks(1).get(0).topActivity;
-        String currentPackageName = cn.getPackageName();
-        if (!TextUtils.isEmpty(currentPackageName)
-                && currentPackageName.equals(getPackageName())) {
-            return true;
-        }
-        return false;
-    }
-
-    public void setPowerStateListener(IPowerStateListener powerStateListener) {
-        this.powerStateListener = powerStateListener;
-    }
 
     @Override
     public void onFragmentInteraction(String id) {
 
     }
-
 }

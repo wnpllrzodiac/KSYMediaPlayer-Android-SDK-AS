@@ -10,12 +10,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.ksy.media.widget.data.MediaPlayMode;
-import com.ksy.media.widget.ui.MediaPlayerVideoSeekBar;
 import com.ksy.mediaPlayer.widget.R;
 
 public class StreamMediaPlayerSmallControllerView extends MediaPlayerBaseControllerView implements View.OnClickListener {

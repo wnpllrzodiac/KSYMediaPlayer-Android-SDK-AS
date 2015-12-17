@@ -14,7 +14,7 @@
         android:layout_marginBottom="@dimen/bright_margin_bottom"
         android:src="@drawable/blue_ksy_light_light" />
 
-    <com.ksy.media.widget.ui.MediaPlayerBrightSeekBar
+    <com.ksy.media.widget.ui.common.MediaPlayerBrightSeekBar
         android:id="@+id/seekbar_bright_progress"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

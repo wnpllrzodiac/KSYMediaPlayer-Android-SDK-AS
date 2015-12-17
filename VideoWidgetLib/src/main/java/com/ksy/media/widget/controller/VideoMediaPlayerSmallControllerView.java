@@ -3,7 +3,6 @@ package com.ksy.media.widget.controller;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -13,10 +12,8 @@ import android.widget.TextView;
 
 import com.ksy.media.widget.data.MediaPlayMode;
 import com.ksy.media.widget.data.MediaPlayerUtils;
-import com.ksy.media.widget.ui.MediaPlayerVideoSeekBar;
+import com.ksy.media.widget.ui.common.MediaPlayerVideoSeekBar;
 import com.ksy.mediaPlayer.widget.R;
-
-import org.w3c.dom.Text;
 
 public class VideoMediaPlayerSmallControllerView extends MediaPlayerBaseControllerView implements View.OnClickListener {
 
@@ -159,8 +156,8 @@ public class VideoMediaPlayerSmallControllerView extends MediaPlayerBaseControll
             if (durTime > 0 && curTime <= durTime) {
                 mCurrentTimeTextView.setText(MediaPlayerUtils
                         .getVideoDisplayTime(curTime));
-                mTotalTimeTextView.setText("/"
-                        + MediaPlayerUtils.getVideoDisplayTime(durTime));
+                mTotalTimeTextView.setText(
+                        MediaPlayerUtils.getVideoDisplayTime(durTime));
             }
         }
     }

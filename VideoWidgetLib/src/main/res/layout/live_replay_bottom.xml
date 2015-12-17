@@ -35,7 +35,7 @@
             android:layout_alignParentRight="true"
             android:text="@string/live_share" />
 
-        <com.ksy.media.widget.ui.MediaPlayerVideoSeekBar
+        <com.ksy.media.widget.ui.common.MediaPlayerVideoSeekBar
             android:id="@+id/seekbar_video_progress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

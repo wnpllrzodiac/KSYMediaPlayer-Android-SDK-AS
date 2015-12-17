@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.ksy.media.widget.data.MediaPlayMode;
 import com.ksy.media.widget.data.MediaPlayerUtils;
-import com.ksy.media.widget.ui.MediaPlayerVideoSeekBar;
+import com.ksy.media.widget.ui.common.MediaPlayerVideoSeekBar;
 import com.ksy.mediaPlayer.widget.R;
 
 public class ShortVideoMediaPlayerControllerView extends MediaPlayerBaseControllerView implements View.OnClickListener {
@@ -20,7 +20,6 @@ public class ShortVideoMediaPlayerControllerView extends MediaPlayerBaseControll
     private RelativeLayout mControllerTopView;
     private RelativeLayout mBackLayout;
     private TextView mTitleTextView;
-
     private RelativeLayout mControllerBottomView;
     private MediaPlayerVideoSeekBar mSeekBar;
     private ImageView mPlaybackImageView;

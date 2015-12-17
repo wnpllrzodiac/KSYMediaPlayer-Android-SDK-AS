@@ -10,15 +10,18 @@
     <EditText
         android:layout_width="0dp"
         android:layout_weight="5"
-        android:layout_height="60dp"
+        android:layout_height="32dp"
+        android:layout_margin="@dimen/list_margin"
         android:singleLine="true"
+        android:textCursorDrawable="@null"
+        android:background="@drawable/video_edittext_bg"
         android:layout_gravity="center_vertical"
         android:hint="@string/short_video_comment_hint" />
 
     <Button
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="60dp"
+        android:layout_height="48dp"
         android:background="@color/white"
         android:textSize="18sp"
         android:layout_gravity="center_vertical"

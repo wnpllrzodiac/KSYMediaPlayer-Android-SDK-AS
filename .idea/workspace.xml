@@ -63,28 +63,7 @@
     <favorites_list name="KSYMediaPlayer-Android-SDK-AS" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="MediaPlayerVideoView.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/VideoWidgetLib/src/main/java/com/ksy/media/widget/videoview/MediaPlayerVideoView.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3793911">
-              <caret line="613" column="67" selection-start-line="613" selection-start-column="67" selection-end-line="613" selection-end-column="67" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MediaPlayerTexutureVideoView.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/VideoWidgetLib/src/main/java/com/ksy/media/widget/videoview/MediaPlayerTexutureVideoView.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="350" column="37" selection-start-line="350" selection-start-column="17" selection-end-line="350" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -3211,42 +3190,26 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="KSYMediaPlayer-Android-SDK-AS" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="KSYMediaPlayer-Android-SDK-AS" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VideoLibs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="KSYMediaPlayer-Android-SDK-AS" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="KSYMediaPlayer-Android-SDK-AS" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VideoLibs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="widget" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="video" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -3258,7 +3221,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="VideoLibs" />
+              <option name="myItemId" value="VideoWidgetLib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -4005,7 +3968,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/VideoWidgetLib/src/main/java/com/ksy/media/widget/videoview/MediaPlayerTexutureVideoView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.37470725">
           <caret line="350" column="37" selection-start-line="350" selection-start-column="17" selection-end-line="350" selection-end-column="37" />
           <folding />
         </state>
@@ -4013,8 +3976,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/VideoWidgetLib/src/main/java/com/ksy/media/widget/videoview/MediaPlayerVideoView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3793911">
-          <caret line="613" column="67" selection-start-line="613" selection-start-column="67" selection-end-line="613" selection-end-column="67" />
+        <state vertical-scroll-proportion="5.163934">
+          <caret line="193" column="75" selection-start-line="193" selection-start-column="65" selection-end-line="193" selection-end-column="75" />
           <folding />
         </state>
       </provider>

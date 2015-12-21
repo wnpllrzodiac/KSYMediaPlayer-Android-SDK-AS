@@ -3,6 +3,7 @@ package com.ksy.media.widget.videoview;
 import java.io.File;
 import java.io.IOException;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.app.KeyguardManager.KeyguardLock;
@@ -11,6 +12,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.AttributeSet;
@@ -948,6 +950,7 @@ public class MediaPlayerVideoView extends SurfaceView implements
 		}
 	}
 
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	public boolean isKeyGuard() {
 		km = (KeyguardManager) mContext
 				.getSystemService(Context.KEYGUARD_SERVICE);

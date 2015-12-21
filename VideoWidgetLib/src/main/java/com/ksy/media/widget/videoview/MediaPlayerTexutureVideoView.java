@@ -3,6 +3,7 @@ package com.ksy.media.widget.videoview;
 import java.io.File;
 import java.io.IOException;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.app.KeyguardManager.KeyguardLock;
@@ -12,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.AttributeSet;
@@ -161,6 +163,7 @@ public class MediaPlayerTexutureVideoView extends TextureView implements
      * @param layout
      * @Description 设置视频的大小
      */
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
     public void setVideoLayout(int layout) {
 
         Log.d(Constants.LOG_TAG, "SetVideoLayout ,Mode = " + layout);
@@ -951,6 +954,7 @@ public class MediaPlayerTexutureVideoView extends TextureView implements
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public boolean isKeyGuard() {
         km = (KeyguardManager) mContext
                 .getSystemService(Context.KEYGUARD_SERVICE);

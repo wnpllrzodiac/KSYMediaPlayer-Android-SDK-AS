@@ -75,7 +75,6 @@ public class MediaPlayerView extends RelativeLayout implements
     private Window mWindow;
 
     private ViewGroup mRootView;
-    // private MediaPlayerVideoView mMediaPlayerVideoView;
 //	private MediaPlayerTexutureVideoView mMediaPlayerVideoView;
     private MediaPlayerVideoView mMediaPlayerVideoView;
 

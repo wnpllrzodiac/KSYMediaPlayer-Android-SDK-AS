@@ -5,20 +5,24 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.ksy.media.widget.ui.common.HeartLayout;
 import com.ksy.media.widget.ui.common.HorizontalListView;
+import com.ksy.media.widget.ui.common.LiveAnchorDialog;
 import com.ksy.media.widget.ui.common.LiveExitDialog;
 import com.ksy.media.widget.ui.common.LivePersonDialog;
 import com.ksy.media.widget.ui.live.LiveDialogAdapter;
 import com.ksy.media.widget.ui.live.LiveDialogInfo;
 import com.ksy.media.widget.ui.live.LiveHeadListAdapter;
+import com.ksy.media.widget.util.IMediaPlayerControl;
 import com.ksy.mediaPlayer.widget.R;
 
 import java.util.ArrayList;
@@ -27,15 +31,18 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class LiveMediaPlayerControllerView extends MediaPlayerBaseControllerView implements View.OnClickListener {
+public class LiveMediaPlayerControllerView extends FrameLayout implements View.OnClickListener {
 
 	private ImageView liveHead;
+	private ImageView liveStateImage;
+	private TextView timeTextView;
 	private TextView  liveCloseTextView;
 	private TextView  liveReportTextView;
 
 	private ListView liveListView;
 	private List<LiveDialogInfo> liveDialogList;
 	private LiveDialogAdapter liveDialogAdapter;
+	private TextView noticeTextViewLive;
 
 	private ImageView livePerson;
 	private HorizontalListView liveHorizontalList;
@@ -54,6 +61,8 @@ public class LiveMediaPlayerControllerView extends MediaPlayerBaseControllerView
 	private boolean isLiveListVisible;
 
 	private Handler liveHandler = new Handler();
+	protected LayoutInflater mLiveLayoutInflater;
+
 
 	public LiveMediaPlayerControllerView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -69,18 +78,27 @@ public class LiveMediaPlayerControllerView extends MediaPlayerBaseControllerView
 		super(context);
 		mContext = context;
 
-		mLayoutInflater.inflate(R.layout.blue_media_player_controller_live, this);
+		mLiveLayoutInflater = LayoutInflater.from(getContext());
+		mLiveLayoutInflater.inflate(R.layout.blue_media_player_controller_live, this);
 
 		initViews();
 		initListeners();
 	}
 
 	@Override
+	protected void onFinishInflate() {
+		super.onFinishInflate();
+
+		initViews();
+		initListeners();
+	}
+
+
 	protected void initViews() {
 
 		liveEditText = (EditText) findViewById(R.id.video_comment_text);
 		liveHead = (ImageView)findViewById(R.id.image_live_head);
-
+		timeTextView = (TextView) findViewById(R.id.textViewTime);
 		liveCloseTextView = (TextView) findViewById(R.id.title_text_close);
 		liveReportTextView = (TextView) findViewById(R.id.title_text_report);
 
@@ -88,6 +106,7 @@ public class LiveMediaPlayerControllerView extends MediaPlayerBaseControllerView
 		liveDialogList = new ArrayList<LiveDialogInfo>();
 		liveDialogAdapter = new LiveDialogAdapter(liveDialogList, mContext);
 		liveListView.setAdapter(liveDialogAdapter);
+		noticeTextViewLive = (TextView)findViewById(R.id.notice_text_live);
 
 		liveHorizontalList = (HorizontalListView) findViewById(R.id.live_horizon);
 		liveHeadListAdapter = new LiveHeadListAdapter(mContext);
@@ -121,7 +140,7 @@ public class LiveMediaPlayerControllerView extends MediaPlayerBaseControllerView
 			}
 		}, 500, 500);
 
-		mHandler.postDelayed(liveListHideRunnable, 5000);
+		liveHandler.postDelayed(liveListHideRunnable, 5000);
 	}
 
 	//delay
@@ -129,10 +148,11 @@ public class LiveMediaPlayerControllerView extends MediaPlayerBaseControllerView
 		@Override
 		public void run() {
 			liveListView.setVisibility(GONE);
+			noticeTextViewLive.setVisibility(GONE);
 		}
 	};
 
-	@Override
+
 	protected void initListeners() {
 
 		liveHead.setOnClickListener(this);
@@ -143,11 +163,11 @@ public class LiveMediaPlayerControllerView extends MediaPlayerBaseControllerView
 		liveShareButton.setOnClickListener(this);
 	}
 
-	@Override
+//	@Override
 	void onTimerTicker() {
 
-		long currentTime = mMediaPlayerController.getCurrentPosition();
-		long durationTime = mMediaPlayerController.getDuration();
+//		long currentTime = mMediaPlayerController.getCurrentPosition();
+//		long durationTime = mMediaPlayerController.getDuration();
 
 		/*if (durationTime > 0 && currentTime <= durationTime) {
 			float percentage = ((float) currentTime) / durationTime;
@@ -155,20 +175,8 @@ public class LiveMediaPlayerControllerView extends MediaPlayerBaseControllerView
 		}*/
 	}
 
-	@Override
-	void onShow() {
-//		mControllerTopView.setVisibility(VISIBLE);
-//		mControllerBottomView.setVisibility(VISIBLE);
-	}
-
-	@Override
-	void onHide() {
-//		mControllerTopView.setVisibility(INVISIBLE);
-//		mControllerBottomView.setVisibility(INVISIBLE);
-	}
 
 	public void updateVideoTitle(String title) {
-
 		if (!TextUtils.isEmpty(title)) {
 
 		}
@@ -180,7 +188,7 @@ public class LiveMediaPlayerControllerView extends MediaPlayerBaseControllerView
 		int id = v.getId();
 
 		if (id == liveHead.getId()) {
-			LivePersonDialog dialogPerson = new LivePersonDialog(mContext);
+			LiveAnchorDialog dialogPerson = new LiveAnchorDialog(mContext);
 			dialogPerson.show();
 
 		} else if (id == liveCloseTextView.getId()) {
@@ -235,6 +243,41 @@ public class LiveMediaPlayerControllerView extends MediaPlayerBaseControllerView
 
 	private int randomColor() {
 		return  Color.rgb(mRandom.nextInt(255), mRandom.nextInt(255), mRandom.nextInt(255));
+	}
+
+	public interface MediaPlayerController extends IMediaPlayerControl {
+
+		boolean supportQuality();
+
+		boolean supportVolume();
+
+		boolean playVideo(String url);
+
+		int getPlayMode();
+
+		void onRequestPlayMode(int requestPlayMode);
+
+		void onBackPress(int playMode);
+
+		void onControllerShow(int playMode);
+
+		void onControllerHide(int playMode);
+
+		void onRequestLockMode(boolean lockMode);
+
+		void onVideoPreparing();
+
+		void onMovieRatioChange(int screenSize);
+
+		void onMoviePlayRatioUp();
+
+		void onMoviePlayRatioDown();
+
+		void onMovieCrop();
+
+		void onVolumeDown();
+
+		void onVolumeUp();
 	}
 
 }

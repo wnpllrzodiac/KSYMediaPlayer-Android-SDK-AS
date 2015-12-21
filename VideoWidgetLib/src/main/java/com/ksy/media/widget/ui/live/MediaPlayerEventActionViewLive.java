@@ -11,9 +11,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ksy.media.widget.ui.common.LiveExitDialog;
+import com.ksy.media.widget.ui.common.LivePersonDialog;
 import com.ksy.mediaPlayer.widget.R;
 
-public class MediaPlayerEventActionViewLive extends RelativeLayout {
+public class MediaPlayerEventActionViewLive extends RelativeLayout implements View.OnClickListener{
 
 	public static final int EVENT_ACTION_VIEW_MODE_COMPLETE = 0X00;
 	public static final int EVENT_ACTION_VIEW_MODE_WAIT = 0X01;
@@ -123,6 +125,16 @@ public class MediaPlayerEventActionViewLive extends RelativeLayout {
 	public void setCallback(EventActionViewCallback callback) {
 
 		this.mCallback = callback;
+	}
+
+	@Override
+	public void onClick(View view) {
+		int id = view.getId();
+
+		if (id == liveNoticePerson.getId()) {
+			System.exit(0);
+		}
+
 	}
 
 	public interface EventActionViewCallback {

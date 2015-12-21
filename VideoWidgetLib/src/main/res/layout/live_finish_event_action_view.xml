@@ -3,7 +3,7 @@
     android:id="@+id/layout_live_finish"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="gone"
+
     tools:context=".MainActivity">
 
     <RelativeLayout
@@ -56,6 +56,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:text="@string/live_username_one"
+        android:textColor="@color/white"
         android:layout_alignTop="@+id/imageView2"
         android:layout_toRightOf="@+id/imageView2"
         android:layout_toEndOf="@+id/imageView2" />
@@ -66,6 +67,7 @@
         android:gravity="center_vertical"
         android:layout_marginTop="12dp"
         android:text="@string/live_fans_praise"
+        android:textColor="@color/white"
         android:layout_below="@+id/textView3"
         android:layout_toRightOf="@+id/imageView2"
         android:layout_centerHorizontal="true" />

@@ -69,12 +69,22 @@
     <string name="live_no">否</string>
     <string name="live_praise">1.2w 赞</string>
     <string name="live">直播</string>
-    <string name="live_signature_line">签名档签名档签名档签名档签名档</string>
+    <string name="live_signature_line">签名档签名档签名档签名档</string>
     <string name="live_fans">粉丝</string>
     <string name="live_replay">重新播放</string>
     <string name="live_replay_finish">直播回放已经结束</string>
-
-
+    <string name="live_current">当前直播：</string>
+    <string name="live_current_content">直播标题直播标题</string>
+    <string name="live_device">直播设备：</string>
+    <string name="live_device_content">iPhone 7</string>
+    <string name="live_place">直播地点：</string>
+    <string name="live_place_content">美国纽约</string>
+    <string name="live_attention_plus">+  关注</string>
+    <string name="live_replay_current_time">当前时间</string>
+    <string name="live_replay_line">/</string>
+    <string name="live_replay_total_time">总时间</string>
+    <string name="live_replay_net_error"> 网络状况不好，稍后再看</string>
+    <string name="live_replay_notice">我是路飞我是路飞我是路飞</string>
 
     <string name="video_detail_focus">+关注</string>
     <string name="video_detail_title">直播间信息</string>

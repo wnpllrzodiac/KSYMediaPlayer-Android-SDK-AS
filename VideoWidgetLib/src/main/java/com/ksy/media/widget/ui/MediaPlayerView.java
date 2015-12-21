@@ -47,6 +47,7 @@ import com.ksy.media.player.util.DRMRetrieverManager;
 import com.ksy.media.player.util.DRMRetrieverResponseHandler;
 import com.ksy.media.player.util.IDRMRetriverRequest;
 import com.ksy.media.player.util.NetworkUtil;
+import com.ksy.media.widget.controller.MediaPlayerController;
 import com.ksy.media.widget.ui.common.MediaPlayerBufferingView;
 import com.ksy.media.widget.ui.common.MediaPlayerEventActionView;
 import com.ksy.media.widget.ui.common.MediaPlayerLoadingView;
@@ -1200,7 +1201,7 @@ public class MediaPlayerView extends RelativeLayout implements
         void onError(int errorCode, String errorMsg);
     }
 
-    private final MediaPlayerBaseControllerView.MediaPlayerController mMediaPlayerController = new MediaPlayerBaseControllerView.MediaPlayerController() {
+    private final MediaPlayerController mMediaPlayerController = new MediaPlayerController() {
 
         private Bitmap bitmap;
 

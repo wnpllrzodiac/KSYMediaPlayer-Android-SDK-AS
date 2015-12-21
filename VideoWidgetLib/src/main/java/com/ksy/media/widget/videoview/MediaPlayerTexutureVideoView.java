@@ -42,11 +42,11 @@ import com.ksy.media.player.MediaInfo;
 import com.ksy.media.player.option.AvFourCC;
 import com.ksy.media.player.option.format.AvFormatOption_HttpDetectRangeSupport;
 import com.ksy.media.player.util.Constants;
+import com.ksy.media.widget.controller.MediaPlayerController;
 import com.ksy.media.widget.util.IStop;
 import com.ksy.media.widget.util.VideoViewConfig;
 import com.ksy.media.widget.util.IMediaPlayerControl;
 import com.ksy.media.widget.util.IPowerStateListener;
-import com.ksy.media.widget.controller.MediaPlayerBaseControllerView.MediaPlayerController;
 import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
 import com.ksy.media.widget.util.ScreenResolution;
 

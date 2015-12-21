@@ -1,2 +1,5 @@
 
 local.properties
+.idea/workspace.xml
+.gradle/2.4/taskArtifacts/taskArtifacts.bin
+.gradle/2.4/taskArtifacts/fileHashes.bin

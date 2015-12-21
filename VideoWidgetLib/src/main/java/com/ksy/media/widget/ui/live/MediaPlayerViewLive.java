@@ -37,8 +37,8 @@ import com.ksy.media.player.util.DRMRetrieverManager;
 import com.ksy.media.player.util.DRMRetrieverResponseHandler;
 import com.ksy.media.player.util.IDRMRetriverRequest;
 import com.ksy.media.player.util.NetworkUtil;
-import com.ksy.media.widget.controller.MediaPlayerBaseControllerView;
 import com.ksy.media.widget.controller.LiveMediaPlayerControllerView;
+import com.ksy.media.widget.controller.MediaPlayerController;
 import com.ksy.media.widget.data.MediaPlayMode;
 import com.ksy.media.widget.data.MediaPlayerUtils;
 import com.ksy.media.widget.data.NetReceiver;
@@ -50,7 +50,7 @@ import com.ksy.media.widget.ui.common.MediaPlayerLoadingView;
 import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
 import com.ksy.media.widget.util.VideoViewConfig;
 import com.ksy.media.widget.util.IPowerStateListener;
-import com.ksy.media.widget.videoview.LiveMediaPlayerVideoView;
+import com.ksy.media.widget.videoview.MediaPlayerTexutureVideoView;
 import com.ksy.mediaPlayer.widget.R;
 
 import java.io.File;
@@ -70,7 +70,7 @@ public class MediaPlayerViewLive extends RelativeLayout implements
 
     private ViewGroup mRootView;
     //	private MediaPlayerTexutureVideoView mLiveMediaPlayerVideoView;
-    private LiveMediaPlayerVideoView mLiveMediaPlayerVideoView;
+    private MediaPlayerTexutureVideoView mLiveMediaPlayerVideoView;
 
     private LiveMediaPlayerControllerView mLiveMediaPlayerControllerView;
     private MediaPlayerBufferingView mMediaPlayerBufferingView;
@@ -192,7 +192,7 @@ public class MediaPlayerViewLive extends RelativeLayout implements
         this.mRootView = (ViewGroup) mLayoutInflater.inflate(
                 R.layout.live_blue_media_player_view, null);
 
-        this.mLiveMediaPlayerVideoView = (LiveMediaPlayerVideoView) mRootView
+        this.mLiveMediaPlayerVideoView = (MediaPlayerTexutureVideoView) mRootView
                 .findViewById(R.id.live_ks_camera_video_view);
         this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
                 .findViewById(R.id.ks_camera_buffering_view);
@@ -1030,7 +1030,7 @@ public class MediaPlayerViewLive extends RelativeLayout implements
         void onError(int errorCode, String errorMsg);
     }
 
-    private final MediaPlayerBaseControllerView.MediaPlayerController mMediaPlayerController = new MediaPlayerBaseControllerView.MediaPlayerController() {
+    private final MediaPlayerController mMediaPlayerController = new MediaPlayerController() {
 
         private Bitmap bitmap;
 

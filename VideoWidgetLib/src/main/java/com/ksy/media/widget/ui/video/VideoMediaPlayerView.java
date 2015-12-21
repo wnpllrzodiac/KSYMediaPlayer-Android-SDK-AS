@@ -44,6 +44,7 @@ import com.ksy.media.player.util.DRMRetrieverResponseHandler;
 import com.ksy.media.player.util.IDRMRetriverRequest;
 import com.ksy.media.player.util.NetworkUtil;
 import com.ksy.media.widget.controller.MediaPlayerBaseControllerView;
+import com.ksy.media.widget.controller.MediaPlayerController;
 import com.ksy.media.widget.controller.VideoMediaPlayerLargeControllerView;
 import com.ksy.media.widget.controller.VideoMediaPlayerSmallControllerView;
 import com.ksy.media.widget.data.MediaPlayMode;
@@ -82,7 +83,6 @@ public class VideoMediaPlayerView extends RelativeLayout implements
     private Window mWindow;
 
     private ViewGroup mRootView;
-    // private MediaPlayerVideoView mMediaPlayerVideoView;
 //	private MediaPlayerTexutureVideoView mMediaPlayerVideoView;
     private MediaPlayerVideoView mMediaPlayerVideoView;
 
@@ -1225,7 +1225,7 @@ public class VideoMediaPlayerView extends RelativeLayout implements
         void onError(int errorCode, String errorMsg);
     }
 
-    private final MediaPlayerBaseControllerView.MediaPlayerController mMediaPlayerController = new MediaPlayerBaseControllerView.MediaPlayerController() {
+    private final MediaPlayerController mMediaPlayerController = new MediaPlayerController() {
 
         private Bitmap bitmap;
 

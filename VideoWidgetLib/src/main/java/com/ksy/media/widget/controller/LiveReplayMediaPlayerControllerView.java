@@ -28,7 +28,6 @@ import com.ksy.media.widget.ui.common.LivePersonDialog;
 import com.ksy.media.widget.ui.livereplay.LiveReplayDialogAdapter;
 import com.ksy.media.widget.ui.livereplay.LiveReplayDialogInfo;
 import com.ksy.media.widget.ui.livereplay.LiveReplayHeadListAdapter;
-import com.ksy.media.widget.util.IMediaPlayerControl;
 import com.ksy.mediaPlayer.widget.R;
 
 import java.util.List;
@@ -54,6 +53,7 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 	private LiveReplayDialogAdapter dialogAdapter;
 	private TextView noticeTextView;
 
+	private TextView personCountTextView;
 	private ImageView liveReplayPerson;
 	private TextView praiseCountTextView;
 	private HorizontalListView mHorizontalList;
@@ -80,7 +80,7 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 	protected LayoutInflater mLiveReplayLayoutInflater;
 	protected static final int LIVEREPLAY_MAX_VIDEO_PROGRESS = 1000;
 	protected volatile boolean mVideoProgressTrackingTouch = false;
-	protected  LiveReplayMediaPlayerController  mLiveReplayMediaPlayerController;
+	protected  MediaPlayerController  mLiveReplayMediaPlayerController;
 	private Timer seekTimer;
 	private volatile boolean mSeekStarted = false;
 
@@ -121,6 +121,7 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 		closeTextView = (TextView) findViewById(R.id.title_text_close);
 		reportTextView = (TextView) findViewById(R.id.title_text_report);
 		praiseCountTextView = (TextView) findViewById(R.id.praise_count_text);
+		personCountTextView = (TextView) findViewById(R.id.person_count_textview);
 
 		listView = (ListView) findViewById(R.id.live_list);
 		//load data
@@ -360,6 +361,8 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 				mSeekBar.setVisibility(VISIBLE);
 				shareButton.setVisibility(VISIBLE);
 				heartImageView.setVisibility(VISIBLE);
+				personCountTextView.setVisibility(VISIBLE);
+				praiseCountTextView.setVisibility(VISIBLE);
 				isSwitch = false;
 
 			} else {
@@ -374,6 +377,8 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 				mSeekBar.setVisibility(GONE);
 				shareButton.setVisibility(GONE);
 				heartImageView.setVisibility(GONE);
+				personCountTextView.setVisibility(GONE);
+				praiseCountTextView.setVisibility(GONE);
 				isSwitch = true;
 			  }
 			} else if (id == heartImageView.getId()) {
@@ -382,7 +387,7 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 
 	}
 
-	public void setMediaPlayerController(LiveReplayMediaPlayerController mediaPlayerController) {
+	public void setMediaPlayerController(MediaPlayerController mediaPlayerController) {
 		mLiveReplayMediaPlayerController = mediaPlayerController;
 	}
 
@@ -390,7 +395,7 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 		return  Color.rgb(mRandom.nextInt(255), mRandom.nextInt(255), mRandom.nextInt(255));
 	}
 
-	public interface LiveReplayMediaPlayerController extends IMediaPlayerControl {
+	/*public interface LiveReplayMediaPlayerController extends IMediaPlayerControl {
 
 		boolean supportQuality();
 
@@ -418,6 +423,6 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 
 		void onMoviePlayRatioDown();
 
-	}
+	}*/
 
 }

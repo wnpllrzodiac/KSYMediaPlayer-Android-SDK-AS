@@ -14,7 +14,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
-import com.ksy.media.widget.util.IMediaPlayerControl;
 import com.ksy.media.widget.ui.common.MediaPlayerControllerBrightView;
 import com.ksy.media.widget.ui.common.MediaPlayerControllerVolumeView;
 import com.ksy.media.widget.ui.common.MediaPlayerScreenSizePopupView;
@@ -126,7 +125,7 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
     }
 
     public void show() {
-//        show(HIDE_TIMEOUT_DEFAULT);
+        show(HIDE_TIMEOUT_DEFAULT);
     }
 
     public void show(int timeout) {
@@ -139,7 +138,7 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
     }
 
     public void hide() {
-//        mHandler.sendEmptyMessage(MSG_HIDE);
+        mHandler.sendEmptyMessage(MSG_HIDE);
     }
 
     public void toggle() {
@@ -178,7 +177,7 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
 
     public void setMediaPlayerController(MediaPlayerController mediaPlayerController) {
         mMediaPlayerController = mediaPlayerController;
-        mScreenPopup = new MediaPlayerScreenSizePopupView(getContext(), mMediaPlayerController);
+//        mScreenPopup = new MediaPlayerScreenSizePopupView(getContext(), mMediaPlayerController);
     }
 
     public void setHostWindow(Window window) {
@@ -496,47 +495,4 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
 
     abstract void onTimerTicker();
 
-    public interface MediaPlayerController extends IMediaPlayerControl {
-
-        boolean supportQuality();
-
-        boolean supportVolume();
-
-        boolean playVideo(String url);
-
-        int getPlayMode();
-
-        void onRequestPlayMode(int requestPlayMode);
-
-        void onBackPress(int playMode);
-
-        void onControllerShow(int playMode);
-
-        void onControllerHide(int playMode);
-
-        void onRequestLockMode(boolean lockMode);
-
-        void onVideoPreparing();
-
-        void onMovieRatioChange(int screenSize);
-
-        void onMoviePlayRatioUp();
-
-        void onMoviePlayRatioDown();
-
-        void onMovieCrop();
-
-        void onVolumeDown();
-
-        void onVolumeUp();
-    }
-
-    public interface OnGuestureChangeListener {
-
-        void onLightChanged();
-
-        void onVolumeChanged();
-
-        void onPlayProgressChanged();
-    }
 }

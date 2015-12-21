@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:clipChildren="false" >
 
-    <com.ksy.media.widget.videoview.LiveMediaPlayerVideoView
+    <com.ksy.media.widget.videoview.MediaPlayerTexutureVideoView
         android:id="@+id/live_ks_camera_video_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

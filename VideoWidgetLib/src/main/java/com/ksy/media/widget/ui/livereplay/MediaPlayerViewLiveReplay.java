@@ -43,20 +43,20 @@ import com.ksy.media.player.util.DRMRetrieverManager;
 import com.ksy.media.player.util.DRMRetrieverResponseHandler;
 import com.ksy.media.player.util.IDRMRetriverRequest;
 import com.ksy.media.player.util.NetworkUtil;
+import com.ksy.media.widget.controller.MediaPlayerController;
 import com.ksy.media.widget.ui.common.MediaPlayerBufferingView;
 import com.ksy.media.widget.ui.common.MediaPlayerLoadingView;
 import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
 import com.ksy.media.widget.util.VideoViewConfig;
 import com.ksy.media.widget.util.IPowerStateListener;
 import com.ksy.media.widget.controller.LiveReplayMediaPlayerControllerView;
-import com.ksy.media.widget.videoview.LiveReplayMediaPlayerVideoView;
 import com.ksy.media.widget.data.MediaPlayMode;
 import com.ksy.media.widget.data.MediaPlayerUtils;
 import com.ksy.media.widget.data.NetReceiver;
 import com.ksy.media.widget.data.NetReceiver.NetState;
 import com.ksy.media.widget.data.NetReceiver.NetStateChangedListener;
 import com.ksy.media.widget.data.WakeLocker;
-import com.ksy.media.widget.videoview.MediaPlayerVideoView;
+import com.ksy.media.widget.videoview.MediaPlayerTexutureVideoView;
 import com.ksy.mediaPlayer.widget.R;
 
 public class MediaPlayerViewLiveReplay extends RelativeLayout implements
@@ -68,7 +68,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
     private Window mWindow;
     private ViewGroup mRootView;
     //	private MediaPlayerTexutureVideoView mLiveReplayMediaPlayerVideoView;
-    private LiveReplayMediaPlayerVideoView mLiveReplayMediaPlayerVideoView;
+    private MediaPlayerTexutureVideoView  mLiveReplayMediaPlayerVideoView;
     private LiveReplayMediaPlayerControllerView mLiveReplayMediaPlayerControllerView;
 
     private MediaPlayerBufferingView mMediaPlayerBufferingView;
@@ -191,7 +191,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 		/* 初始化UI组件 */
         this.mRootView = (ViewGroup) mLayoutInflater.inflate(
                 R.layout.live_replay_blue_media_player_view, null);
-        this.mLiveReplayMediaPlayerVideoView = (LiveReplayMediaPlayerVideoView) mRootView
+        this.mLiveReplayMediaPlayerVideoView = (MediaPlayerTexutureVideoView) mRootView
                 .findViewById(R.id.live_replay_ks_camera_video_view);
         this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
                 .findViewById(R.id.ks_camera_buffering_view);
@@ -1013,7 +1013,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
         void onError(int errorCode, String errorMsg);
     }
 
-    private final LiveReplayMediaPlayerControllerView.LiveReplayMediaPlayerController mLiveReplayMediaPlayerController = new LiveReplayMediaPlayerControllerView.LiveReplayMediaPlayerController() {
+    private final MediaPlayerController mLiveReplayMediaPlayerController = new MediaPlayerController() {
 
         private Bitmap bitmap;
 
@@ -1263,6 +1263,21 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 
             Log.d(Constants.LOG_TAG,
                     "current video is not playing , set ratio unsupported");
+        }
+
+        @Override
+        public void onMovieCrop() {
+
+        }
+
+        @Override
+        public void onVolumeDown() {
+
+        }
+
+        @Override
+        public void onVolumeUp() {
+
         }
 
     };

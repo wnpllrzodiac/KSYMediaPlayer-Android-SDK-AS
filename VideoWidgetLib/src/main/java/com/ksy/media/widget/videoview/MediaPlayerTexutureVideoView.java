@@ -24,14 +24,13 @@ import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.ViewGroup.LayoutParams;
-
 import com.ksy.media.widget.util.Constants;
+import com.ksy.media.widget.controller.MediaPlayerController;
 import com.ksy.media.widget.util.IStop;
 import com.ksy.media.widget.util.MD5Util;
 import com.ksy.media.widget.util.VideoViewConfig;
 import com.ksy.media.widget.util.IMediaPlayerControl;
 import com.ksy.media.widget.util.IPowerStateListener;
-import com.ksy.media.widget.controller.MediaPlayerBaseControllerView.MediaPlayerController;
 import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
 import com.ksy.media.widget.util.ScreenResolution;
 import com.ksyun.media.player.IMediaPlayer;

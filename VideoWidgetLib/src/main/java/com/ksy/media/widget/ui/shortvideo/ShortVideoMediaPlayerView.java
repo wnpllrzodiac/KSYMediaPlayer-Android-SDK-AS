@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ksy.media.widget.controller.MediaPlayerBaseControllerView;
+import com.ksy.media.widget.controller.MediaPlayerController;
 import com.ksy.media.widget.controller.ShortVideoMediaPlayerControllerView;
 import com.ksy.media.widget.data.MediaPlayMode;
 import com.ksy.media.widget.data.MediaPlayerUtils;
@@ -848,7 +849,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         void onError(int errorCode, String errorMsg);
     }
 
-    private final MediaPlayerBaseControllerView.MediaPlayerController mMediaPlayerController = new MediaPlayerBaseControllerView.MediaPlayerController() {
+    private final MediaPlayerController mMediaPlayerController = new MediaPlayerController() {
 
         private Bitmap bitmap;
 

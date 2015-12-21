@@ -1221,7 +1221,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
         void onError(int errorCode, String errorMsg);
     }
 
-    private final MediaPlayerBaseControllerView.MediaPlayerController mMediaPlayerController = new MediaPlayerBaseControllerView.MediaPlayerController() {
+    private final MediaPlayerController mMediaPlayerController = new MediaPlayerController() {
 
         private Bitmap bitmap;
 

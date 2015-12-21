@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ksy.media.widget.controller.MediaPlayerBaseControllerView.OnGuestureChangeListener;
+import com.ksy.media.widget.controller.OnGuestureChangeListener;
 import com.ksy.media.widget.data.MediaPlayerUtils;
 import com.ksy.mediaPlayer.widget.R;
 

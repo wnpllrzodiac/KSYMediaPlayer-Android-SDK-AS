@@ -17,7 +17,7 @@ import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ksy.media.widget.controller.MediaPlayerBaseControllerView.MediaPlayerController;
+import com.ksy.media.widget.controller.MediaPlayerController;
 import com.ksy.media.widget.data.MediaPlayerMovieRatio;
 import com.ksy.mediaPlayer.widget.R;
 

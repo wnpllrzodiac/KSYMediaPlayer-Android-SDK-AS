@@ -22,8 +22,10 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Toast;
-
 import com.ksy.media.widget.util.Constants;
+import com.ksy.media.widget.controller.MediaPlayerController;
+import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
+import com.ksy.media.widget.ui.video.VideoMediaPlayerView;
 import com.ksy.media.widget.util.IStop;
 import com.ksy.media.widget.util.MD5Util;
 import com.ksy.media.widget.util.VideoViewConfig;

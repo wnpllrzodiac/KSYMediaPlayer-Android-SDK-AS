@@ -18,6 +18,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup.LayoutParams;
@@ -31,7 +32,6 @@ import com.ksy.media.widget.util.MD5Util;
 import com.ksy.media.widget.util.VideoViewConfig;
 import com.ksy.media.widget.util.IMediaPlayerControl;
 import com.ksy.media.widget.util.IPowerStateListener;
-import com.ksy.media.widget.controller.MediaPlayerBaseControllerView.MediaPlayerController;
 import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
 import com.ksy.media.widget.util.ScreenResolution;
 import com.ksyun.media.player.IMediaPlayer;
@@ -107,6 +107,8 @@ public class MediaPlayerVideoView extends SurfaceView implements
     private boolean mHasPrepared = false;
     private VideoViewConfig videoViewConfig = VideoViewConfig.getInstance();
     private IStop callBack;
+    private boolean mNeedUnlock;
+    private boolean misTexturePowetEvent;
 
     public MediaPlayerVideoView(Context context) {
 
@@ -323,6 +325,18 @@ public class MediaPlayerVideoView extends SurfaceView implements
             if (mUri != null) {
                 mMediaPlayer.setDataSource(mUri.toString());
             }
+            if (!misTexturePowetEvent) {
+                if (mSurfaceHolder != null) {
+//                    mSurface = new Surface(mSurfaceTexture);
+                } else {
+                    mSurfaceHolder = getHolder();
+//                    mSurface = new Surface(getSurfaceTexture());
+                }
+            } else {
+                misTexturePowetEvent = false;
+            }
+
+
             mMediaPlayer.setDisplay(mSurfaceHolder);
             mMediaPlayer.setScreenOnWhilePlaying(true);
             mMediaPlayer.prepareAsync();
@@ -578,7 +592,11 @@ public class MediaPlayerVideoView extends SurfaceView implements
 //                    }
                     break;
                 case VideoViewConfig.INTERRUPT_MODE_PAUSE_RESUME:
-                    start();
+                    if (mMediaPlayer != null) {
+                        mMediaPlayer.setSurface(mSurfaceHolder.getSurface());
+                        start();
+                    }
+//                    start();
                     break;
                 case VideoViewConfig.INTERRUPT_MODE_STAY_PLAYING:
                     break;
@@ -869,13 +887,17 @@ public class MediaPlayerVideoView extends SurfaceView implements
     @Override
     public void onPowerState(int state) {
         Log.d(Constants.LOG_TAG, "onPowerState :" + state);
+        Log.d("eflake", "POWER_OFF");
+        misTexturePowetEvent = true;
         switch (state) {
             case Constants.POWER_OFF:
                 switch (videoViewConfig.getInterruptMode()) {
                     case VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE:
-                        mSHCallback.surfaceDestroyed(null);
+//                        mSHCallback.surfaceDestroyed(null);
+                        release(true);
                         break;
                     case VideoViewConfig.INTERRUPT_MODE_PAUSE_RESUME:
+                        pause();
                         break;
                     case VideoViewConfig.INTERRUPT_MODE_STAY_PLAYING:
                         break;
@@ -883,7 +905,24 @@ public class MediaPlayerVideoView extends SurfaceView implements
                 break;
             case Constants.POWER_ON:
                 if (isKeyGuard()) {
+                    Log.d("eflake", "isKeyGuard");
+                    mNeedUnlock = true;
                 } else {
+                    switch (videoViewConfig.getInterruptMode()) {
+                        case VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE:
+//                            mSHCallback.surfaceCreated(mSurfaceHolder);
+                            openVideo();
+                            break;
+                        case VideoViewConfig.INTERRUPT_MODE_PAUSE_RESUME:
+                            start();
+                            break;
+                        case VideoViewConfig.INTERRUPT_MODE_STAY_PLAYING:
+                            break;
+                    }
+                }
+                break;
+            case Constants.USER_PRESENT:
+              /*  if (isAppShowing) {
                     switch (videoViewConfig.getInterruptMode()) {
                         case VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE:
                             mSHCallback.surfaceCreated(mSurfaceHolder);
@@ -893,15 +932,19 @@ public class MediaPlayerVideoView extends SurfaceView implements
                         case VideoViewConfig.INTERRUPT_MODE_STAY_PLAYING:
                             break;
                     }
-                }
-                break;
-            case Constants.USER_PRESENT:
-                if (isAppShowing) {
+                }*/
+                Log.d("eflake", "USER_PRESENT");
+                if (isAppShowing && mNeedUnlock) {
+                    Log.d("eflake", "isKeyGuard");
+                    mNeedUnlock = false;
                     switch (videoViewConfig.getInterruptMode()) {
                         case VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE:
-                            mSHCallback.surfaceCreated(mSurfaceHolder);
+//                            if (!isOpening){
+                            openVideo();
+//                            }
                             break;
                         case VideoViewConfig.INTERRUPT_MODE_PAUSE_RESUME:
+                            start();
                             break;
                         case VideoViewConfig.INTERRUPT_MODE_STAY_PLAYING:
                             break;

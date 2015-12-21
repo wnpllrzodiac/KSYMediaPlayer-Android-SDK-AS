@@ -3,7 +3,6 @@ package com.ksy.media.widget.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ksy.media.player.util.Constants;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,6 +12,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+
+import com.ksy.media.widget.util.Constants;
 
 public class NetReceiver extends BroadcastReceiver {
 

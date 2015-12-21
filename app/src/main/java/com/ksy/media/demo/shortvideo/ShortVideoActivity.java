@@ -24,10 +24,10 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.ksy.media.demo.R;
-import com.ksy.media.player.util.Constants;
 import com.ksy.media.widget.ui.shortvideo.ShortMovieItem;
 import com.ksy.media.widget.ui.shortvideo.ShortVideoListAdapter;
 import com.ksy.media.widget.ui.shortvideo.ShortVideoMediaPlayerView;
+import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.util.VideoViewConfig;
 
 import java.util.ArrayList;

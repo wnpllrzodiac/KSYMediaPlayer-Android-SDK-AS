@@ -15,6 +15,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.ksy.media.widget.util.Constants;
+import com.ksy.mediaPlayer.widget.R;
 
 /**
  * @Description 亮度控制所有控制

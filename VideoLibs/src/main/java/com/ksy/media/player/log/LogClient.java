@@ -14,19 +14,12 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.ConnectivityManager;
 import android.text.TextUtils;
 import android.util.Log;
-import com.ksy.media.player.db.DBManager;
-import com.ksy.media.player.db.RecordResult;
-import com.ksy.media.player.exception.Ks3ClientException;
-import com.ksy.media.player.util.Constants;
-import com.ksy.media.player.util.GzipUtil;
-import com.ksy.media.player.util.NetworkUtil;
 
 
 public class LogClient {

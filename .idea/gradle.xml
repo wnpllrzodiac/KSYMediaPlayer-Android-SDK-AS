@@ -9,7 +9,6 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/VideoLibs" />
             <option value="$PROJECT_DIR$/VideoWidgetLib" />
             <option value="$PROJECT_DIR$/app" />
           </set>

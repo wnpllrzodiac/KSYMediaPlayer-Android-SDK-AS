@@ -15,10 +15,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ksy.media.demo.R;
-import com.ksy.media.player.util.Constants;
 import com.ksy.media.widget.ui.video.VideoMediaPlayerPagerAdapter;
 import com.ksy.media.widget.ui.video.VideoMediaPlayerView;
 import com.ksy.media.widget.ui.video.fragment.CommentListFragment;
+import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.util.VideoViewConfig;
 
 public class OnlineVideoActivity extends AppCompatActivity implements

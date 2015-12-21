@@ -3,9 +3,6 @@ package com.ksy.media.widget.data;
 import java.lang.reflect.Method;
 import java.util.Formatter;
 import java.util.Locale;
-
-import com.ksy.media.player.util.Constants;
-
 import android.content.Context;
 import android.os.Build;
 import android.provider.Settings;
@@ -17,6 +14,8 @@ import android.view.Surface;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.ksy.media.widget.util.Constants;
 
 public class MediaPlayerUtils {
 

@@ -286,9 +286,9 @@ public class StreamMediaPlayerLargeControllerView extends
             mQualityPopup.hide();
         }
 
-        if (mScreenPopup.isShowing()) {
-            mScreenPopup.hide();
-        }
+//        if (mScreenPopup.isShowing()) {
+//            mScreenPopup.hide();
+//        }
 
         // 当前全屏模式,隐藏系统UI
         if (mDeviceNavigationBarExist) {

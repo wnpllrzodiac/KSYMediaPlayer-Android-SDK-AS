@@ -14,8 +14,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ksy.media.demo.R;
-import com.ksy.media.player.util.Constants;
 import com.ksy.media.widget.ui.livereplay.MediaPlayerViewLiveReplay;
+import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.util.VideoViewConfig;
 
 public class PhoneLiveReplayActivity extends AppCompatActivity implements MediaPlayerViewLiveReplay.PlayerViewCallback{

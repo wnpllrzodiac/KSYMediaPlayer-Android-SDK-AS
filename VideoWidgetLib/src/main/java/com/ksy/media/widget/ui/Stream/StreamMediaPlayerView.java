@@ -36,6 +36,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.ksy.media.widget.controller.MediaPlayerBaseControllerView;
+import com.ksy.media.widget.controller.MediaPlayerController;
 import com.ksy.media.widget.controller.StreamMediaPlayerLargeControllerView;
 import com.ksy.media.widget.controller.StreamMediaPlayerSmallControllerView;
 import com.ksy.media.widget.data.MediaPlayMode;

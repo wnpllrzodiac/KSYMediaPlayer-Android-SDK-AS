@@ -1,13 +1,13 @@
 package com.ksy.media.widget.ui.common;
 
-import com.ksy.media.player.util.Constants;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.SeekBar;
+
+import com.ksy.media.widget.util.Constants;
 
 public class MediaPlayerVolumeSeekBar extends SeekBar {
 

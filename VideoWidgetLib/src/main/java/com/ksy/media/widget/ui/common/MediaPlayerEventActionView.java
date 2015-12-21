@@ -9,8 +9,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.ksy.media.player.util.Constants;
 import com.ksy.mediaPlayer.widget.R;
 
 public class MediaPlayerEventActionView extends RelativeLayout {

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.ksy.media.demo.R;
 import com.ksy.media.player.util.Constants;
 import com.ksy.media.widget.ui.live.MediaPlayerViewLive;
+import com.ksy.media.widget.util.VideoViewConfig;
 
 public class PhoneLiveActivity extends AppCompatActivity implements MediaPlayerViewLive.PlayerViewCallback{
 
@@ -30,6 +31,8 @@ public class PhoneLiveActivity extends AppCompatActivity implements MediaPlayerV
         setContentView(R.layout.activity_phone_live);
 
         playerViewLive = (MediaPlayerViewLive) findViewById(R.id.player_view_live);
+        playerViewLive.setVideoViewConfig(true, VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE);
+
         final View dialogView = LayoutInflater.from(this).inflate(
                 R.layout.dialog_input, null);
         final EditText editInput = (EditText) dialogView

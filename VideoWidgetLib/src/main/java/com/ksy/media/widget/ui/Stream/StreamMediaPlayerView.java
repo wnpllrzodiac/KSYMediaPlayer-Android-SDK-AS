@@ -57,9 +57,10 @@ import com.ksy.media.widget.ui.common.MediaPlayerBufferingView;
 import com.ksy.media.widget.ui.common.MediaPlayerEventActionView;
 import com.ksy.media.widget.ui.common.MediaPlayerLoadingView;
 import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
-import com.ksy.media.widget.util.ControlDelay;
+import com.ksy.media.widget.util.IStop;
+import com.ksy.media.widget.util.VideoViewConfig;
 import com.ksy.media.widget.util.IPowerStateListener;
-import com.ksy.media.widget.videoview.StreamMediaPlayerTexutureVideoView;
+import com.ksy.media.widget.videoview.MediaPlayerTexutureVideoView;
 import com.ksy.mediaPlayer.widget.R;
 
 import java.io.File;
@@ -81,7 +82,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
     private Window mWindow;
 
     private ViewGroup mRootView;
-    private StreamMediaPlayerTexutureVideoView mMediaPlayerVideoView;
+    private MediaPlayerTexutureVideoView mMediaPlayerVideoView;
 
     private StreamMediaPlayerLargeControllerView mMediaPlayerLargeControllerView;
     private StreamMediaPlayerSmallControllerView mMediaPlayerSmallControllerView;
@@ -156,7 +157,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
     private TextView mTextViewTotal;
     private TextView mTextViewNet;
 
-    private ControlDelay controlDelay = ControlDelay.getInstance();
+    private VideoViewConfig videoViewConfig = VideoViewConfig.getInstance();
     private Timer totalTimer;
     long uidSizeTemp;
     private volatile boolean mStart = false;
@@ -246,7 +247,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
         // mRootView.findViewById(R.id.player_total);
         // mTextViewNet = (TextView) mRootView.findViewById(R.id.player_net);
 
-        this.mMediaPlayerVideoView = (StreamMediaPlayerTexutureVideoView) mRootView
+        this.mMediaPlayerVideoView = (MediaPlayerTexutureVideoView) mRootView
                 .findViewById(R.id.ks_camera_video_view);
         this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
                 .findViewById(R.id.ks_camera_buffering_view);
@@ -580,7 +581,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
     public void play(String path, boolean isDelay) {
 
         if (this.mMediaPlayerVideoView != null) {
-            controlDelay.setDelay(isDelay);
+            videoViewConfig.setStream(isDelay);
             Log.d(Constants.LOG_TAG, "play() path =" + path);
             url = path;
             this.mMediaPlayerVideoView.setVideoPath(url);
@@ -721,16 +722,19 @@ public class StreamMediaPlayerView extends RelativeLayout implements
     }
 
     public void onResume() {
+        Log.d("eflake","PlayView onResume");
         powerStateListener.onPowerState(Constants.APP_SHOWN);
-
         mWindowActived = true;
-
         enableOrientationEventListener();
         mNetReceiver.registNetBroadCast(getContext());
         mNetReceiver.addNetStateChangeListener(mNetChangedListener);
+        if (mMediaPlayerController.canStart()){
+            mMediaPlayerController.start();
+        }
     }
 
     public void onPause() {
+        Log.d("eflake","PlayView OnPause");
         powerStateListener.onPowerState(Constants.APP_HIDEN);
 
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
@@ -1655,10 +1659,6 @@ public class StreamMediaPlayerView extends RelativeLayout implements
         }
     }
 
-    public interface IStop {
-        void stopTimer();
-    }
-
     // stop timer
     IStop mStop = new IStop() {
         @Override
@@ -1752,5 +1752,8 @@ public class StreamMediaPlayerView extends RelativeLayout implements
         return false;
     }
 
-
+    public void setVideoViewConfig(boolean isStream, int interruptMode) {
+        videoViewConfig.setStream(isStream);
+        videoViewConfig.setInterruptMode(interruptMode);
+    }
 }

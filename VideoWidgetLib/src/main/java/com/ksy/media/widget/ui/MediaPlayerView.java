@@ -51,11 +51,11 @@ import com.ksy.media.widget.ui.common.MediaPlayerBufferingView;
 import com.ksy.media.widget.ui.common.MediaPlayerEventActionView;
 import com.ksy.media.widget.ui.common.MediaPlayerLoadingView;
 import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
-import com.ksy.media.widget.util.ControlDelay;
 import com.ksy.media.widget.util.IPowerStateListener;
 import com.ksy.media.widget.controller.MediaPlayerBaseControllerView;
 import com.ksy.media.widget.controller.MediaPlayerLargeControllerView;
 import com.ksy.media.widget.controller.MediaPlayerSmallControllerView;
+import com.ksy.media.widget.util.VideoViewConfig;
 import com.ksy.media.widget.videoview.MediaPlayerVideoView;
 import com.ksy.media.widget.data.MediaPlayMode;
 import com.ksy.media.widget.data.MediaPlayerUtils;
@@ -152,7 +152,7 @@ public class MediaPlayerView extends RelativeLayout implements
     private TextView mTextViewTotal;
     private TextView mTextViewNet;
 
-    private ControlDelay controlDelay = ControlDelay.getInstance();
+    private VideoViewConfig videoViewConfig = VideoViewConfig.getInstance();
     private Timer totalTimer;
     long uidSizeTemp;
     private volatile boolean mStart = false;
@@ -269,7 +269,6 @@ public class MediaPlayerView extends RelativeLayout implements
         this.mMediaPlayerVideoView.setOnDebugInfoListener(mOnDebugListener);
 
         this.mMediaPlayerVideoView.setFocusable(false);
-        this.mMediaPlayerVideoView.setCallBack(mStop);
         setPowerStateListener(this.mMediaPlayerVideoView);
         /* 设置playerVideoView UI 参数 */
         LayoutParams mediaPlayerVideoViewParams = new LayoutParams(
@@ -572,7 +571,7 @@ public class MediaPlayerView extends RelativeLayout implements
     public void play(String path, boolean isDelay) {
 
         if (this.mMediaPlayerVideoView != null) {
-            controlDelay.setDelay(isDelay);
+            videoViewConfig.setStream(isDelay);
             Log.d(Constants.LOG_TAG, "play() path =" + path);
             url = path;
             this.mMediaPlayerVideoView.setVideoPath(url);

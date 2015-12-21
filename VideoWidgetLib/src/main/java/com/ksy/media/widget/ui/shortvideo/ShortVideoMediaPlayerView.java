@@ -51,7 +51,9 @@ import com.ksy.media.widget.ui.common.MediaPlayerEventActionView;
 import com.ksy.media.widget.ui.common.MediaPlayerLoadingView;
 import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
 import com.ksy.media.widget.util.IPowerStateListener;
-import com.ksy.media.widget.videoview.ShortVideoMediaPlayerTextureVideoView;
+import com.ksy.media.widget.util.IStop;
+import com.ksy.media.widget.util.VideoViewConfig;
+import com.ksy.media.widget.videoview.MediaPlayerTexutureVideoView;
 import com.ksy.mediaPlayer.widget.R;
 
 import java.io.File;
@@ -72,7 +74,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
     private volatile boolean mWindowActived = false;
 
     private ViewGroup mRootView;
-    private ShortVideoMediaPlayerTextureVideoView mMediaPlayerVideoView;
+    private MediaPlayerTexutureVideoView mMediaPlayerVideoView;
 
     private ShortVideoMediaPlayerControllerView mMediaPlayerSmallControllerView;
     private MediaPlayerBufferingView mMediaPlayerBufferingView;
@@ -89,6 +91,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
     private boolean mVideoReady = false;
 
     private boolean mStartAfterPause = false;
+    private VideoViewConfig videoViewConfig = VideoViewConfig.getInstance();
 
     private int mPausePosition = 0;
 
@@ -192,7 +195,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         // mRootView.findViewById(R.id.player_total);
         // mTextViewNet = (TextView) mRootView.findViewById(R.id.player_net);
 
-        this.mMediaPlayerVideoView = (ShortVideoMediaPlayerTextureVideoView) mRootView
+        this.mMediaPlayerVideoView = (MediaPlayerTexutureVideoView) mRootView
                 .findViewById(R.id.ks_camera_video_view);
         this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
                 .findViewById(R.id.ks_camera_buffering_view);
@@ -519,14 +522,19 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
     }
 
     public void onResume() {
+        Log.d("eflake","PlayView onResume");
 
         mWindowActived = true;
         powerStateListener.onPowerState(Constants.APP_SHOWN);
         mNetReceiver.registNetBroadCast(getContext());
         mNetReceiver.addNetStateChangeListener(mNetChangedListener);
+//        if (mMediaPlayerController.canStart()){
+//            mMediaPlayerController.start();
+//        }
     }
 
     public void onPause() {
+        Log.d("eflake","PlayView OnPause");
         powerStateListener.onPowerState(Constants.APP_HIDEN);
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
         mNetReceiver.unRegistNetBroadCast(getContext());
@@ -534,10 +542,10 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
 
         mPausePosition = mMediaPlayerController.getCurrentPosition();
 
-        if (mMediaPlayerController.isPlaying()) {
-            mMediaPlayerController.pause();
-            mStartAfterPause = true;
-        }
+//        if (mMediaPlayerController.isPlaying()) {
+//            mMediaPlayerController.pause();
+//            mStartAfterPause = true;
+//        }
         WakeLocker.release();
     }
 
@@ -1247,10 +1255,6 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         }
     }
 
-    public interface IStop {
-        void stopTimer();
-    }
-
     // stop timer
     IStop mStop = new IStop() {
         @Override
@@ -1342,6 +1346,11 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
             return true;
         }
         return false;
+    }
+
+    public void setVideoViewConfig(boolean isStream, int interruptMode) {
+        videoViewConfig.setStream(isStream);
+        videoViewConfig.setInterruptMode(interruptMode);
     }
 
 }

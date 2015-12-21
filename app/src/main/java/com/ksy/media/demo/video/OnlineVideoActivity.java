@@ -19,6 +19,7 @@ import com.ksy.media.player.util.Constants;
 import com.ksy.media.widget.ui.video.VideoMediaPlayerPagerAdapter;
 import com.ksy.media.widget.ui.video.VideoMediaPlayerView;
 import com.ksy.media.widget.ui.video.fragment.CommentListFragment;
+import com.ksy.media.widget.util.VideoViewConfig;
 
 public class OnlineVideoActivity extends AppCompatActivity implements
         VideoMediaPlayerView.PlayerViewCallback, CommentListFragment.OnFragmentInteractionListener {
@@ -36,7 +37,7 @@ public class OnlineVideoActivity extends AppCompatActivity implements
 
     private void setupViews() {
         playerView = (VideoMediaPlayerView) findViewById(R.id.video_player_view);
-
+        playerView.setVideoViewConfig(false, VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE);
         setupDialog();
         setUpPagerAndTabs();
     }
@@ -137,17 +138,14 @@ public class OnlineVideoActivity extends AppCompatActivity implements
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            finish();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-
-    @Override
     public void onFragmentInteraction(String id) {
 
     }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        playerView.dispatchKeyEvent(event);
+        return true;
+    }
+
 }

@@ -44,10 +44,10 @@ import com.ksy.media.player.util.Constants;
 import com.ksy.media.widget.controller.MediaPlayerBaseControllerView.MediaPlayerController;
 import com.ksy.media.widget.ui.MediaPlayerView.IStop;
 import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
-import com.ksy.media.widget.util.ControlDelay;
 import com.ksy.media.widget.util.IMediaPlayerControl;
 import com.ksy.media.widget.util.IPowerStateListener;
 import com.ksy.media.widget.util.ScreenResolution;
+import com.ksy.media.widget.util.VideoViewConfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -121,7 +121,7 @@ public class LiveReplayMediaPlayerTexutureVideoView extends TextureView implemen
     KSYMediaPlayer ksyMediaPlayer = null;
 
     private boolean mHasPrepared = false;
-    private ControlDelay controlDelay = ControlDelay.getInstance();
+    private VideoViewConfig videoViewConfig = VideoViewConfig.getInstance();
     private IStop callBack;
     private Surface mSurface;
 
@@ -317,9 +317,9 @@ public class LiveReplayMediaPlayerTexutureVideoView extends TextureView implemen
                         .setAnalyseDuration(IMediaPlayer.MEDIA_ANALYSE_DURATION_DEFAULT * 2);
                 ksyMediaPlayer.setTimeout(IMediaPlayer.MEDIA_TIME_OUT_DEFAULT);
                 // 建议直播模式下启动低时延模式setLowDelayEnabled，缓冲时间大于start_drop_frame_threshold时开启，缓冲时间小于stop_drop_frame_threshold关闭
-                Log.d(Constants.LOG_TAG, "controlDelay.isDelay() "
-                        + controlDelay.isDelay());
-                if (controlDelay.isDelay()) {
+                Log.d(Constants.LOG_TAG, "controlDelay.isStream() "
+                        + videoViewConfig.isStream());
+                if (videoViewConfig.isStream()) {
                     ksyMediaPlayer.setLowDelayEnabled(
                             LOW_LATENCY_DROP_AUDIO_VIDEO, 6000, 300);
                 } else {

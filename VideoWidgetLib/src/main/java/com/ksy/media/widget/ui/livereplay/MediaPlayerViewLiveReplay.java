@@ -17,7 +17,6 @@ import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.Color;
 import android.hardware.SensorManager;
 import android.os.Build;
@@ -47,9 +46,8 @@ import com.ksy.media.player.util.NetworkUtil;
 import com.ksy.media.widget.ui.common.MediaPlayerBufferingView;
 import com.ksy.media.widget.ui.common.MediaPlayerLoadingView;
 import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
-import com.ksy.media.widget.util.ControlDelay;
+import com.ksy.media.widget.util.VideoViewConfig;
 import com.ksy.media.widget.util.IPowerStateListener;
-import com.ksy.media.widget.controller.MediaPlayerBaseControllerView;
 import com.ksy.media.widget.controller.LiveReplayMediaPlayerControllerView;
 import com.ksy.media.widget.videoview.LiveReplayMediaPlayerVideoView;
 import com.ksy.media.widget.data.MediaPlayMode;
@@ -58,6 +56,7 @@ import com.ksy.media.widget.data.NetReceiver;
 import com.ksy.media.widget.data.NetReceiver.NetState;
 import com.ksy.media.widget.data.NetReceiver.NetStateChangedListener;
 import com.ksy.media.widget.data.WakeLocker;
+import com.ksy.media.widget.videoview.MediaPlayerVideoView;
 import com.ksy.mediaPlayer.widget.R;
 
 public class MediaPlayerViewLiveReplay extends RelativeLayout implements
@@ -122,7 +121,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 
     private Handler mHandler = new Handler();
 
-    private ControlDelay controlDelay = ControlDelay.getInstance();
+    private VideoViewConfig videoViewConfig = VideoViewConfig.getInstance();
     private Context mContext;
     private IPowerStateListener powerStateListener;
 
@@ -447,8 +446,10 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 
     public void play(String path, boolean isDelay) {
 
+
         if (this.mLiveReplayMediaPlayerVideoView != null) {
-            controlDelay.setDelay(isDelay);
+            videoViewConfig.setStream(isDelay);
+
             Log.d(Constants.LOG_TAG, "play() path =" + path);
             url = path;
             this.mLiveReplayMediaPlayerVideoView.setVideoPath(url);
@@ -463,7 +464,6 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 
         if (mVideoReady && !mMediaPlayerEventActionViewLiveReplay.isShowing()) {
             if (MediaPlayerUtils.isWindowMode(mPlayMode)) {
-                Log.d("lixp","MediaPlayerUtils.isWindowMode(mPlayMode) =" + MediaPlayerUtils.isWindowMode(mPlayMode));
                 return mLiveReplayMediaPlayerControllerView.dispatchTouchEvent(ev);
             }
         }
@@ -549,15 +549,19 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
     }
 
     public void onResume() {
-
+        Log.d("eflake","PlayView onResume");
         mWindowActived = true;
         powerStateListener.onPowerState(Constants.APP_SHOWN);
         enableOrientationEventListener();
         mNetReceiver.registNetBroadCast(getContext());
         mNetReceiver.addNetStateChangeListener(mNetChangedListener);
+//        if (mMediaPlayerController.canStart()){
+//            mMediaPlayerController.start();
+//        }
     }
 
     public void onPause() {
+        Log.d("eflake","PlayView OnPause");
         powerStateListener.onPowerState(Constants.APP_HIDEN);
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
         mNetReceiver.unRegistNetBroadCast(getContext());
@@ -988,6 +992,11 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 
         }
     };
+
+    public void setVideoViewConfig(boolean isStream, int interruptMode) {
+        videoViewConfig.setStream(isStream);
+        videoViewConfig.setInterruptMode(interruptMode);
+    }
 
     public interface PlayerViewCallback {
 

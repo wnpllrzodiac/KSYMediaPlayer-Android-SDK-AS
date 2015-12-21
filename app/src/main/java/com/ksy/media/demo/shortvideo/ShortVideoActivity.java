@@ -28,6 +28,7 @@ import com.ksy.media.player.util.Constants;
 import com.ksy.media.widget.ui.shortvideo.ShortMovieItem;
 import com.ksy.media.widget.ui.shortvideo.ShortVideoListAdapter;
 import com.ksy.media.widget.ui.shortvideo.ShortVideoMediaPlayerView;
+import com.ksy.media.widget.util.VideoViewConfig;
 
 import java.util.ArrayList;
 
@@ -77,6 +78,8 @@ public class ShortVideoActivity extends AppCompatActivity implements
         listView.setAdapter(adapter);
         listView.setOnScrollListener(this);
         playerViewShortMovie = (ShortVideoMediaPlayerView) headView.findViewById(R.id.player_view_short_movie);
+        playerViewShortMovie.setVideoViewConfig(false, VideoViewConfig.INTERRUPT_MODE_PAUSE_RESUME);
+
     }
 
     private void setupAnimation() {
@@ -210,12 +213,9 @@ public class ShortVideoActivity extends AppCompatActivity implements
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            finish();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        playerViewShortMovie.dispatchKeyEvent(event);
+        return true;
     }
 
 

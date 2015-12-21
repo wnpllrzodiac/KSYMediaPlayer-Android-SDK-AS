@@ -57,9 +57,10 @@ import com.ksy.media.widget.ui.common.MediaPlayerBufferingView;
 import com.ksy.media.widget.ui.common.MediaPlayerEventActionView;
 import com.ksy.media.widget.ui.common.MediaPlayerLoadingView;
 import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
-import com.ksy.media.widget.util.ControlDelay;
+import com.ksy.media.widget.util.IStop;
+import com.ksy.media.widget.util.VideoViewConfig;
 import com.ksy.media.widget.util.IPowerStateListener;
-import com.ksy.media.widget.videoview.VideoMediaPlayerVideoView;
+import com.ksy.media.widget.videoview.MediaPlayerVideoView;
 import com.ksy.mediaPlayer.widget.R;
 
 import java.io.File;
@@ -83,7 +84,7 @@ public class VideoMediaPlayerView extends RelativeLayout implements
     private ViewGroup mRootView;
     // private MediaPlayerVideoView mMediaPlayerVideoView;
 //	private MediaPlayerTexutureVideoView mMediaPlayerVideoView;
-    private VideoMediaPlayerVideoView mMediaPlayerVideoView;
+    private MediaPlayerVideoView mMediaPlayerVideoView;
 
     private VideoMediaPlayerLargeControllerView mMediaPlayerLargeControllerView;
     private VideoMediaPlayerSmallControllerView mMediaPlayerSmallControllerView;
@@ -159,7 +160,7 @@ public class VideoMediaPlayerView extends RelativeLayout implements
     private TextView mTextViewTotal;
     private TextView mTextViewNet;
 
-    private ControlDelay controlDelay = ControlDelay.getInstance();
+    private VideoViewConfig videoViewConfig = VideoViewConfig.getInstance();
     private Timer totalTimer;
     long uidSizeTemp;
     private volatile boolean mStart = false;
@@ -246,7 +247,7 @@ public class VideoMediaPlayerView extends RelativeLayout implements
         // mRootView.findViewById(R.id.player_total);
         // mTextViewNet = (TextView) mRootView.findViewById(R.id.player_net);
 
-        this.mMediaPlayerVideoView = (VideoMediaPlayerVideoView) mRootView
+        this.mMediaPlayerVideoView = (MediaPlayerVideoView) mRootView
                 .findViewById(R.id.ks_camera_video_view);
         this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
                 .findViewById(R.id.ks_camera_buffering_view);
@@ -580,7 +581,7 @@ public class VideoMediaPlayerView extends RelativeLayout implements
     public void play(String path, boolean isDelay) {
 
         if (this.mMediaPlayerVideoView != null) {
-            controlDelay.setDelay(isDelay);
+            videoViewConfig.setStream(isDelay);
             Log.d(Constants.LOG_TAG, "play() path =" + path);
             url = path;
             this.mMediaPlayerVideoView.setVideoPath(url);
@@ -615,6 +616,7 @@ public class VideoMediaPlayerView extends RelativeLayout implements
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
+        Log.d("eflake","playview dispatchKeyEvent");
 
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK
                 && event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -721,15 +723,19 @@ public class VideoMediaPlayerView extends RelativeLayout implements
     }
 
     public void onResume() {
-
+        Log.d("eflake","PlayView onResume");
         mWindowActived = true;
         powerStateListener.onPowerState(Constants.APP_SHOWN);
         enableOrientationEventListener();
         mNetReceiver.registNetBroadCast(getContext());
         mNetReceiver.addNetStateChangeListener(mNetChangedListener);
+        if (mMediaPlayerController.canStart()){
+            mMediaPlayerController.start();
+        }
     }
 
     public void onPause() {
+        Log.d("eflake","PlayView OnPause");
         powerStateListener.onPowerState(Constants.APP_HIDEN);
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
         mNetReceiver.unRegistNetBroadCast(getContext());
@@ -1199,6 +1205,11 @@ public class VideoMediaPlayerView extends RelativeLayout implements
         }
     };
 
+    public void setVideoViewConfig(boolean isStream, int interruptMode) {
+        videoViewConfig.setStream(isStream);
+        videoViewConfig.setInterruptMode(interruptMode);
+    }
+
     public interface PlayerViewCallback {
 
         void hideViews();
@@ -1649,10 +1660,6 @@ public class VideoMediaPlayerView extends RelativeLayout implements
         } else {
             return String.format("%d B", size);
         }
-    }
-
-    public interface IStop {
-        void stopTimer();
     }
 
     // stop timer

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.ksy.media.demo.R;
 import com.ksy.media.player.util.Constants;
 import com.ksy.media.widget.ui.livereplay.MediaPlayerViewLiveReplay;
+import com.ksy.media.widget.util.VideoViewConfig;
 
 public class PhoneLiveReplayActivity extends AppCompatActivity implements MediaPlayerViewLiveReplay.PlayerViewCallback{
 
@@ -31,7 +32,7 @@ public class PhoneLiveReplayActivity extends AppCompatActivity implements MediaP
         setContentView(R.layout.activity_phone_live_replay);
 
         playerViewLiveReplay = (MediaPlayerViewLiveReplay) findViewById(R.id.player_view_live_replay);
-
+        playerViewLiveReplay.setVideoViewConfig(false, VideoViewConfig.INTERRUPT_MODE_PAUSE_RESUME);
         final View dialogView = LayoutInflater.from(this).inflate(
                 R.layout.dialog_input, null);
         final EditText editInput = (EditText) dialogView

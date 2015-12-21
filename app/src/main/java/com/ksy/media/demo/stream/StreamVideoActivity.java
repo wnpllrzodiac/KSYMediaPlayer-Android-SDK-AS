@@ -19,6 +19,7 @@ import com.ksy.media.player.util.Constants;
 import com.ksy.media.widget.ui.Stream.StreamMediaPlayerPagerAdapter;
 import com.ksy.media.widget.ui.Stream.StreamMediaPlayerView;
 import com.ksy.media.widget.ui.video.fragment.CommentListFragment;
+import com.ksy.media.widget.util.VideoViewConfig;
 
 public class StreamVideoActivity extends AppCompatActivity implements
         StreamMediaPlayerView.PlayerViewCallback, CommentListFragment.OnFragmentInteractionListener {
@@ -37,7 +38,7 @@ public class StreamVideoActivity extends AppCompatActivity implements
 
     private void setupViews() {
         playerView = (StreamMediaPlayerView) findViewById(R.id.stream_player_view);
-
+        playerView.setVideoViewConfig(true, VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE);
         setupDialog();
         setUpPagerAndTabs();
     }
@@ -136,12 +137,9 @@ public class StreamVideoActivity extends AppCompatActivity implements
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            finish();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        playerView.dispatchKeyEvent(event);
+        return true;
     }
 
 

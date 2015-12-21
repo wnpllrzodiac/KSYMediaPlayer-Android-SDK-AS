@@ -35,14 +35,6 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.ksy.media.player.IMediaPlayer;
-import com.ksy.media.player.util.Constants;
-import com.ksy.media.player.util.DRMKey;
-import com.ksy.media.player.util.DRMRetrieverManager;
-import com.ksy.media.player.util.DRMRetrieverResponseHandler;
-import com.ksy.media.player.util.IDRMRetriverRequest;
-import com.ksy.media.player.util.NetworkUtil;
 import com.ksy.media.widget.controller.MediaPlayerBaseControllerView;
 import com.ksy.media.widget.controller.StreamMediaPlayerLargeControllerView;
 import com.ksy.media.widget.controller.StreamMediaPlayerSmallControllerView;
@@ -57,11 +49,18 @@ import com.ksy.media.widget.ui.common.MediaPlayerBufferingView;
 import com.ksy.media.widget.ui.common.MediaPlayerEventActionView;
 import com.ksy.media.widget.ui.common.MediaPlayerLoadingView;
 import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
+import com.ksy.media.widget.util.Constants;
+import com.ksy.media.widget.util.DRMKey;
+import com.ksy.media.widget.util.DRMRetrieverManager;
+import com.ksy.media.widget.util.DRMRetrieverResponseHandler;
+import com.ksy.media.widget.util.IDRMRetriverRequest;
 import com.ksy.media.widget.util.IStop;
+import com.ksy.media.widget.util.NetworkUtil;
 import com.ksy.media.widget.util.VideoViewConfig;
 import com.ksy.media.widget.util.IPowerStateListener;
 import com.ksy.media.widget.videoview.MediaPlayerTexutureVideoView;
 import com.ksy.mediaPlayer.widget.R;
+import com.ksyun.media.player.IMediaPlayer;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -267,15 +266,15 @@ public class StreamMediaPlayerView extends RelativeLayout implements
         this.mMediaPlayerVideoView
                 .setOnCompletionListener(mOnCompletionListener);
         this.mMediaPlayerVideoView.setOnInfoListener(mOnInfoListener);
-        this.mMediaPlayerVideoView
-                .setOnDRMRequiredListener(mOnDRMRequiredListener);
+//        this.mMediaPlayerVideoView
+//                .setOnDRMRequiredListener(mOnDRMRequiredListener);
         this.mMediaPlayerVideoView.setOnErrorListener(mOnErrorListener);
-        this.mMediaPlayerVideoView.setOnSurfaceListener(mOnSurfaceListener);
+//        this.mMediaPlayerVideoView.setOnSurfaceListener(mOnSurfaceListener);
         this.mMediaPlayerVideoView
                 .setMediaPlayerController(mMediaPlayerController);
-        this.mMediaPlayerVideoView
-                .setOnSpeedListener(mOnPlaybackNetSpeedListener);
-        this.mMediaPlayerVideoView.setOnDebugInfoListener(mOnDebugListener);
+//        this.mMediaPlayerVideoView
+//                .setOnSpeedListener(mOnPlaybackNetSpeedListener);
+//        this.mMediaPlayerVideoView.setOnDebugInfoListener(mOnDebugListener);
 
         this.mMediaPlayerVideoView.setFocusable(false);
         this.mMediaPlayerVideoView.setCallBack(mStop);
@@ -1032,10 +1031,10 @@ public class StreamMediaPlayerView extends RelativeLayout implements
         public boolean onInfo(IMediaPlayer mp, int what, int extra) {
 
             switch (what) {
-                case IMediaPlayer.MEDIA_INFO_METADATA_SPEED:
-                    // Log.i(Constants.LOG_TAG, "MEDIA_INFO_METADATA_SPEED:"
-                    // +extra);
-                    break;
+//                case IMediaPlayer.MEDIA_INFO_METADATA_SPEED:
+//                    // Log.i(Constants.LOG_TAG, "MEDIA_INFO_METADATA_SPEED:"
+//                    // +extra);
+//                    break;
                 // 视频缓冲开始
                 case IMediaPlayer.MEDIA_INFO_BUFFERING_START:
                     Log.i(Constants.LOG_TAG, "MEDIA_INFO_BUFFERING_START");
@@ -1053,18 +1052,18 @@ public class StreamMediaPlayerView extends RelativeLayout implements
         }
     };
 
-    IMediaPlayer.OnDRMRequiredListener mOnDRMRequiredListener = new IMediaPlayer.OnDRMRequiredListener() {
-
-        @Override
-        public void OnDRMRequired(IMediaPlayer mp, int what, int extra,
-                                  String version) {
-
-            Toast.makeText(getContext(),
-                    "begin drm retriving..version :" + version,
-                    Toast.LENGTH_SHORT).show();
-            requestDRMKey(version);
-        }
-    };
+//    IMediaPlayer.OnDRMRequiredListener mOnDRMRequiredListener = new IMediaPlayer.OnDRMRequiredListener() {
+//
+//        @Override
+//        public void OnDRMRequired(IMediaPlayer mp, int what, int extra,
+//                                  String version) {
+//
+//            Toast.makeText(getContext(),
+//                    "begin drm retriving..version :" + version,
+//                    Toast.LENGTH_SHORT).show();
+//            requestDRMKey(version);
+//        }
+//    };
 
     private void requestDRMKey(final String version) {
 
@@ -1078,7 +1077,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
                 @Override
                 public void onSuccess(String version, String cek) {
 
-                    mMediaPlayerVideoView.setDRMKey(version, cek);
+//                    mMediaPlayerVideoView.setDRMKey(version, cek);
                     Toast.makeText(
                             getContext(),
                             "DRM KEY retrieve success,ver :" + version
@@ -1136,20 +1135,20 @@ public class StreamMediaPlayerView extends RelativeLayout implements
         }
     };
 
-    IMediaPlayer.OnNetSpeedListener mOnPlaybackNetSpeedListener = new IMediaPlayer.OnNetSpeedListener() {
-        @Override
-        public void onNetSpeedUpdate(IMediaPlayer mp, int arg1, int arg2) {
+//    IMediaPlayer.OnNetSpeedListener mOnPlaybackNetSpeedListener = new IMediaPlayer.OnNetSpeedListener() {
+//        @Override
+//        public void onNetSpeedUpdate(IMediaPlayer mp, int arg1, int arg2) {
             // arg2 = arg2 / 1024 / 8; KB/s
 //			mTextViewSpeed.setText(getResources().getString(R.string.net_speed)
 //					+ " " + arg2 + " bit/s");
-        }
-    };
+//        }
+//    };
 
 
-    IMediaPlayer.OnDebugInfoListener mOnDebugListener = new IMediaPlayer.OnDebugInfoListener() {
-
-        @Override
-        public void onDebugInfo(IMediaPlayer mp, int type, int arg1, int arg2) {
+//    IMediaPlayer.OnDebugInfoListener mOnDebugListener = new IMediaPlayer.OnDebugInfoListener() {
+//
+//        @Override
+//        public void onDebugInfo(IMediaPlayer mp, int type, int arg1, int arg2) {
 
             // if (type == 10002) {
             // mTextViewDemux.setText("demux:" + arg1 + " , " + arg2);
@@ -1158,8 +1157,8 @@ public class StreamMediaPlayerView extends RelativeLayout implements
             // } else if (type == 10004) {
             // mTextViewTime.setText("time:" + arg1 + " , " + arg2);
             // }
-        }
-    };
+//        }
+//    };
 
     IMediaPlayer.OnErrorListener mOnErrorListener = new IMediaPlayer.OnErrorListener() {
 
@@ -1180,32 +1179,32 @@ public class StreamMediaPlayerView extends RelativeLayout implements
         }
     };
 
-    IMediaPlayer.OnSurfaceListener mOnSurfaceListener = new IMediaPlayer.OnSurfaceListener() {
-
-        @Override
-        public void surfaceDestroyed(SurfaceHolder holder) {
-
-            Log.i(Constants.LOG_TAG, "surfaceDestroyed");
-            mVideoReady = false;
-            mMediaPlayerLargeControllerView.hide();
-            mMediaPlayerSmallControllerView.hide();
-            mMediaPlayerBufferingView.hide();
-            mMediaPlayerLoadingView.hide();
-
-        }
-
-        @Override
-        public void surfaceCreated(SurfaceHolder holder) {
-
-            Log.i(Constants.LOG_TAG, "MediaPlayerView surfaceCreated");
-        }
-
-        @Override
-        public void surfaceChanged(SurfaceHolder holder, int format, int w,
-                                   int h) {
-
-        }
-    };
+//    IMediaPlayer.OnSurfaceListener mOnSurfaceListener = new IMediaPlayer.OnSurfaceListener() {
+//
+//        @Override
+//        public void surfaceDestroyed(SurfaceHolder holder) {
+//
+//            Log.i(Constants.LOG_TAG, "surfaceDestroyed");
+//            mVideoReady = false;
+//            mMediaPlayerLargeControllerView.hide();
+//            mMediaPlayerSmallControllerView.hide();
+//            mMediaPlayerBufferingView.hide();
+//            mMediaPlayerLoadingView.hide();
+//
+//        }
+//
+//        @Override
+//        public void surfaceCreated(SurfaceHolder holder) {
+//
+//            Log.i(Constants.LOG_TAG, "MediaPlayerView surfaceCreated");
+//        }
+//
+//        @Override
+//        public void surfaceChanged(SurfaceHolder holder, int format, int w,
+//                                   int h) {
+//
+//        }
+//    };
 
     public interface PlayerViewCallback {
 
@@ -1455,7 +1454,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
                     return;
                 } else {
                     mCurrentPlayingRatio = mCurrentPlayingRatio + 0.5f;
-                    mMediaPlayerVideoView.setVideoRate(mCurrentPlayingRatio);
+//                    mMediaPlayerVideoView.setVideoRate(mCurrentPlayingRatio);
                     Log.d(Constants.LOG_TAG, "set playing ratio to --->"
                             + mCurrentPlayingRatio);
                 }
@@ -1476,7 +1475,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
                     return;
                 } else {
                     mCurrentPlayingRatio = mCurrentPlayingRatio - 0.5f;
-                    mMediaPlayerVideoView.setVideoRate(mCurrentPlayingRatio);
+//                    mMediaPlayerVideoView.setVideoRate(mCurrentPlayingRatio);
                     Log.d(Constants.LOG_TAG, "set playing ratio to --->"
                             + mCurrentPlayingRatio);
                     return;
@@ -1496,7 +1495,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
                         mMediaPlayerVideoView.getVideoHeight(),
                         Config.ARGB_8888);
                 if (bitmap != null) {
-                    mMediaPlayerVideoView.getCurrentFrame(bitmap);
+//                    mMediaPlayerVideoView.getCurrentFrame(bitmap);
                     compressAndSaveBitmapToSDCard(bitmap, getCurrentTime(),
                             StreamMediaPlayerView.QUALITY_BEST);
                     /*
@@ -1526,8 +1525,8 @@ public class StreamMediaPlayerView extends RelativeLayout implements
                     return;
                 } else {
                     mCurrentPlayingVolumeRatio = mCurrentPlayingVolumeRatio - 0.5f;
-                    mMediaPlayerVideoView
-                            .setAudioAmplify(mCurrentPlayingVolumeRatio);
+//                    mMediaPlayerVideoView
+//                            .setAudioAmplify(mCurrentPlayingVolumeRatio);
                     Log.d(Constants.LOG_TAG, "set playing volume to --->"
                             + mCurrentPlayingVolumeRatio);
                     return;
@@ -1545,8 +1544,8 @@ public class StreamMediaPlayerView extends RelativeLayout implements
                     return;
                 } else {
                     mCurrentPlayingVolumeRatio = mCurrentPlayingVolumeRatio + 0.5f;
-                    mMediaPlayerVideoView
-                            .setAudioAmplify(mCurrentPlayingVolumeRatio);
+//                    mMediaPlayerVideoView
+//                            .setAudioAmplify(mCurrentPlayingVolumeRatio);
                     Log.d(Constants.LOG_TAG, "set playing volume to --->"
                             + mCurrentPlayingVolumeRatio);
                 }

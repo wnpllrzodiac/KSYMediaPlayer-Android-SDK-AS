@@ -25,30 +25,18 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.ViewGroup.LayoutParams;
 
-import com.ksy.media.player.IMediaPlayer;
-import com.ksy.media.player.IMediaPlayer.OnBufferingUpdateListener;
-import com.ksy.media.player.IMediaPlayer.OnCompletionListener;
-import com.ksy.media.player.IMediaPlayer.OnDRMRequiredListener;
-import com.ksy.media.player.IMediaPlayer.OnDebugInfoListener;
-import com.ksy.media.player.IMediaPlayer.OnErrorListener;
-import com.ksy.media.player.IMediaPlayer.OnInfoListener;
-import com.ksy.media.player.IMediaPlayer.OnNetSpeedListener;
-import com.ksy.media.player.IMediaPlayer.OnPreparedListener;
-import com.ksy.media.player.IMediaPlayer.OnSeekCompleteListener;
-import com.ksy.media.player.IMediaPlayer.OnSurfaceListener;
-import com.ksy.media.player.IMediaPlayer.OnVideoSizeChangedListener;
-import com.ksy.media.player.KSYMediaPlayer;
-import com.ksy.media.player.MediaInfo;
-import com.ksy.media.player.option.AvFourCC;
-import com.ksy.media.player.option.format.AvFormatOption_HttpDetectRangeSupport;
-import com.ksy.media.player.util.Constants;
+import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.util.IStop;
+import com.ksy.media.widget.util.MD5Util;
 import com.ksy.media.widget.util.VideoViewConfig;
 import com.ksy.media.widget.util.IMediaPlayerControl;
 import com.ksy.media.widget.util.IPowerStateListener;
 import com.ksy.media.widget.controller.MediaPlayerBaseControllerView.MediaPlayerController;
 import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
 import com.ksy.media.widget.util.ScreenResolution;
+import com.ksyun.media.player.IMediaPlayer;
+import com.ksyun.media.player.KSYMediaPlayer;
+import com.ksyun.media.player.MediaInfo;
 
 import android.view.TextureView.SurfaceTextureListener;
 import android.widget.Toast;
@@ -104,17 +92,17 @@ public class MediaPlayerTexutureVideoView extends TextureView implements
     private int mVideoSarDen;
     private int mSurfaceWidth;
     private int mSurfaceHeight;
-    private OnDebugInfoListener mOnDebugInfoListener;
-    private OnCompletionListener mOnCompletionListener;
-    private OnPreparedListener mOnPreparedListener;
-    private OnErrorListener mOnErrorListener;
-    private OnSeekCompleteListener mOnSeekCompleteListener;
-    private OnInfoListener mOnInfoListener;
-    private OnDRMRequiredListener mOnDRMRequiredListener;
-    private OnBufferingUpdateListener mOnBufferingUpdateListener;
-    private OnSurfaceListener mOnSurfaceListener;
+    //    private OnDebugInfoListener mOnDebugInfoListener;
+    private IMediaPlayer.OnCompletionListener mOnCompletionListener;
+    private IMediaPlayer.OnPreparedListener mOnPreparedListener;
+    private IMediaPlayer.OnErrorListener mOnErrorListener;
+    private IMediaPlayer.OnSeekCompleteListener mOnSeekCompleteListener;
+    private IMediaPlayer.OnInfoListener mOnInfoListener;
+    //    private OnDRMRequiredListener mOnDRMRequiredListener;
+    private IMediaPlayer.OnBufferingUpdateListener mOnBufferingUpdateListener;
+    //    private OnSurfaceListener mOnSurfaceListener;
     private MediaPlayerController mMediaPlayerController;
-    private OnNetSpeedListener mOnNetSpeedListener;
+//    private OnNetSpeedListener mOnNetSpeedListener;
 
     private int mCurrentBufferPercentage;
     // private long mSeekWhenPrepared;
@@ -308,31 +296,25 @@ public class MediaPlayerTexutureVideoView extends TextureView implements
                  * cpu占用率每50秒取一次，用户可自定义; true为开启日志 开关，false关闭开关;
                  * waqu为用户key可以自定义的，需要自己传，只能是 字母（不分大小写），其他的都是无效的
                  */
-                ksyMediaPlayer = new KSYMediaPlayer(mContext, 50000, false,
-                        "test");
-                ksyMediaPlayer
-                        .setAvOption(AvFormatOption_HttpDetectRangeSupport.Disable);
-                ksyMediaPlayer.setOverlayFormat(AvFourCC.SDL_FCC_RV32);
+                String timeSec = String.valueOf(System.currentTimeMillis() / 1000);
+                String skSign = MD5Util.md5("sb56661c74aabc0df83d723a8d3eba69" + timeSec);
+                ksyMediaPlayer = new KSYMediaPlayer.Builder(mContext.getApplicationContext()).setAppId("QYA0788DA337D2E0EC45").setAccessKey("a8b4dff4665f6e69ba6cbeb8ebadc9a3").setSecretKeySign(skSign).setTimeSec(timeSec).build();
+
+//                ksyMediaPlayer
+//                        .setAvOption(AvFormatOption_HttpDetectRangeSupport.Disable);
+//                ksyMediaPlayer.setOverlayFormat(AvFourCC.SDL_FCC_RV32);
                 // ksyMediaPlayer.setAvCodecOption("skip_loop_filter", "48");
-                ksyMediaPlayer.setFrameDrop(0);
-                ksyMediaPlayer
-                        .setBufferSize(IMediaPlayer.MEDIA_BUFFERSIZE_DEFAULT);
-                ksyMediaPlayer
-                        .setAnalyseDuration(IMediaPlayer.MEDIA_ANALYSE_DURATION_DEFAULT * 2);
-                ksyMediaPlayer.setTimeout(IMediaPlayer.MEDIA_TIME_OUT_DEFAULT);
+//                ksyMediaPlayer.setFrameDrop(0);
+//                ksyMediaPlayer
+//                        .setBufferSize(IMediaPlayer.MEDIA_BUFFERSIZE_DEFAULT);
+//                ksyMediaPlayer
+//                        .setAnalyseDuration(IMediaPlayer.MEDIA_ANALYSE_DURATION_DEFAULT * 2);
+//                ksyMediaPlayer.setTimeout(IMediaPlayer.MEDIA_TIME_OUT_DEFAULT);
                 // 建议直播模式下启动低时延模式setLowDelayEnabled，缓冲时间大于start_drop_frame_threshold时开启，缓冲时间小于stop_drop_frame_threshold关闭
                 Log.d(Constants.LOG_TAG, "controlDelay.isStream() "
                         + videoViewConfig.isStream());
-                if (videoViewConfig.isStream()) {
-                    ksyMediaPlayer.setLowDelayEnabled(
-                            LOW_LATENCY_DROP_AUDIO_VIDEO, 6000, 300);
-                } else {
-                    ksyMediaPlayer
-                            .setLowDelayEnabled(LOW_LATENCY_NO, 6000, 300);
-                }
-
                 // 设置暂停状态下仍然缓存
-                ksyMediaPlayer.setCacheInPause(true);
+//                ksyMediaPlayer.setCacheInPause(true);
                 // 设置缓存路径
                 ksyMediaPlayer.clearCachedFiles(new File(Environment
                         .getExternalStorageDirectory(), "ksy_cached_temp")
@@ -340,9 +322,9 @@ public class MediaPlayerTexutureVideoView extends TextureView implements
                 ksyMediaPlayer.setCachedDir(new File(Environment
                         .getExternalStorageDirectory(), "ksy_cached_temp")
                         .getPath());
-                if (mUserAgent != null) {
-                    ksyMediaPlayer.setAvFormatOption("user_agent", mUserAgent);
-                }
+//                if (mUserAgent != null) {
+//                    ksyMediaPlayer.setAvFormatOption("user_agent", mUserAgent);
+//                }
             } else {
                 Log.e(Constants.LOG_TAG, "mUri is null ");
             }
@@ -353,11 +335,11 @@ public class MediaPlayerTexutureVideoView extends TextureView implements
             mMediaPlayer.setOnCompletionListener(mCompletionListener);
             mMediaPlayer.setOnErrorListener(mErrorListener);
             mMediaPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);
-            mMediaPlayer.setOnNetSpeedUpdateListener(mNetSpeedListener);
+//            mMediaPlayer.setOnNetSpeedUpdateListener(mNetSpeedListener);
             mMediaPlayer.setOnInfoListener(mInfoListener);
-            mMediaPlayer.setOnDRMRequiredListener(mDRMRequiredListener);
+//            mMediaPlayer.setOnDRMRequiredListener(mDRMRequiredListener);
             mMediaPlayer.setOnSeekCompleteListener(mSeekCompleteListener);
-            mMediaPlayer.setOnDebugInfoListener(mDebugInfoListener);
+//            mMediaPlayer.setOnDebugInfoListener(mDebugInfoListener);
             // For test add header
             // Map<String, String> headers = new HashMap<String, String>();
             // headers.put("User-Agent", "Android");
@@ -365,7 +347,7 @@ public class MediaPlayerTexutureVideoView extends TextureView implements
             // if (mUri != null)
             // mMediaPlayer.setDataSource(mUri.toString(), headers);
             if (mUri != null) {
-                mMediaPlayer.setDataSource(mUri.toString(), null);
+                mMediaPlayer.setDataSource(mUri.toString());
             }
             if (!misTexturePowetEvent) {
                 if (mSurfaceTexture != null) {
@@ -400,7 +382,7 @@ public class MediaPlayerTexutureVideoView extends TextureView implements
         }
     }
 
-    OnVideoSizeChangedListener mSizeChangedListener = new OnVideoSizeChangedListener() {
+    IMediaPlayer.OnVideoSizeChangedListener mSizeChangedListener = new IMediaPlayer.OnVideoSizeChangedListener() {
 
         @Override
         public void onVideoSizeChanged(IMediaPlayer mp, int width, int height,
@@ -414,7 +396,7 @@ public class MediaPlayerTexutureVideoView extends TextureView implements
         }
     };
 
-    OnPreparedListener mPreparedListener = new OnPreparedListener() {
+    IMediaPlayer.OnPreparedListener mPreparedListener = new IMediaPlayer.OnPreparedListener() {
 
         @Override
         public void onPrepared(IMediaPlayer mp) {
@@ -430,14 +412,14 @@ public class MediaPlayerTexutureVideoView extends TextureView implements
             mVideoWidth = mp.getVideoWidth();
             mVideoHeight = mp.getVideoHeight();
             // For test source ip
-            Bundle bundle = mp.getMediaMeta();
-            String source_ip = bundle
-                    .getString(MediaPlayerTexutureVideoView.KEY_SOUCE_IP);
-            Log.d(Constants.LOG_TAG, "Source IP = " + source_ip);
+//            Bundle bundle = mp.getMediaMeta();
+//            String source_ip = bundle
+//                    .getString(MediaPlayerTexutureVideoView.KEY_SOUCE_IP);
+//            Log.d(Constants.LOG_TAG, "Source IP = " + source_ip);
         }
     };
 
-    private final OnCompletionListener mCompletionListener = new OnCompletionListener() {
+    private final IMediaPlayer.OnCompletionListener mCompletionListener = new IMediaPlayer.OnCompletionListener() {
 
         @Override
         public void onCompletion(IMediaPlayer mp) {
@@ -451,7 +433,7 @@ public class MediaPlayerTexutureVideoView extends TextureView implements
         }
     };
 
-    private final OnErrorListener mErrorListener = new OnErrorListener() {
+    private final IMediaPlayer.OnErrorListener mErrorListener = new IMediaPlayer.OnErrorListener() {
 
         @Override
         public boolean onError(IMediaPlayer mp, int framework_err, int impl_err) {
@@ -471,7 +453,7 @@ public class MediaPlayerTexutureVideoView extends TextureView implements
         }
     };
 
-    private final OnBufferingUpdateListener mBufferingUpdateListener = new OnBufferingUpdateListener() {
+    private final IMediaPlayer.OnBufferingUpdateListener mBufferingUpdateListener = new IMediaPlayer.OnBufferingUpdateListener() {
 
         @Override
         public void onBufferingUpdate(IMediaPlayer mp, int percent) {
@@ -482,18 +464,18 @@ public class MediaPlayerTexutureVideoView extends TextureView implements
         }
     };
 
-    private final OnNetSpeedListener mNetSpeedListener = new OnNetSpeedListener() {
+//    private final OnNetSpeedListener mNetSpeedListener = new OnNetSpeedListener() {
+//
+//        @Override
+//        public void onNetSpeedUpdate(IMediaPlayer mp, int arg1, int arg2) {
+//
+//            if (mOnNetSpeedListener != null) {
+//                mOnNetSpeedListener.onNetSpeedUpdate(mp, arg1, arg2);
+//            }
+//        }
+//    };
 
-        @Override
-        public void onNetSpeedUpdate(IMediaPlayer mp, int arg1, int arg2) {
-
-            if (mOnNetSpeedListener != null) {
-                mOnNetSpeedListener.onNetSpeedUpdate(mp, arg1, arg2);
-            }
-        }
-    };
-
-    private final OnInfoListener mInfoListener = new OnInfoListener() {
+    private final IMediaPlayer.OnInfoListener mInfoListener = new IMediaPlayer.OnInfoListener() {
 
         @Override
         public boolean onInfo(IMediaPlayer mp, int what, int extra) {
@@ -505,30 +487,30 @@ public class MediaPlayerTexutureVideoView extends TextureView implements
         }
     };
 
-    private final OnDRMRequiredListener mDRMRequiredListener = new OnDRMRequiredListener() {
+//    private final OnDRMRequiredListener mDRMRequiredListener = new OnDRMRequiredListener() {
+//
+//        @Override
+//        public void OnDRMRequired(IMediaPlayer mp, int what, int extra,
+//                                  String version) {
+//
+//            if (mOnDRMRequiredListener != null) {
+//                mOnDRMRequiredListener.OnDRMRequired(mp, what, extra, version);
+//            }
+//        }
+//
+//    };
+//
+//    private OnDebugInfoListener mDebugInfoListener = new OnDebugInfoListener() {
+//
+//        @Override
+//        public void onDebugInfo(IMediaPlayer mp, int type, int arg1, int arg2) {
+//            if (mOnDebugInfoListener != null) {
+//                mOnDebugInfoListener.onDebugInfo(mp, type, arg1, arg2);
+//            }
+//        }
+//    };
 
-        @Override
-        public void OnDRMRequired(IMediaPlayer mp, int what, int extra,
-                                  String version) {
-
-            if (mOnDRMRequiredListener != null) {
-                mOnDRMRequiredListener.OnDRMRequired(mp, what, extra, version);
-            }
-        }
-
-    };
-
-    private OnDebugInfoListener mDebugInfoListener = new OnDebugInfoListener() {
-
-        @Override
-        public void onDebugInfo(IMediaPlayer mp, int type, int arg1, int arg2) {
-            if (mOnDebugInfoListener != null) {
-                mOnDebugInfoListener.onDebugInfo(mp, type, arg1, arg2);
-            }
-        }
-    };
-
-    private final OnSeekCompleteListener mSeekCompleteListener = new OnSeekCompleteListener() {
+    private final IMediaPlayer.OnSeekCompleteListener mSeekCompleteListener = new IMediaPlayer.OnSeekCompleteListener() {
 
         @Override
         public void onSeekComplete(IMediaPlayer mp) {
@@ -544,54 +526,54 @@ public class MediaPlayerTexutureVideoView extends TextureView implements
 
         mMediaPlayerController = mediaPlayerController;
     }
+//
+//    public void setOnDebugInfoListener(OnDebugInfoListener l) {
+//        mOnDebugInfoListener = l;
+//    }
 
-    public void setOnDebugInfoListener(OnDebugInfoListener l) {
-        mOnDebugInfoListener = l;
-    }
-
-    public void setOnPreparedListener(OnPreparedListener l) {
+    public void setOnPreparedListener(IMediaPlayer.OnPreparedListener l) {
 
         mOnPreparedListener = l;
     }
 
-    public void setOnCompletionListener(OnCompletionListener l) {
+    public void setOnCompletionListener(IMediaPlayer.OnCompletionListener l) {
 
         mOnCompletionListener = l;
     }
 
-    public void setOnErrorListener(OnErrorListener l) {
+    public void setOnErrorListener(IMediaPlayer.OnErrorListener l) {
 
         mOnErrorListener = l;
     }
 
-    public void setOnBufferingUpdateListener(OnBufferingUpdateListener l) {
+    public void setOnBufferingUpdateListener(IMediaPlayer.OnBufferingUpdateListener l) {
 
         mOnBufferingUpdateListener = l;
     }
 
-    public void setOnSpeedListener(OnNetSpeedListener l) {
-        mOnNetSpeedListener = l;
-    }
+//    public void setOnSpeedListener(OnNetSpeedListener l) {
+//        mOnNetSpeedListener = l;
+//    }
 
-    public void setOnSeekCompleteListener(OnSeekCompleteListener l) {
+    public void setOnSeekCompleteListener(IMediaPlayer.OnSeekCompleteListener l) {
 
         mOnSeekCompleteListener = l;
     }
 
-    public void setOnInfoListener(OnInfoListener l) {
+    public void setOnInfoListener(IMediaPlayer.OnInfoListener l) {
 
         mOnInfoListener = l;
     }
 
-    public void setOnDRMRequiredListener(OnDRMRequiredListener l) {
+//    public void setOnDRMRequiredListener(OnDRMRequiredListener l) {
+//
+//        mOnDRMRequiredListener = l;
+//    }
 
-        mOnDRMRequiredListener = l;
-    }
-
-    public void setOnSurfaceListener(OnSurfaceListener l) {
-
-        mOnSurfaceListener = l;
-    }
+//    public void setOnSurfaceListener(OnSurfaceListener l) {
+//
+//        mOnSurfaceListener = l;
+//    }
 
     private boolean mIsDismiss;
     private KeyguardManager km;
@@ -818,36 +800,36 @@ public class MediaPlayerTexutureVideoView extends TextureView implements
     }
 
     // P1 Added Interface
-    public void setAudioAmplify(float ratio) {
+//    public void setAudioAmplify(float ratio) {
 
-        mMediaPlayer.setAudioAmplify(ratio);
-    }
+//        mMediaPlayer.setAudioAmplify(ratio);
+//    }
 
-    public void setVideoRate(float rate) {
+//    public void setVideoRate(float rate) {
+//
+//        mMediaPlayer.setVideoRate(rate);
+//    }
+//
+//    public void getCurrentFrame(Bitmap bitmap) {
+//
+//        mMediaPlayer.getCurrentFrame(bitmap);
+//    }
 
-        mMediaPlayer.setVideoRate(rate);
-    }
-
-    public void getCurrentFrame(Bitmap bitmap) {
-
-        mMediaPlayer.getCurrentFrame(bitmap);
-    }
-
-    public void setBufferSize(int size) {
-
-        mMediaPlayer.setBufferSize(size);
-    }
-
-    public void setAnalyseDuration(int duration) {
-
-        mMediaPlayer.setAnalyseDuration(duration);
-    }
+//    public void setBufferSize(int size) {
+//
+//        mMediaPlayer.setBufferSize(size);
+//    }
+//
+//    public void setAnalyseDuration(int duration) {
+//
+//        mMediaPlayer.setAnalyseDuration(duration);
+//    }
 
     // P2 Added Interface
-    public void setDRMKey(String version, String key) {
-
-        mMediaPlayer.setDRMKey(version, key);
-    }
+//    public void setDRMKey(String version, String key) {
+//
+//        mMediaPlayer.setDRMKey(version, key);
+//    }
 
     @Override
     public void onPowerState(int state) {

@@ -11,7 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.ksy.media.player.util.Constants;
+import com.ksy.media.widget.util.Constants;
 import com.ksy.mediaPlayer.widget.R;
 
 /**

@@ -80,9 +80,9 @@
     <string name="live_place">直播地点：</string>
     <string name="live_place_content">美国纽约</string>
     <string name="live_attention_plus">+  关注</string>
-    <string name="live_replay_current_time">当前时间</string>
+    <string name="live_replay_current_time">00:00:00</string>
     <string name="live_replay_line">/</string>
-    <string name="live_replay_total_time">总时间</string>
+    <string name="live_replay_total_time">00:00:00</string>
     <string name="live_replay_net_error"> 网络状况不好，稍后再看</string>
     <string name="live_replay_notice">我是路飞我是路飞我是路飞</string>
 

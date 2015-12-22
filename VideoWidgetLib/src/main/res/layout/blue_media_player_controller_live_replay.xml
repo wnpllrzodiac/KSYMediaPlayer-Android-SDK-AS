@@ -38,7 +38,7 @@
             android:src="@drawable/live_person_grey"/>
         <TextView
             android:id="@+id/person_count_textview"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:text="88人"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="12dp"

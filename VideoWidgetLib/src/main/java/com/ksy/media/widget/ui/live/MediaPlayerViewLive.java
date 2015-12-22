@@ -23,7 +23,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.OrientationEventListener;
-import android.view.SurfaceHolder;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -31,11 +30,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.ksy.media.widget.util.Constants;
-import com.ksy.media.widget.util.DRMKey;
-import com.ksy.media.widget.util.DRMRetrieverManager;
-import com.ksy.media.widget.util.DRMRetrieverResponseHandler;
-import com.ksy.media.widget.util.IDRMRetriverRequest;
-import com.ksy.media.widget.util.IStop;
 import com.ksy.media.widget.util.NetworkUtil;
 import com.ksy.media.widget.util.VideoViewConfig;
 import com.ksy.media.widget.util.IPowerStateListener;
@@ -50,9 +44,7 @@ import com.ksy.media.widget.data.WakeLocker;
 import com.ksy.media.widget.ui.common.MediaPlayerBufferingView;
 import com.ksy.media.widget.ui.common.MediaPlayerLoadingView;
 import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
-import com.ksy.media.widget.util.VideoViewConfig;
-import com.ksy.media.widget.util.IPowerStateListener;
-import com.ksy.media.widget.videoview.MediaPlayerTexutureVideoView;
+import com.ksy.media.widget.videoview.MediaPlayerTextureVideoView;
 import com.ksy.mediaPlayer.widget.R;
 import com.ksyun.media.player.IMediaPlayer;
 
@@ -73,7 +65,7 @@ public class MediaPlayerViewLive extends RelativeLayout implements
 
     private ViewGroup mRootView;
     //	private MediaPlayerTexutureVideoView mLiveMediaPlayerVideoView;
-    private MediaPlayerTexutureVideoView mLiveMediaPlayerVideoView;
+    private MediaPlayerTextureVideoView mLiveMediaPlayerVideoView;
 
     private LiveMediaPlayerControllerView mLiveMediaPlayerControllerView;
     private MediaPlayerBufferingView mMediaPlayerBufferingView;
@@ -195,7 +187,7 @@ public class MediaPlayerViewLive extends RelativeLayout implements
         this.mRootView = (ViewGroup) mLayoutInflater.inflate(
                 R.layout.live_blue_media_player_view, null);
 
-        this.mLiveMediaPlayerVideoView = (MediaPlayerTexutureVideoView) mRootView
+        this.mLiveMediaPlayerVideoView = (MediaPlayerTextureVideoView) mRootView
                 .findViewById(R.id.live_ks_camera_video_view);
         this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
                 .findViewById(R.id.ks_camera_buffering_view);

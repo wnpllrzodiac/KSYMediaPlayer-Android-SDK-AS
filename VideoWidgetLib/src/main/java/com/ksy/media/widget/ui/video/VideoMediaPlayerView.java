@@ -1754,4 +1754,12 @@ public class VideoMediaPlayerView extends RelativeLayout implements
         return false;
     }
 
+    public void stopPlayback(){
+        mMediaPlayerVideoView.stopPlayback();
+    }
+
+    public void reopen(){
+        mMediaPlayerVideoView.setVideoPath(url);
+    }
+
 }

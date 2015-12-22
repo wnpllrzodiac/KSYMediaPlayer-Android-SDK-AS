@@ -29,7 +29,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.OrientationEventListener;
-import android.view.SurfaceHolder;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -37,11 +36,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.ksy.media.widget.util.Constants;
-import com.ksy.media.widget.util.DRMKey;
-import com.ksy.media.widget.util.DRMRetrieverManager;
-import com.ksy.media.widget.util.DRMRetrieverResponseHandler;
-import com.ksy.media.widget.util.IDRMRetriverRequest;
-import com.ksy.media.widget.util.IStop;
 import com.ksy.media.widget.util.NetworkUtil;
 import com.ksy.media.widget.util.VideoViewConfig;
 import com.ksy.media.widget.util.IPowerStateListener;
@@ -49,8 +43,6 @@ import com.ksy.media.widget.controller.MediaPlayerController;
 import com.ksy.media.widget.ui.common.MediaPlayerBufferingView;
 import com.ksy.media.widget.ui.common.MediaPlayerLoadingView;
 import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
-import com.ksy.media.widget.util.VideoViewConfig;
-import com.ksy.media.widget.util.IPowerStateListener;
 import com.ksy.media.widget.controller.LiveReplayMediaPlayerControllerView;
 import com.ksy.media.widget.data.MediaPlayMode;
 import com.ksy.media.widget.data.MediaPlayerUtils;
@@ -58,7 +50,7 @@ import com.ksy.media.widget.data.NetReceiver;
 import com.ksy.media.widget.data.NetReceiver.NetState;
 import com.ksy.media.widget.data.NetReceiver.NetStateChangedListener;
 import com.ksy.media.widget.data.WakeLocker;
-import com.ksy.media.widget.videoview.MediaPlayerTexutureVideoView;
+import com.ksy.media.widget.videoview.MediaPlayerTextureVideoView;
 import com.ksy.mediaPlayer.widget.R;
 import com.ksyun.media.player.IMediaPlayer;
 
@@ -71,7 +63,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
     private Window mWindow;
     private ViewGroup mRootView;
     //	private MediaPlayerTexutureVideoView mLiveReplayMediaPlayerVideoView;
-    private MediaPlayerTexutureVideoView  mLiveReplayMediaPlayerVideoView;
+    private MediaPlayerTextureVideoView mLiveReplayMediaPlayerVideoView;
     private LiveReplayMediaPlayerControllerView mLiveReplayMediaPlayerControllerView;
 
     private MediaPlayerBufferingView mMediaPlayerBufferingView;
@@ -194,7 +186,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 		/* 初始化UI组件 */
         this.mRootView = (ViewGroup) mLayoutInflater.inflate(
                 R.layout.live_replay_blue_media_player_view, null);
-        this.mLiveReplayMediaPlayerVideoView = (MediaPlayerTexutureVideoView) mRootView
+        this.mLiveReplayMediaPlayerVideoView = (MediaPlayerTextureVideoView) mRootView
                 .findViewById(R.id.live_replay_ks_camera_video_view);
         this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
                 .findViewById(R.id.ks_camera_buffering_view);

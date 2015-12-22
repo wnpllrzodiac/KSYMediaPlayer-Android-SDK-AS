@@ -27,7 +27,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.OrientationEventListener;
-import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -35,7 +34,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.ksy.media.widget.controller.MediaPlayerBaseControllerView;
+
 import com.ksy.media.widget.controller.MediaPlayerController;
 import com.ksy.media.widget.controller.StreamMediaPlayerLargeControllerView;
 import com.ksy.media.widget.controller.StreamMediaPlayerSmallControllerView;
@@ -59,7 +58,7 @@ import com.ksy.media.widget.util.IStop;
 import com.ksy.media.widget.util.NetworkUtil;
 import com.ksy.media.widget.util.VideoViewConfig;
 import com.ksy.media.widget.util.IPowerStateListener;
-import com.ksy.media.widget.videoview.MediaPlayerTexutureVideoView;
+import com.ksy.media.widget.videoview.MediaPlayerTextureVideoView;
 import com.ksy.mediaPlayer.widget.R;
 import com.ksyun.media.player.IMediaPlayer;
 
@@ -82,7 +81,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
     private Window mWindow;
 
     private ViewGroup mRootView;
-    private MediaPlayerTexutureVideoView mMediaPlayerVideoView;
+    private MediaPlayerTextureVideoView mMediaPlayerVideoView;
 
     private StreamMediaPlayerLargeControllerView mMediaPlayerLargeControllerView;
     private StreamMediaPlayerSmallControllerView mMediaPlayerSmallControllerView;
@@ -247,7 +246,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
         // mRootView.findViewById(R.id.player_total);
         // mTextViewNet = (TextView) mRootView.findViewById(R.id.player_net);
 
-        this.mMediaPlayerVideoView = (MediaPlayerTexutureVideoView) mRootView
+        this.mMediaPlayerVideoView = (MediaPlayerTextureVideoView) mRootView
                 .findViewById(R.id.ks_camera_video_view);
         this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
                 .findViewById(R.id.ks_camera_buffering_view);

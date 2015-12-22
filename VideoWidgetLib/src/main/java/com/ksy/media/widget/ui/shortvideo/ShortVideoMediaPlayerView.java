@@ -23,7 +23,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -31,7 +30,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ksy.media.widget.controller.MediaPlayerBaseControllerView;
 import com.ksy.media.widget.controller.MediaPlayerController;
 import com.ksy.media.widget.controller.ShortVideoMediaPlayerControllerView;
 import com.ksy.media.widget.data.MediaPlayMode;
@@ -48,12 +46,8 @@ import com.ksy.media.widget.util.IPowerStateListener;
 import com.ksy.media.widget.util.IStop;
 import com.ksy.media.widget.util.VideoViewConfig;
 import com.ksy.media.widget.util.Constants;
-import com.ksy.media.widget.util.DRMKey;
-import com.ksy.media.widget.util.DRMRetrieverManager;
-import com.ksy.media.widget.util.DRMRetrieverResponseHandler;
-import com.ksy.media.widget.util.IDRMRetriverRequest;
 import com.ksy.media.widget.util.NetworkUtil;
-import com.ksy.media.widget.videoview.MediaPlayerTexutureVideoView;
+import com.ksy.media.widget.videoview.MediaPlayerTextureVideoView;
 import com.ksy.mediaPlayer.widget.R;
 import com.ksyun.media.player.IMediaPlayer;
 
@@ -75,7 +69,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
     private volatile boolean mWindowActived = false;
 
     private ViewGroup mRootView;
-    private MediaPlayerTexutureVideoView mMediaPlayerVideoView;
+    private MediaPlayerTextureVideoView mMediaPlayerVideoView;
 
     private ShortVideoMediaPlayerControllerView mMediaPlayerSmallControllerView;
     private MediaPlayerBufferingView mMediaPlayerBufferingView;
@@ -196,7 +190,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         // mRootView.findViewById(R.id.player_total);
         // mTextViewNet = (TextView) mRootView.findViewById(R.id.player_net);
 
-        this.mMediaPlayerVideoView = (MediaPlayerTexutureVideoView) mRootView
+        this.mMediaPlayerVideoView = (MediaPlayerTextureVideoView) mRootView
                 .findViewById(R.id.ks_camera_video_view);
         this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
                 .findViewById(R.id.ks_camera_buffering_view);

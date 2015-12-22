@@ -104,6 +104,7 @@ public class CommentListFragment extends Fragment implements AbsListView.OnItemC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (null != mListener) {
+            mListener.onFragmentInteraction(position + "");
         }
     }
 
@@ -156,12 +157,10 @@ public class CommentListFragment extends Fragment implements AbsListView.OnItemC
     }
 
     private void hideCommentLayout() {
-        Log.d("ok", "hide");
         view_container.removeView(commentLayout);
     }
 
     private void showCommentLayout() {
-        Log.d("ok", "show");
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelSize(R.dimen.video_comment_distance));
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         view_container.addView(commentLayout, params);

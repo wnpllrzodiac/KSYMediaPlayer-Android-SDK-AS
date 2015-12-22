@@ -7,32 +7,28 @@ import android.app.KeyguardManager;
 import android.app.KeyguardManager.KeyguardLock;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Environment;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Toast;
+
 import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.controller.MediaPlayerController;
 import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
-import com.ksy.media.widget.ui.video.VideoMediaPlayerView;
 import com.ksy.media.widget.util.IStop;
 import com.ksy.media.widget.util.MD5Util;
 import com.ksy.media.widget.util.VideoViewConfig;
 import com.ksy.media.widget.util.IMediaPlayerControl;
 import com.ksy.media.widget.util.IPowerStateListener;
-import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
 import com.ksy.media.widget.util.ScreenResolution;
 import com.ksyun.media.player.IMediaPlayer;
 import com.ksyun.media.player.IMediaPlayer.*;
@@ -47,16 +43,9 @@ public class MediaPlayerVideoView extends SurfaceView implements
         IMediaPlayerControl, IPowerStateListener {
 
     private static final String TAG = MediaPlayerVideoView.class.getName();
-    public volatile boolean isReleasing = false;
-    public volatile boolean isNeedHandlerOpen = false;
     private Uri mUri;
     private long mDuration;
     private MediaInfo mMediaInfo;
-    private String mUserAgent;
-    private static final int LOW_LATENCY_NO = 0;
-    private static final int LOW_LATENCY_DROP_AUDIO = 1;
-    private static final int LOW_LATENCY_DROP_AUDIO_VIDEO = 2;
-
     private static final int STATE_ERROR = -1;
     private static final int STATE_IDLE = 0;
     private static final int STATE_PREPARING = 1;
@@ -70,15 +59,13 @@ public class MediaPlayerVideoView extends SurfaceView implements
 
     public int mCurrentState = STATE_IDLE;
     private int mTargetState = STATE_IDLE;
-
     private int mVideoLayout = VIDEO_LAYOUT_SCALE;
     public static final int VIDEO_LAYOUT_ORIGIN = 0;
     public static final int VIDEO_LAYOUT_SCALE = 1;
     public static final int VIDEO_LAYOUT_STRETCH = 2;
     public static final int VIDEO_LAYOUT_ZOOM = 3;
-
     protected static final String KEY_SOUCE_IP = "source_ip";
-
+    KSYMediaPlayer ksyMediaPlayer = null;
     private SurfaceHolder mSurfaceHolder = null;
     private IMediaPlayer mMediaPlayer = null;
     private int mVideoWidth;
@@ -87,49 +74,42 @@ public class MediaPlayerVideoView extends SurfaceView implements
     private int mVideoSarDen;
     private int mSurfaceWidth;
     private int mSurfaceHeight;
-    //    private OnDebugInfoListener mOnDebugInfoListener;
     private OnCompletionListener mOnCompletionListener;
     private OnPreparedListener mOnPreparedListener;
     private OnErrorListener mOnErrorListener;
     private OnSeekCompleteListener mOnSeekCompleteListener;
     private OnInfoListener mOnInfoListener;
+    //    private long mSeekWhenPrepared;
+    //    private OnNetSpeedListener mOnNetSpeedListener;
+    //    private OnSurfaceListener mOnSurfaceListener;
+    //    private OnDebugInfoListener mOnDebugInfoListener;
     //    private OnDRMRequiredListener mOnDRMRequiredListener;
     private OnBufferingUpdateListener mOnBufferingUpdateListener;
-    //    private OnSurfaceListener mOnSurfaceListener;
     private MediaPlayerController mMediaPlayerController;
-//    private OnNetSpeedListener mOnNetSpeedListener;
-
     private int mCurrentBufferPercentage;
-    // private long mSeekWhenPrepared;
     private Context mContext;
-    KSYMediaPlayer ksyMediaPlayer = null;
-
     private boolean mHasPrepared = false;
     private VideoViewConfig videoViewConfig = VideoViewConfig.getInstance();
     private IStop callBack;
     private boolean mNeedUnlock;
-    private boolean misTexturePowetEvent;
+    private boolean misTexturePowerEvent;
 
     public MediaPlayerVideoView(Context context) {
-
         super(context);
         initVideoView(context);
     }
 
     public MediaPlayerVideoView(Context context, AttributeSet attrs) {
-
         this(context, attrs, 0);
         initVideoView(context);
     }
 
     public MediaPlayerVideoView(Context context, AttributeSet attrs,
                                 int defStyle) {
-
         super(context, attrs, defStyle);
         initVideoView(context);
     }
 
-    // stop get flow timer
     public void setCallBack(IStop callBack) {
         this.callBack = callBack;
     }
@@ -142,7 +122,6 @@ public class MediaPlayerVideoView extends SurfaceView implements
     }
 
     public void setVideoLayout(int layout) {
-
         LayoutParams lp = getLayoutParams();
         Pair<Integer, Integer> res = ScreenResolution.getResolution(mContext);
         int windowWidth = res.first.intValue(), windowHeight = res.second
@@ -193,7 +172,6 @@ public class MediaPlayerVideoView extends SurfaceView implements
 			 * (int) (videoRatio * windowHeight); lp.height = (windowRatio >
 			 * videoRatio) ? windowHeight : (int) (windowWidth / videoRatio); }
 			 */
-
             setLayoutParams(lp);
             getHolder().setFixedSize(mSurfaceWidth, mSurfaceHeight);
 
@@ -202,7 +180,6 @@ public class MediaPlayerVideoView extends SurfaceView implements
     }
 
     private void initVideoView(Context ctx) {
-
         mContext = ctx;
         mVideoWidth = 0;
         mVideoHeight = 0;
@@ -216,7 +193,6 @@ public class MediaPlayerVideoView extends SurfaceView implements
         mTargetState = STATE_IDLE;
         if (ctx instanceof Activity)
             ((Activity) ctx).setVolumeControlStream(AudioManager.STREAM_MUSIC);
-        // handler = new ReleaseHandler();
     }
 
     public boolean isValid() {
@@ -224,29 +200,19 @@ public class MediaPlayerVideoView extends SurfaceView implements
     }
 
     public void setVideoPath(String path) {
-
         Log.i(Constants.LOG_TAG, "setVideoPath : path=" + path);
         setVideoURI(Uri.parse(path));
     }
 
     public void setVideoURI(Uri uri) {
-
         mUri = uri;
         openVideo();
         requestLayout();
         invalidate();
     }
 
-    public void setUserAgent(String ua) {
-
-        mUserAgent = ua;
-    }
-
     public void stopPlayback() {
-
-        Log.i(Constants.LOG_TAG, "on stop ");
         if (mMediaPlayer != null) {
-            mMediaPlayer.stop();
             mMediaPlayer.release();
             mMediaPlayer = null;
             mCurrentState = STATE_IDLE;
@@ -255,8 +221,6 @@ public class MediaPlayerVideoView extends SurfaceView implements
     }
 
     private void openVideo() {
-
-        Log.i(Constants.LOG_TAG, "openVideo");
         if (mUri == null || mSurfaceHolder == null) {
             return;
         }
@@ -269,38 +233,22 @@ public class MediaPlayerVideoView extends SurfaceView implements
             mDuration = -1;
             mCurrentBufferPercentage = 0;
             mMediaInfo = null;
-
             if (mUri != null) {
                 String timeSec = String.valueOf(System.currentTimeMillis() / 1000);
                 String skSign = MD5Util.md5("sb56661c74aabc0df83d723a8d3eba69" + timeSec);
                 ksyMediaPlayer = new KSYMediaPlayer.Builder(mContext.getApplicationContext()).setAppId("QYA0788DA337D2E0EC45").setAccessKey("a8b4dff4665f6e69ba6cbeb8ebadc9a3").setSecretKeySign(skSign).setTimeSec(timeSec).build();
-
-//                ksyMediaPlayer
-//                        .setAvOption(AvFormatOption_HttpDetectRangeSupport.Disable);
-//                ksyMediaPlayer.setOverlayFormat(AvFourCC.SDL_FCC_RV32);
-//                ksyMediaPlayer.setFrameDrop(0);
-//                // For test
 //                ksyMediaPlayer.setRetryCount(3);
-//                ksyMediaPlayer
-//                        .setBufferSize(IMediaPlayer.MEDIA_BUFFERSIZE_DEFAULT);
-//                ksyMediaPlayer
-//                        .setAnalyseDuration(IMediaPlayer.MEDIA_ANALYSE_DURATION_DEFAULT * 2);
-//                ksyMediaPlayer.setTimeout(IMediaPlayer.MEDIA_TIME_OUT_DEFAULT);
-                // 建议直播模式下启动低时延模式setLowDelayEnabled，缓冲时间大于start_drop_frame_threshold时开启，缓冲时间小于stop_drop_frame_threshold关闭
-                Log.d(Constants.LOG_TAG, "controlDelay.isStream() "
+                ksyMediaPlayer
+                        .setBufferSize(Constants.MEDIA_BUFFERSIZE_DEFAULT);
+                ksyMediaPlayer.setTimeout(Constants.MEDIA_TIME_OUT_DEFAULT);
+                Log.d(Constants.LOG_TAG, "isStream = "
                         + videoViewConfig.isStream());
-                // 设置暂停状态下仍然缓存
-//                ksyMediaPlayer.setCacheInPause(true);
-                // 设置缓存路径
                 ksyMediaPlayer.clearCachedFiles(new File(Environment
                         .getExternalStorageDirectory(), "ksy_cached_temp")
                         .getPath());
                 ksyMediaPlayer.setCachedDir(new File(Environment
                         .getExternalStorageDirectory(), "ksy_cached_temp")
                         .getPath());
-//                if (mUserAgent != null) {
-//                    ksyMediaPlayer.setAvFormatOption("user_agent", mUserAgent);
-//                }
             } else {
                 Log.e(Constants.LOG_TAG, "mUri is null ");
             }
@@ -311,10 +259,10 @@ public class MediaPlayerVideoView extends SurfaceView implements
             mMediaPlayer.setOnCompletionListener(mCompletionListener);
             mMediaPlayer.setOnErrorListener(mErrorListener);
             mMediaPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);
-//            mMediaPlayer.setOnNetSpeedUpdateListener(mNetSpeedListener);
             mMediaPlayer.setOnInfoListener(mInfoListener);
-//            mMediaPlayer.setOnDRMRequiredListener(mDRMRequiredListener);
             mMediaPlayer.setOnSeekCompleteListener(mSeekCompleteListener);
+//            mMediaPlayer.setOnNetSpeedUpdateListener(mNetSpeedListener);
+//            mMediaPlayer.setOnDRMRequiredListener(mDRMRequiredListener);
 //            mMediaPlayer.setOnDebugInfoListener(mDebugInfoListener);
             // For test add header
             // Map<String, String> headers = new HashMap<String, String>();
@@ -325,18 +273,14 @@ public class MediaPlayerVideoView extends SurfaceView implements
             if (mUri != null) {
                 mMediaPlayer.setDataSource(mUri.toString());
             }
-            if (!misTexturePowetEvent) {
+            if (!misTexturePowerEvent) {
                 if (mSurfaceHolder != null) {
-//                    mSurface = new Surface(mSurfaceTexture);
                 } else {
                     mSurfaceHolder = getHolder();
-//                    mSurface = new Surface(getSurfaceTexture());
                 }
             } else {
-                misTexturePowetEvent = false;
+                misTexturePowerEvent = false;
             }
-
-
             mMediaPlayer.setDisplay(mSurfaceHolder);
             mMediaPlayer.setScreenOnWhilePlaying(true);
             mMediaPlayer.prepareAsync();
@@ -420,7 +364,6 @@ public class MediaPlayerVideoView extends SurfaceView implements
             mCurrentState = STATE_ERROR;
             mTargetState = STATE_ERROR;
 
-			/* If an error handler has been supplied, use it and finish. */
             if (mOnErrorListener != null) {
                 if (mOnErrorListener.onError(mMediaPlayer, framework_err,
                         impl_err)) {
@@ -559,13 +502,10 @@ public class MediaPlayerVideoView extends SurfaceView implements
         @Override
         public void surfaceChanged(SurfaceHolder holder, int format, int w,
                                    int h) {
-
-            Log.i(Constants.LOG_TAG, "surfaceChanged in videoview");
             mSurfaceHolder = holder;
             if (mMediaPlayer != null) {
                 mMediaPlayer.setDisplay(mSurfaceHolder);
             }
-
             mSurfaceWidth = w;
             mSurfaceHeight = h;
 //            if (mOnSurfaceListener != null)
@@ -574,53 +514,37 @@ public class MediaPlayerVideoView extends SurfaceView implements
 
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
-            Log.i("eflake", "surfaceCreated in video view");
+            Log.d(Constants.LOG_TAG, "MediaPlayerVideoView surfaceCreated");
             mSurfaceHolder = holder;
             switch (videoViewConfig.getInterruptMode()) {
                 case VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE:
-//                    if (mMediaPlayer != null && mCurrentState == STATE_SUSPEND
-//                            && mTargetState == STATE_RESUME) {
-//                        Log.i(Constants.LOG_TAG, "surfaceCreated  resume in video view");
-//                        mMediaPlayer.setDisplay(mSurfaceHolder);
-//                        resume();
-//                    } else {
-                    Log.i(Constants.LOG_TAG,
-                            "surfaceCreated  openVideo in video view");
-                    Log.d(Constants.LOG_TAG, "current is releasing = "
-                            + isReleasing);
+                    Log.d(Constants.LOG_TAG, "MediaPlayerVideoView surfaceCreated Create");
                     openVideo();
-//                    }
                     break;
                 case VideoViewConfig.INTERRUPT_MODE_PAUSE_RESUME:
                     if (mMediaPlayer != null) {
+                        Log.d(Constants.LOG_TAG, "MediaPlayerVideoView surfaceCreated Start");
                         mMediaPlayer.setSurface(mSurfaceHolder.getSurface());
                         start();
                     }
-//                    start();
                     break;
                 case VideoViewConfig.INTERRUPT_MODE_STAY_PLAYING:
                     break;
             }
-
 //            if (mOnSurfaceListener != null)
 //                mOnSurfaceListener.surfaceCreated(holder);
         }
 
         @Override
         public void surfaceDestroyed(SurfaceHolder holder) {
-            Log.i("eflake", "surfaceDestroyed in videoview");
-            // mSurfaceHolder = null;
+            Log.d(Constants.LOG_TAG, "MediaPlayerVideoView surfaceDestroyed");
             switch (videoViewConfig.getInterruptMode()) {
                 case VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE:
-//                    if (mCurrentState != STATE_SUSPEND) {
-                    Log.i(Constants.LOG_TAG, "surfaceDestroyed release");
+                    Log.d(Constants.LOG_TAG, "MediaPlayerVideoView surfaceDestroyed Release");
                     release(true);
-                    // callBack.stopTimer();
-//                    }
-//                    if (mOnSurfaceListener != null)
-//                        mOnSurfaceListener.surfaceDestroyed(holder);
                     break;
                 case VideoViewConfig.INTERRUPT_MODE_PAUSE_RESUME:
+                    Log.d(Constants.LOG_TAG, "MediaPlayerVideoView surfaceDestroyed Pause");
                     pause();
                     break;
                 case VideoViewConfig.INTERRUPT_MODE_STAY_PLAYING:
@@ -646,11 +570,11 @@ public class MediaPlayerVideoView extends SurfaceView implements
                 mTargetState = STATE_IDLE;
         }
         Log.e(Constants.LOG_TAG,
-                "videoview release cost :"
+                "MediaPlayerVideoView release cost :"
                         + String.valueOf(System.currentTimeMillis() - current));
         Toast.makeText(
                 mContext.getApplicationContext(),
-                "videoview release cost :"
+                "MediaPlayerVideoView release cost :"
                         + String.valueOf(System.currentTimeMillis() - current),
                 Toast.LENGTH_SHORT).show();
     }
@@ -886,17 +810,17 @@ public class MediaPlayerVideoView extends SurfaceView implements
 
     @Override
     public void onPowerState(int state) {
-        Log.d(Constants.LOG_TAG, "onPowerState :" + state);
-        Log.d("eflake", "POWER_OFF");
-        misTexturePowetEvent = true;
+        misTexturePowerEvent = true;
         switch (state) {
             case Constants.POWER_OFF:
+                Log.d(Constants.LOG_TAG, "POWER_OFF");
                 switch (videoViewConfig.getInterruptMode()) {
                     case VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE:
-//                        mSHCallback.surfaceDestroyed(null);
+                        Log.d(Constants.LOG_TAG, "POWER_OFF Release");
                         release(true);
                         break;
                     case VideoViewConfig.INTERRUPT_MODE_PAUSE_RESUME:
+                        Log.d(Constants.LOG_TAG, "POWER_OFF Pause");
                         pause();
                         break;
                     case VideoViewConfig.INTERRUPT_MODE_STAY_PLAYING:
@@ -904,16 +828,19 @@ public class MediaPlayerVideoView extends SurfaceView implements
                 }
                 break;
             case Constants.POWER_ON:
+                Log.d(Constants.LOG_TAG, "POWER_ON");
                 if (isKeyGuard()) {
-                    Log.d("eflake", "isKeyGuard");
+                    Log.d(Constants.LOG_TAG, "is KeyGuard");
                     mNeedUnlock = true;
                 } else {
+                    Log.d(Constants.LOG_TAG, "no KeyGuard");
                     switch (videoViewConfig.getInterruptMode()) {
                         case VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE:
-//                            mSHCallback.surfaceCreated(mSurfaceHolder);
+                            Log.d(Constants.LOG_TAG, "POWER_ON Create");
                             openVideo();
                             break;
                         case VideoViewConfig.INTERRUPT_MODE_PAUSE_RESUME:
+                            Log.d(Constants.LOG_TAG, "POWER_ON Start");
                             start();
                             break;
                         case VideoViewConfig.INTERRUPT_MODE_STAY_PLAYING:
@@ -922,28 +849,17 @@ public class MediaPlayerVideoView extends SurfaceView implements
                 }
                 break;
             case Constants.USER_PRESENT:
-              /*  if (isAppShowing) {
-                    switch (videoViewConfig.getInterruptMode()) {
-                        case VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE:
-                            mSHCallback.surfaceCreated(mSurfaceHolder);
-                            break;
-                        case VideoViewConfig.INTERRUPT_MODE_PAUSE_RESUME:
-                            break;
-                        case VideoViewConfig.INTERRUPT_MODE_STAY_PLAYING:
-                            break;
-                    }
-                }*/
-                Log.d("eflake", "USER_PRESENT");
+                Log.d(Constants.LOG_TAG, "USER_PRESENT");
                 if (isAppShowing && mNeedUnlock) {
-                    Log.d("eflake", "isKeyGuard");
+                    Log.d(Constants.LOG_TAG, "is KeyGuard");
                     mNeedUnlock = false;
                     switch (videoViewConfig.getInterruptMode()) {
                         case VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE:
-//                            if (!isOpening){
+                            Log.d(Constants.LOG_TAG, "is KeyGuard Create");
                             openVideo();
-//                            }
                             break;
                         case VideoViewConfig.INTERRUPT_MODE_PAUSE_RESUME:
+                            Log.d(Constants.LOG_TAG, "is KeyGuard Start");
                             start();
                             break;
                         case VideoViewConfig.INTERRUPT_MODE_STAY_PLAYING:
@@ -967,7 +883,6 @@ public class MediaPlayerVideoView extends SurfaceView implements
         km = (KeyguardManager) mContext
                 .getSystemService(Context.KEYGUARD_SERVICE);
         if (km.isKeyguardSecure() || km.isKeyguardLocked()) {
-            Log.d(Constants.LOG_TAG, "locked");
             return true;
         } else {
             return false;

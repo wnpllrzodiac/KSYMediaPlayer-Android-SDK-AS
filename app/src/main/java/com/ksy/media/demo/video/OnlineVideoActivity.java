@@ -139,7 +139,8 @@ public class OnlineVideoActivity extends AppCompatActivity implements
 
     @Override
     public void onFragmentInteraction(String id) {
-
+        playerView.stopPlayback();
+        playerView.reopen();
     }
 
     @Override

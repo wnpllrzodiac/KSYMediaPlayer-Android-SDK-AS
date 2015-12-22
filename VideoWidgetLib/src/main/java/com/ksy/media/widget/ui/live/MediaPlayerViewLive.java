@@ -525,9 +525,9 @@ public class MediaPlayerViewLive extends RelativeLayout implements
         // 请求窗口模式
         else if (MediaPlayerUtils.isWindowMode(requestPlayMode)) {
 
-            if (mLayoutParamWindowMode == null)
+            if (mLayoutParamWindowMode == null) {
                 return false;
-
+            }
             addView(mLiveMediaPlayerControllerView,
                     mMediaPlayerControllerViewSmallParams);
             this.setLayoutParams(mLayoutParamWindowMode);
@@ -826,6 +826,7 @@ public class MediaPlayerViewLive extends RelativeLayout implements
                 }
             } else {
                 mIsComplete = true;
+                mLiveMediaPlayerControllerView.setVisibility(GONE);
                 mMediaPlayerEventActionViewLive
                         .updateEventMode(
                                 mMediaPlayerEventActionViewLive.EVENT_ACTION_VIEW_MODE_COMPLETE,
@@ -973,7 +974,7 @@ public class MediaPlayerViewLive extends RelativeLayout implements
 
             Log.e(Constants.LOG_TAG, "On Native Error,what :" + what
                     + " , extra :" + extra);
-//            mLiveMediaPlayerControllerView.hide();
+            mLiveMediaPlayerControllerView.setVisibility(GONE);
             mMediaPlayerBufferingView.hide();
             mMediaPlayerLoadingView.hide();
             mMediaPlayerEventActionViewLive.updateEventMode(

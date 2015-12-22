@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -59,6 +60,9 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 	private ImageView liveImageView;
 	private boolean isSwitch;
 	private boolean isLiveListVisible;
+    private TextView livePraiseCountTextView;
+	private TextView livePersonCountTextView;
+	private int livePraiseCount;
 
 	private Handler liveHandler = new Handler();
 	protected LayoutInflater mLiveLayoutInflater;
@@ -101,6 +105,8 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 		timeTextView = (TextView) findViewById(R.id.textViewTime);
 		liveCloseTextView = (TextView) findViewById(R.id.title_text_close);
 		liveReportTextView = (TextView) findViewById(R.id.title_text_report);
+		livePersonCountTextView = (TextView) findViewById(R.id.person_count_textview);
+        livePraiseCountTextView = (TextView) findViewById(R.id.live_praise_count_text);
 
 		liveListView = (ListView) findViewById(R.id.live_list);
 		liveDialogList = new ArrayList<LiveDialogInfo>();
@@ -138,7 +144,7 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 					}
 				});
 			}
-		}, 500, 500);
+		}, 500, 300);
 
 		liveHandler.postDelayed(liveListHideRunnable, 5000);
 	}
@@ -211,6 +217,8 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 
 		} else if (id == liveShareButton.getId()) {
             //TODO
+			livePraiseCount ++;
+			livePraiseCountTextView.setText(String.valueOf(livePraiseCount));
 
 		} else if (id == liveSwitchButton.getId()) {
 			if (isSwitch) {
@@ -222,6 +230,9 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 				liveEditText.setVisibility(VISIBLE);
 				liveImageView.setVisibility(VISIBLE);
 				liveSwitchButton.setText(getResources().getString(R.string.live_info_switch));
+				livePersonCountTextView.setVisibility(VISIBLE);
+				livePraiseCountTextView.setVisibility(VISIBLE);
+
 				isSwitch = false;
 
 			} else {
@@ -233,10 +244,14 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 				liveEditText.setVisibility(GONE);
 				liveImageView.setVisibility(GONE);
 				liveSwitchButton.setText(getResources().getString(R.string.live_info_quiet));
+				livePersonCountTextView.setVisibility(GONE);
+				livePraiseCountTextView.setVisibility(GONE);
 				isSwitch = true;
 			}
 		} else if (id == liveImageView.getId()) {
             //TODO
+//			livePraiseCount ++;
+//			livePraiseCountTextView.setText(String.valueOf(livePraiseCount));
 		}
 
 	}

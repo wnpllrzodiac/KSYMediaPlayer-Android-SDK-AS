@@ -395,34 +395,4 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 		return  Color.rgb(mRandom.nextInt(255), mRandom.nextInt(255), mRandom.nextInt(255));
 	}
 
-	/*public interface LiveReplayMediaPlayerController extends IMediaPlayerControl {
-
-		boolean supportQuality();
-
-		boolean supportVolume();
-
-		boolean playVideo(String url);
-
-		int getPlayMode();
-
-		void onRequestPlayMode(int requestPlayMode);
-
-		void onBackPress(int playMode);
-
-		void onControllerShow(int playMode);
-
-		void onControllerHide(int playMode);
-
-		void onRequestLockMode(boolean lockMode);
-
-		void onVideoPreparing();
-
-		void onMovieRatioChange(int screenSize);
-
-		void onMoviePlayRatioUp();
-
-		void onMoviePlayRatioDown();
-
-	}*/
-
 }

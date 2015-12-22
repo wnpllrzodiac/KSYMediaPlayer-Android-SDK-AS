@@ -287,7 +287,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
                             Log.i(Constants.LOG_TAG,
                                     "event action  view action error");
                             mMediaPlayerEventActionViewLiveReplay.hide();
-//                            mLiveReplayMediaPlayerControllerView.hide();
+                            mLiveReplayMediaPlayerControllerView.setVisibility(GONE);
                             mMediaPlayerLoadingView.show();
                             mLiveReplayMediaPlayerVideoView.setVideoPath(url);
                         } else {
@@ -325,12 +325,6 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 		/* 初始化:ControllerViewLarge */
         this.mLiveReplayMediaPlayerControllerView
                 .setMediaPlayerController(mLiveReplayMediaPlayerController);
-        /*this.mLiveReplayMediaPlayerControllerView.setHostWindow(mWindow);
-        this.mLiveReplayMediaPlayerControllerView
-                .setDeviceNavigationBarExist(mDeviceNavigationBarExist);
-        this.mLiveReplayMediaPlayerControllerView.setNeedGestureDetector(true);
-        this.mLiveReplayMediaPlayerControllerView.setNeedGestureAction(false, false,
-                false);*/
         this.mMediaPlayerControllerViewSmallParams = new LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
@@ -351,7 +345,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
         if (MediaPlayerUtils.isWindowMode(mPlayMode)) {
             addView(mLiveReplayMediaPlayerControllerView,
                     mMediaPlayerControllerViewSmallParams);
-//			mMediaPlayerLiveReplayControllerView.hide();
+//            mLiveReplayMediaPlayerControllerView.setVisibility(GONE);
         }
 
         mMediaPlayerBufferingView.hide();
@@ -513,19 +507,17 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 
     private boolean requestPlayMode(int requestPlayMode) {
 
-        if (mPlayMode == requestPlayMode)
+        if (mPlayMode == requestPlayMode) {
             return false;
+        } else if (MediaPlayerUtils.isWindowMode(requestPlayMode)) { // 请求窗口模式
 
-            // 请求窗口模式
-        else if (MediaPlayerUtils.isWindowMode(requestPlayMode)) {
-
-            if (mLayoutParamWindowMode == null)
+            if (mLayoutParamWindowMode == null) {
                 return false;
-
+            }
             addView(mLiveReplayMediaPlayerControllerView,
                     mMediaPlayerControllerViewSmallParams);
             this.setLayoutParams(mLayoutParamWindowMode);
-//			mMediaPlayerLiveReplayControllerView.hide();
+//			mLiveReplayMediaPlayerControllerView.setVisibility(GONE);
 
             if (mPlayerViewCallback != null) {
                 mPlayerViewCallback.restoreViews();
@@ -751,7 +743,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
             }
 
             if (mIsComplete) {
-//                mLiveReplayMediaPlayerControllerView.hide();
+                mLiveReplayMediaPlayerControllerView.setVisibility(GONE);
                 mMediaPlayerEventActionViewLiveReplay
                         .updateEventMode(
                                 MediaPlayerEventActionViewLiveReplay.EVENT_ACTION_VIEW_MODE_COMPLETE,
@@ -802,7 +794,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
                 }
             } else {
                 mIsComplete = true;
-//                mLiveReplayMediaPlayerControllerView.hide();
+                mLiveReplayMediaPlayerControllerView.setVisibility(GONE);
                 mMediaPlayerEventActionViewLiveReplay
                         .updateEventMode(
                                 MediaPlayerEventActionViewLiveReplay.EVENT_ACTION_VIEW_MODE_COMPLETE,

@@ -30,12 +30,24 @@
         android:layout_marginBottom="10dp"
         android:layout_above="@+id/controller_bottom_layout"
         android:layout_width="300dp"
-        android:layout_height="100dp">
+        android:layout_height="120dp">
         <ImageView
             android:id="@+id/live_person_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/live_person_grey"/>
+
+        <TextView
+            android:id="@+id/live_person_count_textview"
+            android:textColor="@color/white"
+            android:text="88人"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="12dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/live_person_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <com.ksy.media.widget.ui.common.HorizontalListView
             android:id="@+id/live_horizon"
             android:layout_toRightOf="@+id/live_person_image"
@@ -60,7 +72,18 @@
         <ImageView
             android:id="@+id/live_image_heart_bt"
             android:src="@drawable/heart"
+            android:layout_centerHorizontal="true"
             android:layout_below="@+id/live_image_heart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/live_praise_count_text"
+            android:layout_below="@+id/live_image_heart_bt"
+            android:layout_marginLeft="6dp"
+            android:text="0"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>

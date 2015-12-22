@@ -10,9 +10,10 @@
         android:layout_above="@+id/notice_text"
         android:scrollbars="none"
         android:headerDividersEnabled="false"
+        android:stackFromBottom="true"
         android:dividerHeight="6dp"
         android:layout_marginLeft="6dp"
-        android:layout_width="230dp"
+        android:layout_width="220dp"
         android:layout_height="400dp">
     </ListView>
 
@@ -20,9 +21,13 @@
         android:id="@+id/notice_text"
         android:layout_above="@+id/live_replay_person_list"
         android:layout_marginLeft="6dp"
+        android:layout_marginTop="10dp"
         android:text="@string/live_replay_notice"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:background="@color/white"
         android:layout_width="230dp"
-        android:layout_height="33dp" />
+        android:layout_height="35dp" />
 
     <RelativeLayout
         android:id="@+id/live_replay_person_list"

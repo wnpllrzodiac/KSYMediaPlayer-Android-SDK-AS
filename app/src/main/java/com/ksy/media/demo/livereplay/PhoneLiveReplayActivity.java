@@ -65,7 +65,6 @@ public class PhoneLiveReplayActivity extends AppCompatActivity implements MediaP
     }
 
 
-
     @Override
     protected void onResume() {
         super.onResume();

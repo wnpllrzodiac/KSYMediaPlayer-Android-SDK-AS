@@ -288,7 +288,7 @@ public class MediaPlayerViewLive extends RelativeLayout implements
                             Log.i(Constants.LOG_TAG,
                                     "event action  view action error");
                             mMediaPlayerEventActionViewLive.hide();
-//                            mLiveMediaPlayerControllerView.hide();
+                            mLiveMediaPlayerControllerView.setVisibility(VISIBLE);
                             mMediaPlayerLoadingView.show();
                             mLiveMediaPlayerVideoView.setVideoPath(url);
                         } else {
@@ -478,20 +478,12 @@ public class MediaPlayerViewLive extends RelativeLayout implements
             if (mScreenLockMode) {
                 return true;
             }
-            if (MediaPlayerUtils.isFullScreenMode(mPlayMode)) {
-                if (mLockMode) {
-                    if (mPlayerViewCallback != null)
-                        mPlayerViewCallback.onFinish(mPlayMode);
-                } else {
-                    mMediaPlayerController
-                            .onRequestPlayMode(MediaPlayMode.PLAYMODE_WINDOW);
-                }
-                return true;
-            } else if (MediaPlayerUtils.isWindowMode(mPlayMode)) {
 
-                if (mPlayerViewCallback != null)
+           if (MediaPlayerUtils.isWindowMode(mPlayMode)) {
+                if (mPlayerViewCallback != null) {
                     mPlayerViewCallback.onFinish(mPlayMode);
-                return true;
+                }
+                return false;
             }
 
         } else if (event.getKeyCode() == KeyEvent.KEYCODE_MENU

@@ -60,25 +60,33 @@ public class MediaPlayerEventActionViewLiveReplay extends RelativeLayout {
 
 		mxCompleteLayout = (RelativeLayout) findViewById(R.id.layout_live_replay_finish);
 
-//		mErrorLayout = (LinearLayout) findViewById(R.id.error_layout);
-//		mErrorReplayLayout = (LinearLayout) findViewById(R.id.error_replay_layout);
-//		mErrorTextView = (TextView) findViewById(R.id.error_info_title_text_view);
+		mErrorLayout = (LinearLayout) findViewById(R.id.live_replay_error_layout);
+		mErrorReplayLayout = (LinearLayout) findViewById(R.id.live_error_replay_layout);
+		mErrorTextView = (TextView) findViewById(R.id.error_info_title_text_view);
+
+		closeTextView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				System.exit(0);
+			}
+		});
 
 		replayButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (mCallback != null)
+				if (mCallback != null) {
 					mCallback.onActionReplay();
+				}
 			}
 		});
 
-//		mErrorReplayLayout.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				if (mCallback != null)
-//					mCallback.onActionError();
-//			}
-//		});
+		mErrorReplayLayout.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (mCallback != null)
+					mCallback.onActionError();
+			}
+		});
 
 	}
 
@@ -94,22 +102,22 @@ public class MediaPlayerEventActionViewLiveReplay extends RelativeLayout {
 		case EVENT_ACTION_VIEW_MODE_COMPLETE:
 			mxCompleteLayout.setVisibility(View.VISIBLE);
 //			mWaitLayout.setVisibility(View.GONE);
-//			mErrorLayout.setVisibility(View.GONE);
+			mErrorLayout.setVisibility(View.GONE);
 			break;
 		case EVENT_ACTION_VIEW_MODE_WAIT:
 //			mWaitLayout.setVisibility(View.VISIBLE);
-//			mxCompleteLayout.setVisibility(View.GONE);
-//			mErrorLayout.setVisibility(View.GONE);
+			mxCompleteLayout.setVisibility(View.GONE);
+			mErrorLayout.setVisibility(View.GONE);
 			break;
 		case EVENT_ACTION_VIEW_MODE_ERROR:
-//			mErrorLayout.setVisibility(View.VISIBLE);
-//			if (!TextUtils.isEmpty(extraMessage)) {
-//				mErrorTextView.setText(getResources().getString(R.string.player_error) + ",错误码（" + extraMessage + "）");
-//			} else {
-//				mErrorTextView.setText(getResources().getString(R.string.player_error));
-//			}
+			mErrorLayout.setVisibility(View.VISIBLE);
+			if (!TextUtils.isEmpty(extraMessage)) {
+				mErrorTextView.setText(getResources().getString(R.string.player_error) + ",错误码（" + extraMessage + "）");
+			} else {
+				mErrorTextView.setText(getResources().getString(R.string.player_error));
+			}
 //			mWaitLayout.setVisibility(View.GONE);
-//			mxCompleteLayout.setVisibility(View.GONE);
+			mxCompleteLayout.setVisibility(View.GONE);
 			break;
 		default:
 			break;
@@ -118,21 +126,18 @@ public class MediaPlayerEventActionViewLiveReplay extends RelativeLayout {
 	}
 
 	public void updateVideoTitle(String title) {
-
 		if (!TextUtils.isEmpty(title)) {
 
 		}
 	}
 
 	public void show() {
-
 		if (!isShowing()) {
 			setVisibility(View.VISIBLE);
 		}
 	}
 
 	public void hide() {
-
 		if (isShowing()) {
 			setVisibility(View.GONE);
 		}

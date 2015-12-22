@@ -177,7 +177,7 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
 
     public void setMediaPlayerController(MediaPlayerController mediaPlayerController) {
         mMediaPlayerController = mediaPlayerController;
-//        mScreenPopup = new MediaPlayerScreenSizePopupView(getContext(), mMediaPlayerController);
+        mScreenPopup = new MediaPlayerScreenSizePopupView(getContext(), mMediaPlayerController);
     }
 
     public void setHostWindow(Window window) {

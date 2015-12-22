@@ -39,6 +39,7 @@ public class StreamVideoActivity extends AppCompatActivity implements
     private void setupViews() {
         playerView = (StreamMediaPlayerView) findViewById(R.id.stream_player_view);
         playerView.setVideoViewConfig(true, VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE);
+        playerView.setPlayerViewCallback(this);
         setupDialog();
         setUpPagerAndTabs();
     }
@@ -54,7 +55,7 @@ public class StreamVideoActivity extends AppCompatActivity implements
 
     private void setupDialog() {
         final View dialogView = LayoutInflater.from(this).inflate(
-                R.layout.dialog_input, null);
+                R.layout.stream_dialog_input, null);
         final EditText editInput = (EditText) dialogView
                 .findViewById(R.id.input);
         new AlertDialog.Builder(this).setTitle("User Input")
@@ -102,7 +103,6 @@ public class StreamVideoActivity extends AppCompatActivity implements
     // master
     private void startPlayer(String url) {
         Log.d(Constants.LOG_TAG, "input url = " + url);
-        playerView.setPlayerViewCallback(this);
         playerView.play(url, true);
     }
 
@@ -139,7 +139,7 @@ public class StreamVideoActivity extends AppCompatActivity implements
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         playerView.dispatchKeyEvent(event);
-        return true;
+        return false;
     }
 
 

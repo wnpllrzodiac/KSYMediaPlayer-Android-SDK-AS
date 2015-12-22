@@ -79,7 +79,7 @@ public class ShortVideoActivity extends AppCompatActivity implements
         listView.setOnScrollListener(this);
         playerViewShortMovie = (ShortVideoMediaPlayerView) headView.findViewById(R.id.player_view_short_movie);
         playerViewShortMovie.setVideoViewConfig(false, VideoViewConfig.INTERRUPT_MODE_PAUSE_RESUME);
-
+        playerViewShortMovie.setPlayerViewCallback(this);
     }
 
     private void setupAnimation() {
@@ -178,7 +178,6 @@ public class ShortVideoActivity extends AppCompatActivity implements
     // master
     private void startPlayer(String url) {
         Log.d(Constants.LOG_TAG, "input url = " + url);
-        playerViewShortMovie.setPlayerViewCallback(this);
         playerViewShortMovie.play(url, false);
     }
 

@@ -859,6 +859,8 @@ public class MediaPlayerTextureVideoView extends TextureView implements
                     Log.d(Constants.LOG_TAG, "MediaPlayerTextureVideoView onSurfaceTextureAvailable Start");
                     mMediaPlayer.setSurface(new Surface(mSurfaceTexture));
                     start();
+                }else{
+                    openVideo();
                 }
                 break;
             case VideoViewConfig.INTERRUPT_MODE_STAY_PLAYING:

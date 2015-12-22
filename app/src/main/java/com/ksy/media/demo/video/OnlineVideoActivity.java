@@ -1,18 +1,14 @@
 package com.ksy.media.demo.video;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.ksy.media.demo.R;
 import com.ksy.media.widget.ui.video.VideoMediaPlayerPagerAdapter;
@@ -38,6 +34,7 @@ public class OnlineVideoActivity extends AppCompatActivity implements
     private void setupViews() {
         playerView = (VideoMediaPlayerView) findViewById(R.id.video_player_view);
         playerView.setVideoViewConfig(false, VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE);
+        playerView.setPlayerViewCallback(this);
         setupDialog();
         setUpPagerAndTabs();
     }
@@ -56,7 +53,11 @@ public class OnlineVideoActivity extends AppCompatActivity implements
                 R.layout.dialog_input, null);
         final EditText editInput = (EditText) dialogView
                 .findViewById(R.id.input);
-        new AlertDialog.Builder(this).setTitle("User Input")
+
+        String inputString = editInput.getText().toString();
+        startPlayer(inputString);
+
+        /*new AlertDialog.Builder(this).setTitle("User Input")
                 .setView(dialogView)
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
 
@@ -77,7 +78,7 @@ public class OnlineVideoActivity extends AppCompatActivity implements
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
-        }).show();
+        }).show();*/
     }
 
     @Override
@@ -103,7 +104,6 @@ public class OnlineVideoActivity extends AppCompatActivity implements
     // master
     private void startPlayer(String url) {
         Log.d(Constants.LOG_TAG, "input url = " + url);
-        playerView.setPlayerViewCallback(this);
         playerView.play(url, false);
     }
 
@@ -146,7 +146,7 @@ public class OnlineVideoActivity extends AppCompatActivity implements
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         playerView.dispatchKeyEvent(event);
-        return true;
+        return false;
     }
 
 }

@@ -526,6 +526,8 @@ public class MediaPlayerVideoView extends SurfaceView implements
                         Log.d(Constants.LOG_TAG, "MediaPlayerVideoView surfaceCreated Start");
                         mMediaPlayer.setSurface(mSurfaceHolder.getSurface());
                         start();
+                    }else{
+                        openVideo();
                     }
                     break;
                 case VideoViewConfig.INTERRUPT_MODE_STAY_PLAYING:

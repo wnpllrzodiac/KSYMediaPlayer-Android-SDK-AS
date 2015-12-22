@@ -82,7 +82,6 @@ public class VideoMediaPlayerView extends RelativeLayout implements
     private Window mWindow;
 
     private ViewGroup mRootView;
-//	private MediaPlayerTexutureVideoView mMediaPlayerVideoView;
     private MediaPlayerVideoView mMediaPlayerVideoView;
 
     private VideoMediaPlayerLargeControllerView mMediaPlayerLargeControllerView;
@@ -1250,7 +1249,6 @@ public class VideoMediaPlayerView extends RelativeLayout implements
 
         @Override
         public int getDuration() {
-
             return mMediaPlayerVideoView.getDuration();
         }
 

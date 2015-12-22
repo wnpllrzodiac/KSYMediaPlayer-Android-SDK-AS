@@ -43,15 +43,17 @@ public class MediaPlayerScreenSizePopupView {
 	
 	public MediaPlayerScreenSizePopupView(Context context) {
 		this.mContext = context;
-		
 		init();
 	}
 	
 	public MediaPlayerScreenSizePopupView(Context context, MediaPlayerController mMediaPlayerController) {
 		this.mContext = context;
 		this.mediaPlayerController = mMediaPlayerController;
-		
 		init();
+	}
+
+	public void setMediaPlayerController(MediaPlayerController mediaPlayerController) {
+		this.mediaPlayerController = mediaPlayerController;
 	}
 
 	private void init() {

@@ -143,7 +143,7 @@ public class VideoMediaPlayerLargeControllerView extends
 
         mQualityPopup = new MediaPlayerQualityPopupView(getContext());
 
-        mScreenPopup = new MediaPlayerScreenSizePopupView(getContext()/*, mMediaPlayerController*/);
+//        mScreenPopup = new MediaPlayerScreenSizePopupView(getContext()/*, mMediaPlayerController*/);
 
         // mWidgetLightView = (MediaPlayerBrightView) findViewById(R.id.widget_light_view); //亮度调节
 
@@ -243,22 +243,21 @@ public class VideoMediaPlayerLargeControllerView extends
 
         //屏幕16：9
         /*mScreenPopup.setCallback(new MediaPlayerScreenSizePopupView.Callback() {
-			
-			@Override
-			public void onQualitySelected(MediaPlayerScreenSize screensize) {
-				mScreenPopup.hide();
-				mVideoSizeTextView.setText(screensize.getName());
-				setScreenSize(screensize);
-			}
-			
-			@Override
-			public void onPopupViewDismiss() {
-				mVideoSizeLayout.setSelected(false);
-				if (isShowing()) {
-					show();
-				}
-			}
-		});*/
+
+            @Override
+            public void onQualitySelected(MediaPlayerMovieRatio screensize) {
+                mScreenPopup.hide();
+                mVideoSizeTextView.setText(screensize.getName());
+            }
+
+            @Override
+            public void onPopupViewDismiss() {
+                mVideoSizeLayout.setSelected(false);
+                if (isShowing()) {
+                    show();
+                }
+            }
+        });*/
 
         mLockView.setCallback(new MediaPlayerLockView.ScreenLockCallback() {
 
@@ -281,7 +280,7 @@ public class VideoMediaPlayerLargeControllerView extends
         });
 
 		/*
-		 * mWidgetControllerVolumeView .setCallback(new
+         * mWidgetControllerVolumeView .setCallback(new
 		 * MediaPlayerControllerVolumeView.Callback() {
 		 * 
 		 * @Override public void onVolumeProgressChanged( AudioManager
@@ -361,9 +360,9 @@ public class VideoMediaPlayerLargeControllerView extends
             mQualityPopup.hide();
         }
 
-        if (mScreenPopup.isShowing()) {
-            mScreenPopup.hide();
-        }
+//        if (mScreenPopup.isShowing()) {
+//            mScreenPopup.hide();
+//        }
 
         // 当前全屏模式,隐藏系统UI
         if (mDeviceNavigationBarExist) {

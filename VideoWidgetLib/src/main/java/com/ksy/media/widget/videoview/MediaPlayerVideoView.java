@@ -240,7 +240,7 @@ public class MediaPlayerVideoView extends SurfaceView implements
 //                ksyMediaPlayer.setRetryCount(3);
                 ksyMediaPlayer
                         .setBufferSize(Constants.MEDIA_BUFFERSIZE_DEFAULT);
-                ksyMediaPlayer.setTimeout(Constants.MEDIA_TIME_OUT_DEFAULT);
+//                ksyMediaPlayer.setTimeout(Constants.MEDIA_TIME_OUT_DEFAULT);
                 Log.d(Constants.LOG_TAG, "isStream = "
                         + videoViewConfig.isStream());
                 ksyMediaPlayer.clearCachedFiles(new File(Environment

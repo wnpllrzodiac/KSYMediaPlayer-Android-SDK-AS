@@ -257,7 +257,7 @@ public class MediaPlayerTextureVideoView extends TextureView implements
                 ksyMediaPlayer = new KSYMediaPlayer.Builder(mContext.getApplicationContext()).setAppId("QYA0788DA337D2E0EC45").setAccessKey("a8b4dff4665f6e69ba6cbeb8ebadc9a3").setSecretKeySign(skSign).setTimeSec(timeSec).build();
                 ksyMediaPlayer
                         .setBufferSize(Constants.MEDIA_BUFFERSIZE_DEFAULT);
-                ksyMediaPlayer.setTimeout(Constants.MEDIA_TIME_OUT_DEFAULT);
+//                ksyMediaPlayer.setTimeout(Constants.MEDIA_TIME_OUT_DEFAULT);
                 Log.d(Constants.LOG_TAG, "isStream =  "
                         + videoViewConfig.isStream());
                 ksyMediaPlayer.clearCachedFiles(new File(Environment

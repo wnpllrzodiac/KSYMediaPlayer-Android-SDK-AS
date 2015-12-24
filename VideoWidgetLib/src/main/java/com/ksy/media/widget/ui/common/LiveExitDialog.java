@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.ksy.mediaPlayer.widget.R;
 
@@ -13,9 +14,13 @@ public class LiveExitDialog extends Dialog {
     private Context mContext;
     private Button mConfirm;
     private Button mCancel;
-    public LiveExitDialog(Context context) {
+    private TextView titleTextView;
+    String mTitle;
+
+    public LiveExitDialog(Context context, String title) {
         super(context,R.style.ExitDialog);
         mContext=context;
+        mTitle = title;
     }
 
     public LiveExitDialog(Context context, int theme) {
@@ -30,6 +35,9 @@ public class LiveExitDialog extends Dialog {
 
         this.setCanceledOnTouchOutside(false);
 
+        titleTextView = (TextView) findViewById(R.id.title);
+        titleTextView.setText(mTitle);
+
         mConfirm= (Button) findViewById(R.id.dialog_confirm);
         mCancel= (Button) findViewById(R.id.dialog_cancel);
 
@@ -37,7 +45,7 @@ public class LiveExitDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 System.exit(0);
-//                LiveExitDialog.this.dismiss();
+
             }
         });
 

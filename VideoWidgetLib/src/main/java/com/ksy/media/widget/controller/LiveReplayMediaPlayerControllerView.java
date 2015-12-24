@@ -34,6 +34,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import android.os.Handler;
 import android.graphics.Color;
+import android.widget.Toast;
 
 
 public class LiveReplayMediaPlayerControllerView extends FrameLayout implements View.OnClickListener {
@@ -324,11 +325,11 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 //				show();
 			}
 		} else if (id == closeTextView.getId()) {
-			LiveExitDialog dialog = new LiveExitDialog(mContext);
+			LiveExitDialog dialog = new LiveExitDialog(mContext, "确定关闭该直播");
 			dialog.show();
 
 		} else if (id == reportTextView.getId()) {
-			LiveExitDialog dialog = new LiveExitDialog(mContext);
+			LiveExitDialog dialog = new LiveExitDialog(mContext, "确定举报该直播");
 			dialog.show();
 
 		} else if (id == liveReplayPerson.getId()) {
@@ -342,7 +343,8 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 			}
 
 		} else if (id == shareButton.getId()) {
-			//TODO
+
+			Toast.makeText(mContext, "I am share", Toast.LENGTH_SHORT).show();
 
 		} else if (id == switchButton.getId()) {
 			if (isSwitch) {

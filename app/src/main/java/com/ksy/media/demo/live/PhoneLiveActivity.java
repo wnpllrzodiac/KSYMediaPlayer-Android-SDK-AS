@@ -35,9 +35,9 @@ public class PhoneLiveActivity extends AppCompatActivity implements MediaPlayerV
         playerViewLive.setVideoViewConfig(true, VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE);
 
         final View dialogView = LayoutInflater.from(this).inflate(
-                R.layout.dialog_input, null);
+                R.layout.dialog_input_live, null);
         final EditText editInput = (EditText) dialogView
-                .findViewById(R.id.input);
+                .findViewById(R.id.input_live);
         // startPlayer("");
         new AlertDialog.Builder(this).setTitle("User Input")
                 .setView(dialogView)

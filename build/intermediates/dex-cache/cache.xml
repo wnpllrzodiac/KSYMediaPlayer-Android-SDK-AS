@@ -5,10 +5,8 @@
         jar="E:\html5\KSYMediaPlayer-Android-SDK-AS\app\build\intermediates\exploded-aar\KSYMediaPlayer-Android-SDK-AS\VideoWidgetLib\unspecified\jars\classes.jar"
         jumboMode="false"
         revision="23.0.2"
-
-        sha1="131887e15cff6f83ac1be3cfb9849854976222fb">
+        sha1="353daa4a042b1bd8501450fdbb6d98a29b58847d">
         <dex dex="E:\html5\KSYMediaPlayer-Android-SDK-AS\app\build\intermediates\pre-dexed\debug\classes-33b0d89e46b804a338c94041828217579d50e466.jar" />
-
     </item>
 
 </items>

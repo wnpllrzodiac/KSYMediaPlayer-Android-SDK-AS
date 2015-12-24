@@ -15,6 +15,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.ksy.media.widget.ui.common.HeartLayout;
 import com.ksy.media.widget.ui.common.HorizontalListView;
 import com.ksy.media.widget.ui.common.LiveAnchorDialog;
@@ -199,11 +201,11 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 			dialogPerson.show();
 
 		} else if (id == liveCloseTextView.getId()) {
-			LiveExitDialog dialog = new LiveExitDialog(mContext);
+			LiveExitDialog dialog = new LiveExitDialog(mContext, "确定关闭该直播");
 			dialog.show();
 
 		} else if (id == liveReportTextView.getId()) {
-			LiveExitDialog dialog = new LiveExitDialog(mContext);
+			LiveExitDialog dialog = new LiveExitDialog(mContext, "确定举报该直播");
 			dialog.show();
 
 		} else if (id == livePerson.getId()) {
@@ -217,7 +219,8 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 			}
 
 		} else if (id == liveShareButton.getId()) {
-            //TODO
+
+			Toast.makeText(mContext, "I am share", Toast.LENGTH_SHORT).show();
 
 		} else if (id == liveSwitchButton.getId()) {
 			if (isSwitch) {

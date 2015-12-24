@@ -793,7 +793,12 @@ public class MediaPlayerViewLive extends RelativeLayout implements
             mMediaPlayerLoadingView.hide();
 
             if (!mIsComplete) {
-                mLiveMediaPlayerVideoView.start();
+                if (!mLiveMediaPlayerVideoView.mNeedPauseAfterLeave) {
+                    mLiveMediaPlayerVideoView.start();
+                } else {
+                    Log.d(Constants.LOG_TAG, "mOnPreparedListener ingore start for last paused state");
+                    mLiveMediaPlayerVideoView.mNeedPauseAfterLeave = false;
+                }
             }
 
             mVideoReady = true;

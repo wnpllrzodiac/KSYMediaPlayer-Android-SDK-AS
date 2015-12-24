@@ -93,6 +93,7 @@ public class MediaPlayerVideoView extends SurfaceView implements
     private IStop callBack;
     private boolean mNeedUnlock;
     private boolean misTexturePowerEvent;
+    public boolean mNeedPauseAfterLeave;
 
     public MediaPlayerVideoView(Context context) {
         super(context);
@@ -225,9 +226,7 @@ public class MediaPlayerVideoView extends SurfaceView implements
             return;
         }
 
-        Intent i = new Intent("com.android.music.musicservicecommand");
-        i.putExtra("command", "pause");
-        mContext.sendBroadcast(i);
+        stopMusicService();
         // release(false);
         try {
             mDuration = -1;
@@ -303,6 +302,12 @@ public class MediaPlayerVideoView extends SurfaceView implements
                     IMediaPlayer.MEDIA_ERROR_UNKNOWN, 0);
             return;
         }
+    }
+
+    private void stopMusicService() {
+        Intent i = new Intent("com.android.music.musicservicecommand");
+        i.putExtra("command", "pause");
+        mContext.sendBroadcast(i);
     }
 
     OnVideoSizeChangedListener mSizeChangedListener = new OnVideoSizeChangedListener() {
@@ -525,8 +530,13 @@ public class MediaPlayerVideoView extends SurfaceView implements
                     if (mMediaPlayer != null) {
                         Log.d(Constants.LOG_TAG, "MediaPlayerVideoView surfaceCreated Start");
                         mMediaPlayer.setSurface(mSurfaceHolder.getSurface());
-                        start();
-                    }else{
+                        if (!mNeedPauseAfterLeave) {
+                            start();
+                        } else {
+                            Log.d(Constants.LOG_TAG, "POWER_ON PAUSED STATE,Ingored start()");
+                            mNeedPauseAfterLeave = false;
+                        }
+                    } else {
                         openVideo();
                     }
                     break;
@@ -540,6 +550,9 @@ public class MediaPlayerVideoView extends SurfaceView implements
         @Override
         public void surfaceDestroyed(SurfaceHolder holder) {
             Log.d(Constants.LOG_TAG, "MediaPlayerVideoView surfaceDestroyed");
+            if (mCurrentState == STATE_PAUSED) {
+                mNeedPauseAfterLeave = true;
+            }
             switch (videoViewConfig.getInterruptMode()) {
                 case VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE:
                     Log.d(Constants.LOG_TAG, "MediaPlayerVideoView surfaceDestroyed Release");
@@ -812,10 +825,13 @@ public class MediaPlayerVideoView extends SurfaceView implements
 
     @Override
     public void onPowerState(int state) {
-        misTexturePowerEvent = true;
         switch (state) {
             case Constants.POWER_OFF:
+                misTexturePowerEvent = true;
                 Log.d(Constants.LOG_TAG, "POWER_OFF");
+                if (mCurrentState == STATE_PAUSED) {
+                    mNeedPauseAfterLeave = true;
+                }
                 switch (videoViewConfig.getInterruptMode()) {
                     case VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE:
                         Log.d(Constants.LOG_TAG, "POWER_OFF Release");
@@ -843,7 +859,13 @@ public class MediaPlayerVideoView extends SurfaceView implements
                             break;
                         case VideoViewConfig.INTERRUPT_MODE_PAUSE_RESUME:
                             Log.d(Constants.LOG_TAG, "POWER_ON Start");
-                            start();
+                            stopMusicService();
+                            if (!mNeedPauseAfterLeave) {
+                                start();
+                            } else {
+                                Log.d(Constants.LOG_TAG, "POWER_ON PAUSED STATE,Ingored start()");
+                                mNeedPauseAfterLeave = false;
+                            }
                             break;
                         case VideoViewConfig.INTERRUPT_MODE_STAY_PLAYING:
                             break;
@@ -862,7 +884,13 @@ public class MediaPlayerVideoView extends SurfaceView implements
                             break;
                         case VideoViewConfig.INTERRUPT_MODE_PAUSE_RESUME:
                             Log.d(Constants.LOG_TAG, "is KeyGuard Start");
-                            start();
+                            stopMusicService();
+                            if (!mNeedPauseAfterLeave) {
+                                start();
+                            } else {
+                                Log.d(Constants.LOG_TAG, "POWER_ON PAUSED STATE,Ingored start()");
+                                mNeedPauseAfterLeave = false;
+                            }
                             break;
                         case VideoViewConfig.INTERRUPT_MODE_STAY_PLAYING:
                             break;

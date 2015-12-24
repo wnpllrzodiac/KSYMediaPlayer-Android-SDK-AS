@@ -43,6 +43,8 @@
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".shortvideo.ShortVideoActivity"
+            android:screenOrientation="nosensor"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_short_movie"
             android:theme="@style/FullscreenTheme" />
         <activity

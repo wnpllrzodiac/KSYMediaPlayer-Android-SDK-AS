@@ -517,7 +517,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
     }
 
     public void onResume() {
-        Log.d("eflake","PlayView onResume");
+        Log.d("eflake", "PlayView onResume");
 
         mWindowActived = true;
         powerStateListener.onPowerState(Constants.APP_SHOWN);
@@ -529,7 +529,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
     }
 
     public void onPause() {
-        Log.d("eflake","PlayView OnPause");
+        Log.d("eflake", "PlayView OnPause");
         powerStateListener.onPowerState(Constants.APP_HIDEN);
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
         mNetReceiver.unRegistNetBroadCast(getContext());
@@ -608,7 +608,12 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
             mMediaPlayerLoadingView.hide();
 
             if (!mIsComplete) {
-                mMediaPlayerVideoView.start();
+                if (!mMediaPlayerVideoView.mNeedPauseAfterLeave) {
+                    mMediaPlayerVideoView.start();
+                } else {
+                    Log.d(Constants.LOG_TAG, "mOnPreparedListener ingore start for last paused state");
+                    mMediaPlayerVideoView.mNeedPauseAfterLeave = false;
+                }
             }
 
             // mMediaPlayerEventActionView.updateEventMode(
@@ -763,7 +768,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
 //    IMediaPlayer.OnNetSpeedListener mOnPlaybackNetSpeedListener = new IMediaPlayer.OnNetSpeedListener() {
 //        @Override
 //        public void onNetSpeedUpdate(IMediaPlayer mp, int arg1, int arg2) {
-            // arg2 = arg2 / 1024 / 8; KB/s
+    // arg2 = arg2 / 1024 / 8; KB/s
 //            mTextViewSpeed.setText(getResources().getString(R.string.net_speed)
 //                    + " " + arg2 + " bit/s");
 //        }
@@ -774,13 +779,13 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
 //        @Override
 //        public void onDebugInfo(IMediaPlayer mp, int type, int arg1, int arg2) {
 
-            // if (type == 10002) {
-            // mTextViewDemux.setText("demux:" + arg1 + " , " + arg2);
-            // } else if (type == 10003) {
-            // mTextViewDecode.setText("decode:" + arg1 + " , " + arg2);
-            // } else if (type == 10004) {
-            // mTextViewTime.setText("time:" + arg1 + " , " + arg2);
-            // }
+    // if (type == 10002) {
+    // mTextViewDemux.setText("demux:" + arg1 + " , " + arg2);
+    // } else if (type == 10003) {
+    // mTextViewDecode.setText("decode:" + arg1 + " , " + arg2);
+    // } else if (type == 10004) {
+    // mTextViewTime.setText("time:" + arg1 + " , " + arg2);
+    // }
 //        }
 //    };
 

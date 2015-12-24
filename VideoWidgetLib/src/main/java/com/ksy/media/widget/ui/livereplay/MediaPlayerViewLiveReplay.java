@@ -535,7 +535,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
     }
 
     public void onResume() {
-        Log.d("eflake","PlayView onResume");
+        Log.d("eflake", "PlayView onResume");
         mWindowActived = true;
         powerStateListener.onPowerState(Constants.APP_SHOWN);
         enableOrientationEventListener();
@@ -547,7 +547,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
     }
 
     public void onPause() {
-        Log.d("eflake","PlayView OnPause");
+        Log.d("eflake", "PlayView OnPause");
         powerStateListener.onPowerState(Constants.APP_HIDEN);
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
         mNetReceiver.unRegistNetBroadCast(getContext());
@@ -767,7 +767,12 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
             mMediaPlayerLoadingView.hide();
 
             if (!mIsComplete) {
-                mLiveReplayMediaPlayerVideoView.start();
+                if (!mLiveReplayMediaPlayerVideoView.mNeedPauseAfterLeave) {
+                    mLiveReplayMediaPlayerVideoView.start();
+                } else {
+                    Log.d(Constants.LOG_TAG, "mOnPreparedListener ingore start for last paused state");
+                    mLiveReplayMediaPlayerVideoView.mNeedPauseAfterLeave = false;
+                }
             }
 
             mVideoReady = true;

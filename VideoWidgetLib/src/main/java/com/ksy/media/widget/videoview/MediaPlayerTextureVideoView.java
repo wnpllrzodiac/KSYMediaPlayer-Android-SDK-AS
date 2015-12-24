@@ -98,6 +98,7 @@ public class MediaPlayerTextureVideoView extends TextureView implements
     private boolean misTexturePowerEvent;
     private boolean isOpening;
     private boolean mNeedUnlock;
+    public boolean mNeedPauseAfterLeave;
 
     public MediaPlayerTextureVideoView(Context context) {
         super(context);
@@ -242,9 +243,7 @@ public class MediaPlayerTextureVideoView extends TextureView implements
             return;
         }
 
-        Intent i = new Intent("com.android.music.musicservicecommand");
-        i.putExtra("command", "pause");
-        mContext.sendBroadcast(i);
+        stopMusicService();
         // release(false);
         try {
             mDuration = -1;
@@ -287,9 +286,8 @@ public class MediaPlayerTextureVideoView extends TextureView implements
             // headers.put("User-Password", "Password");
             // if (mUri != null)
             // mMediaPlayer.setDataSource(mUri.toString(), headers);
-            if (mUri != null) {
-                mMediaPlayer.setDataSource(mUri.toString());
-            }
+            String url = mUri.toString();
+            Log.d(Constants.LOG_TAG,"final url ="+url);
             if (!misTexturePowerEvent) {
                 if (mSurfaceTexture != null) {
                     mSurface = new Surface(mSurfaceTexture);
@@ -301,6 +299,9 @@ public class MediaPlayerTextureVideoView extends TextureView implements
             }
             mMediaPlayer.setSurface(mSurface);
             mMediaPlayer.setScreenOnWhilePlaying(true);
+            if (mUri != null) {
+                mMediaPlayer.setDataSource(url);
+            }
             mMediaPlayer.prepareAsync();
             if (mMediaPlayerController != null) {
                 mMediaPlayerController.onVideoPreparing();
@@ -321,6 +322,12 @@ public class MediaPlayerTextureVideoView extends TextureView implements
                     IMediaPlayer.MEDIA_ERROR_UNKNOWN, 0);
             return;
         }
+    }
+
+    private void stopMusicService() {
+        Intent i = new Intent("com.android.music.musicservicecommand");
+        i.putExtra("command", "pause");
+        mContext.sendBroadcast(i);
     }
 
     IMediaPlayer.OnVideoSizeChangedListener mSizeChangedListener = new IMediaPlayer.OnVideoSizeChangedListener() {
@@ -766,6 +773,9 @@ public class MediaPlayerTextureVideoView extends TextureView implements
             case Constants.POWER_OFF:
                 Log.d(Constants.LOG_TAG, "POWER_OFF");
                 misTexturePowerEvent = true;
+                if (mCurrentState == STATE_PAUSED) {
+                    mNeedPauseAfterLeave = true;
+                }
                 switch (videoViewConfig.getInterruptMode()) {
                     case VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE:
                         Log.d(Constants.LOG_TAG, "POWER_OFF Release");
@@ -793,8 +803,13 @@ public class MediaPlayerTextureVideoView extends TextureView implements
                             break;
                         case VideoViewConfig.INTERRUPT_MODE_PAUSE_RESUME:
                             Log.d(Constants.LOG_TAG, "POWER_ON Start");
-                            start();
-                            break;
+                            stopMusicService();
+                            if (!mNeedPauseAfterLeave) {
+                                start();
+                            } else {
+                                Log.d(Constants.LOG_TAG, "POWER_ON PAUSED STATE,Ingored start()");
+                                mNeedPauseAfterLeave = false;
+                            }                            break;
                         case VideoViewConfig.INTERRUPT_MODE_STAY_PLAYING:
                             break;
                     }
@@ -812,8 +827,13 @@ public class MediaPlayerTextureVideoView extends TextureView implements
                             break;
                         case VideoViewConfig.INTERRUPT_MODE_PAUSE_RESUME:
                             Log.d(Constants.LOG_TAG, "is KeyGuard Start");
-                            start();
-                            break;
+                            stopMusicService();
+                            if (!mNeedPauseAfterLeave) {
+                                start();
+                            } else {
+                                Log.d(Constants.LOG_TAG, "POWER_ON PAUSED STATE,Ingored start()");
+                                mNeedPauseAfterLeave = false;
+                            }                            break;
                         case VideoViewConfig.INTERRUPT_MODE_STAY_PLAYING:
                             break;
                     }
@@ -857,9 +877,14 @@ public class MediaPlayerTextureVideoView extends TextureView implements
             case VideoViewConfig.INTERRUPT_MODE_PAUSE_RESUME:
                 if (mMediaPlayer != null) {
                     Log.d(Constants.LOG_TAG, "MediaPlayerTextureVideoView onSurfaceTextureAvailable Start");
+                    stopMusicService();
                     mMediaPlayer.setSurface(new Surface(mSurfaceTexture));
-                    start();
-                }else{
+                    if (!mNeedPauseAfterLeave) {
+                        start();
+                    } else {
+                        Log.d(Constants.LOG_TAG, "POWER_ON PAUSED STATE,Ingored start()");
+                        mNeedPauseAfterLeave = false;
+                    }                }else{
                     openVideo();
                 }
                 break;
@@ -876,6 +901,9 @@ public class MediaPlayerTextureVideoView extends TextureView implements
     @Override
     public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
         Log.d(Constants.LOG_TAG, "MediaPlayerTextureVideoView onSurfaceTextureDestroyed");
+        if (mCurrentState == STATE_PAUSED) {
+            mNeedPauseAfterLeave = true;
+        }
         switch (videoViewConfig.getInterruptMode()) {
             case VideoViewConfig.INTERRUPT_MODE_RELEASE_CREATE:
                 Log.d(Constants.LOG_TAG, "MediaPlayerTextureVideoView onSurfaceTextureDestroyed Release");

@@ -35,6 +35,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.ksy.media.widget.controller.MediaPlayerBaseControllerView;
 import com.ksy.media.widget.controller.MediaPlayerController;
 import com.ksy.media.widget.controller.VideoMediaPlayerLargeControllerView;
@@ -614,7 +615,7 @@ public class VideoMediaPlayerView extends RelativeLayout implements
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        Log.d("eflake","playview dispatchKeyEvent");
+        Log.d("eflake", "playview dispatchKeyEvent");
 
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK
                 && event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -721,19 +722,19 @@ public class VideoMediaPlayerView extends RelativeLayout implements
     }
 
     public void onResume() {
-        Log.d("eflake","PlayView onResume");
+        Log.d("eflake", "PlayView onResume");
         mWindowActived = true;
         powerStateListener.onPowerState(Constants.APP_SHOWN);
         enableOrientationEventListener();
         mNetReceiver.registNetBroadCast(getContext());
         mNetReceiver.addNetStateChangeListener(mNetChangedListener);
-        if (mMediaPlayerController.canStart()){
-            mMediaPlayerController.start();
-        }
+//        if (mMediaPlayerController.canStart()){
+//            mMediaPlayerController.start();
+//        }
     }
 
     public void onPause() {
-        Log.d("eflake","PlayView OnPause");
+        Log.d("eflake", "PlayView OnPause");
         powerStateListener.onPowerState(Constants.APP_HIDEN);
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
         mNetReceiver.unRegistNetBroadCast(getContext());
@@ -742,10 +743,10 @@ public class VideoMediaPlayerView extends RelativeLayout implements
 
         disableOrientationEventListener();
 
-        if (mMediaPlayerController.isPlaying()) {
-            mMediaPlayerController.pause();
-            mStartAfterPause = true;
-        }
+//        if (mMediaPlayerController.isPlaying()) {
+//            mMediaPlayerController.pause();
+//            mStartAfterPause = true;
+//        }
         WakeLocker.release();
     }
 
@@ -976,11 +977,17 @@ public class VideoMediaPlayerView extends RelativeLayout implements
                     mMediaPlayerController.pause();
                 }
             }
+
             updateVideoInfo2Controller();
             mMediaPlayerLoadingView.hide();
 
             if (!mIsComplete) {
-                mMediaPlayerVideoView.start();
+                if (!mMediaPlayerVideoView.mNeedPauseAfterLeave) {
+                    mMediaPlayerVideoView.start();
+                } else {
+                    Log.d(Constants.LOG_TAG, "mOnPreparedListener ingore start for last paused state");
+                    mMediaPlayerVideoView.mNeedPauseAfterLeave = false;
+                }
             }
 
             // mMediaPlayerEventActionView.updateEventMode(
@@ -1136,7 +1143,7 @@ public class VideoMediaPlayerView extends RelativeLayout implements
 //    IMediaPlayer.OnNetSpeedListener mOnPlaybackNetSpeedListener = new IMediaPlayer.OnNetSpeedListener() {
 //        @Override
 //        public void onNetSpeedUpdate(IMediaPlayer mp, int arg1, int arg2) {
-            // arg2 = arg2 / 1024 / 8; KB/s
+    // arg2 = arg2 / 1024 / 8; KB/s
 //            mTextViewSpeed.setText(getResources().getString(R.string.net_speed)
 //                    + " " + arg2 + " bit/s");
 //        }
@@ -1147,13 +1154,13 @@ public class VideoMediaPlayerView extends RelativeLayout implements
 //        @Override
 //        public void onDebugInfo(IMediaPlayer mp, int type, int arg1, int arg2) {
 
-            // if (type == 10002) {
-            // mTextViewDemux.setText("demux:" + arg1 + " , " + arg2);
-            // } else if (type == 10003) {
-            // mTextViewDecode.setText("decode:" + arg1 + " , " + arg2);
-            // } else if (type == 10004) {
-            // mTextViewTime.setText("time:" + arg1 + " , " + arg2);
-            // }
+    // if (type == 10002) {
+    // mTextViewDemux.setText("demux:" + arg1 + " , " + arg2);
+    // } else if (type == 10003) {
+    // mTextViewDecode.setText("decode:" + arg1 + " , " + arg2);
+    // } else if (type == 10004) {
+    // mTextViewTime.setText("time:" + arg1 + " , " + arg2);
+    // }
 //        }
 //    };
 
@@ -1500,7 +1507,7 @@ public class VideoMediaPlayerView extends RelativeLayout implements
                     compressAndSaveBitmapToSDCard(bitmap, getCurrentTime(),
                             VideoMediaPlayerView.QUALITY_BEST);
                     /*
-					 * Toast.makeText( getContext(),
+                     * Toast.makeText( getContext(),
 					 * "screenshoot saved in path :/storage/emulated/0/KSY_SDK_SCREENSHOT"
 					 * , Toast.LENGTH_SHORT).show();
 					 */
@@ -1752,11 +1759,11 @@ public class VideoMediaPlayerView extends RelativeLayout implements
         return false;
     }
 
-    public void stopPlayback(){
+    public void stopPlayback() {
         mMediaPlayerVideoView.stopPlayback();
     }
 
-    public void reopen(){
+    public void reopen() {
         mMediaPlayerVideoView.setVideoPath(url);
     }
 

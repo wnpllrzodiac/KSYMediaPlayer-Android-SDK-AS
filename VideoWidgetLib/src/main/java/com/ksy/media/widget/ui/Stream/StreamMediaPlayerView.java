@@ -59,6 +59,7 @@ import com.ksy.media.widget.util.NetworkUtil;
 import com.ksy.media.widget.util.VideoViewConfig;
 import com.ksy.media.widget.util.IPowerStateListener;
 import com.ksy.media.widget.videoview.MediaPlayerTextureVideoView;
+import com.ksy.media.widget.videoview.MediaPlayerVideoView;
 import com.ksy.mediaPlayer.widget.R;
 import com.ksyun.media.player.IMediaPlayer;
 
@@ -81,7 +82,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
     private Window mWindow;
 
     private ViewGroup mRootView;
-    private MediaPlayerTextureVideoView mMediaPlayerVideoView;
+    private MediaPlayerVideoView mMediaPlayerVideoView;
 
     private StreamMediaPlayerLargeControllerView mMediaPlayerLargeControllerView;
     private StreamMediaPlayerSmallControllerView mMediaPlayerSmallControllerView;
@@ -246,7 +247,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
         // mRootView.findViewById(R.id.player_total);
         // mTextViewNet = (TextView) mRootView.findViewById(R.id.player_net);
 
-        this.mMediaPlayerVideoView = (MediaPlayerTextureVideoView) mRootView
+        this.mMediaPlayerVideoView = (MediaPlayerVideoView) mRootView
                 .findViewById(R.id.ks_camera_video_view);
         this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
                 .findViewById(R.id.ks_camera_buffering_view);
@@ -721,19 +722,19 @@ public class StreamMediaPlayerView extends RelativeLayout implements
     }
 
     public void onResume() {
-        Log.d("eflake","PlayView onResume");
+        Log.d("eflake", "PlayView onResume");
         powerStateListener.onPowerState(Constants.APP_SHOWN);
         mWindowActived = true;
         enableOrientationEventListener();
         mNetReceiver.registNetBroadCast(getContext());
         mNetReceiver.addNetStateChangeListener(mNetChangedListener);
-        if (mMediaPlayerController.canStart()){
-            mMediaPlayerController.start();
-        }
+//        if (mMediaPlayerController.canStart()) {
+//            mMediaPlayerController.start();
+//        }
     }
 
     public void onPause() {
-        Log.d("eflake","PlayView OnPause");
+        Log.d("eflake", "PlayView OnPause");
         powerStateListener.onPowerState(Constants.APP_HIDEN);
 
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
@@ -743,10 +744,10 @@ public class StreamMediaPlayerView extends RelativeLayout implements
 
         disableOrientationEventListener();
 
-        if (mMediaPlayerController.isPlaying()) {
-            mMediaPlayerController.pause();
-            mStartAfterPause = true;
-        }
+//        if (mMediaPlayerController.isPlaying()) {
+//            mMediaPlayerController.pause();
+//            mStartAfterPause = true;
+//        }
         WakeLocker.release();
     }
 
@@ -982,7 +983,12 @@ public class StreamMediaPlayerView extends RelativeLayout implements
             mMediaPlayerLoadingView.hide();
 
             if (!mIsComplete) {
-                mMediaPlayerVideoView.start();
+                if (!mMediaPlayerVideoView.mNeedPauseAfterLeave) {
+                    mMediaPlayerVideoView.start();
+                } else {
+                    Log.d(Constants.LOG_TAG, "mOnPreparedListener ingore start for last paused state");
+                    mMediaPlayerVideoView.mNeedPauseAfterLeave = false;
+                }
             }
 
             // mMediaPlayerEventActionView.updateEventMode(
@@ -1138,7 +1144,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
 //    IMediaPlayer.OnNetSpeedListener mOnPlaybackNetSpeedListener = new IMediaPlayer.OnNetSpeedListener() {
 //        @Override
 //        public void onNetSpeedUpdate(IMediaPlayer mp, int arg1, int arg2) {
-            // arg2 = arg2 / 1024 / 8; KB/s
+    // arg2 = arg2 / 1024 / 8; KB/s
 //			mTextViewSpeed.setText(getResources().getString(R.string.net_speed)
 //					+ " " + arg2 + " bit/s");
 //        }
@@ -1150,13 +1156,13 @@ public class StreamMediaPlayerView extends RelativeLayout implements
 //        @Override
 //        public void onDebugInfo(IMediaPlayer mp, int type, int arg1, int arg2) {
 
-            // if (type == 10002) {
-            // mTextViewDemux.setText("demux:" + arg1 + " , " + arg2);
-            // } else if (type == 10003) {
-            // mTextViewDecode.setText("decode:" + arg1 + " , " + arg2);
-            // } else if (type == 10004) {
-            // mTextViewTime.setText("time:" + arg1 + " , " + arg2);
-            // }
+    // if (type == 10002) {
+    // mTextViewDemux.setText("demux:" + arg1 + " , " + arg2);
+    // } else if (type == 10003) {
+    // mTextViewDecode.setText("decode:" + arg1 + " , " + arg2);
+    // } else if (type == 10004) {
+    // mTextViewTime.setText("time:" + arg1 + " , " + arg2);
+    // }
 //        }
 //    };
 

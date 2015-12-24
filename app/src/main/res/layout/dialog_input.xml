@@ -11,8 +11,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:hint="Please Input Video Path or URL..."
-        android:text="http://sfvbook.bj.bcebos.com/movie/Street%20Fighter%20V%20Announcement%20Trailer%20-%20Exclusive%20to%20PS4%20%26%20PC.mp4">
-
+        android:text="http://sfvbook-eflake.bj.bcebos.com/BETA3/RYU/20151220224832.mp4">
         <requestFocus />
     </EditText>
 

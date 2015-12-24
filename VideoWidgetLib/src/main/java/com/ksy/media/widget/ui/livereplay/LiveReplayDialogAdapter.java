@@ -32,7 +32,7 @@ public class LiveReplayDialogAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return 6/*videoInfoList.size()*/;
+		return 5/*videoInfoList.size()*/;
 	}
 
 	@Override

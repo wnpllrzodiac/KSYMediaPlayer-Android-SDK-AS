@@ -1,11 +1,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_live_finish"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
     tools:context=".MainActivity">
 
+    <!-- complete-->
+    <RelativeLayout
+        android:id="@+id/layout_live_finish"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <RelativeLayout
         android:id="@+id/controller_top_layout"
         android:layout_width="match_parent"
@@ -162,4 +167,61 @@
         android:layout_toEndOf="@+id/imageView6" />
 
     </RelativeLayout>
+</RelativeLayout>
+
+    <!-- Error -->
+    <LinearLayout
+        android:id="@+id/error_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/error_info_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/event_action_padding_left"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/player_error"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:id="@+id/error_replay_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.5"
+            android:background="@color/black"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/small_margin_left"
+            android:paddingLeft="@dimen/event_action_padding"
+            android:paddingRight="@dimen/event_action_padding"
+            android:paddingTop="@dimen/small_margin_left">
+
+            <ImageView
+                android:id="@+id/error_replay_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/player_controller_action_replay" />
+
+            <TextView
+                android:id="@+id/error_replay_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/event_action_padding_left"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/connect_failed"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+
 </RelativeLayout>

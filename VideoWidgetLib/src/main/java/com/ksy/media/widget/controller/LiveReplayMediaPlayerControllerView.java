@@ -5,9 +5,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -19,7 +17,6 @@ import android.widget.TextView;
 
 import com.ksy.media.widget.data.MediaPlayerUtils;
 import com.ksy.media.widget.ui.common.LiveAnchorDialog;
-import com.ksy.media.widget.ui.common.MediaPlayerScreenSizePopupView;
 import com.ksy.media.widget.ui.common.MediaPlayerVideoSeekBar;
 import com.ksy.media.widget.ui.common.HeartLayout;
 import com.ksy.media.widget.ui.common.HorizontalListView;
@@ -35,7 +32,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import android.os.Handler;
 import android.graphics.Color;
 
@@ -164,6 +160,8 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 					@Override
 					public void run() {
 						mHeartLayout.addHeart(randomColor());
+						praiseCount++;
+						praiseCountTextView.setText(String.valueOf(praiseCount));
 					}
 				});
 			}
@@ -345,12 +343,9 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 
 		} else if (id == shareButton.getId()) {
 			//TODO
-			praiseCount++;
-			praiseCountTextView.setText(String.valueOf(praiseCount));
 
 		} else if (id == switchButton.getId()) {
 			if (isSwitch) {
-//				listView.setVisibility(VISIBLE);
 				currentTimeTextView.setVisibility(VISIBLE);
 				lineTextView.setVisibility(VISIBLE);
 				totalTimeTextView.setVisibility(VISIBLE);
@@ -366,7 +361,6 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 				isSwitch = false;
 
 			} else {
-//				listView.setVisibility(GONE);
 				currentTimeTextView.setVisibility(GONE);
 				lineTextView.setVisibility(GONE);
 				totalTimeTextView.setVisibility(GONE);
@@ -383,6 +377,8 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 			  }
 			} else if (id == heartImageView.getId()) {
 			  //TODO
+			  praiseCount++;
+			  praiseCountTextView.setText(String.valueOf(praiseCount));
 		}
 
 	}

@@ -287,7 +287,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
                             Log.i(Constants.LOG_TAG,
                                     "event action  view action error");
                             mMediaPlayerEventActionViewLiveReplay.hide();
-                            mLiveReplayMediaPlayerControllerView.setVisibility(GONE);
+                            mLiveReplayMediaPlayerControllerView.setVisibility(VISIBLE);
                             mMediaPlayerLoadingView.show();
                             mLiveReplayMediaPlayerVideoView.setVideoPath(url);
                         } else {
@@ -517,7 +517,6 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
             addView(mLiveReplayMediaPlayerControllerView,
                     mMediaPlayerControllerViewSmallParams);
             this.setLayoutParams(mLayoutParamWindowMode);
-//			mLiveReplayMediaPlayerControllerView.setVisibility(GONE);
 
             if (mPlayerViewCallback != null) {
                 mPlayerViewCallback.restoreViews();
@@ -743,7 +742,6 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
             }
 
             if (mIsComplete) {
-                mLiveReplayMediaPlayerControllerView.setVisibility(GONE);
                 mMediaPlayerEventActionViewLiveReplay
                         .updateEventMode(
                                 MediaPlayerEventActionViewLiveReplay.EVENT_ACTION_VIEW_MODE_COMPLETE,
@@ -949,7 +947,7 @@ public class MediaPlayerViewLiveReplay extends RelativeLayout implements
 
             Log.e(Constants.LOG_TAG, "On Native Error,what :" + what
                     + " , extra :" + extra);
-//			mMediaPlayerLiveReplayControllerView.hide();
+            mLiveReplayMediaPlayerControllerView.setVisibility(GONE);
             mMediaPlayerBufferingView.hide();
             mMediaPlayerLoadingView.hide();
             mMediaPlayerEventActionViewLiveReplay.updateEventMode(

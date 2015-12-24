@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,7 +18,7 @@ import com.ksy.media.widget.ui.live.MediaPlayerViewLive;
 import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.util.VideoViewConfig;
 
-public class PhoneLiveActivity extends AppCompatActivity implements MediaPlayerViewLive.PlayerViewCallback{
+public class PhoneLiveActivity extends AppCompatActivity implements MediaPlayerViewLive.PlayerViewCallback {
 
     MediaPlayerViewLive playerViewLive;
 
@@ -62,7 +63,6 @@ public class PhoneLiveActivity extends AppCompatActivity implements MediaPlayerV
             }
         }).show();
     }
-
 
 
     @Override
@@ -121,5 +121,13 @@ public class PhoneLiveActivity extends AppCompatActivity implements MediaPlayerV
 
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
 }

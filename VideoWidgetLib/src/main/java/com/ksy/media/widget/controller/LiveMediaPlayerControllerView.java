@@ -23,7 +23,6 @@ import com.ksy.media.widget.ui.common.LivePersonDialog;
 import com.ksy.media.widget.ui.live.LiveDialogAdapter;
 import com.ksy.media.widget.ui.live.LiveDialogInfo;
 import com.ksy.media.widget.ui.live.LiveHeadListAdapter;
-import com.ksy.media.widget.util.IMediaPlayerControl;
 import com.ksy.mediaPlayer.widget.R;
 
 import java.util.ArrayList;
@@ -105,7 +104,7 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 		timeTextView = (TextView) findViewById(R.id.textViewTime);
 		liveCloseTextView = (TextView) findViewById(R.id.title_text_close);
 		liveReportTextView = (TextView) findViewById(R.id.title_text_report);
-		livePersonCountTextView = (TextView) findViewById(R.id.person_count_textview);
+		livePersonCountTextView = (TextView) findViewById(R.id.live_person_count_textview);
         livePraiseCountTextView = (TextView) findViewById(R.id.live_praise_count_text);
 
 		liveListView = (ListView) findViewById(R.id.live_list);
@@ -141,6 +140,8 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 					@Override
 					public void run() {
 						liveHeartLayout.addHeart(randomColor());
+						livePraiseCount ++;
+						livePraiseCountTextView.setText(String.valueOf(livePraiseCount));
 					}
 				});
 			}
@@ -217,12 +218,9 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 
 		} else if (id == liveShareButton.getId()) {
             //TODO
-			livePraiseCount ++;
-			livePraiseCountTextView.setText(String.valueOf(livePraiseCount));
 
 		} else if (id == liveSwitchButton.getId()) {
 			if (isSwitch) {
-//				liveListView.setVisibility(VISIBLE);
 				livePerson.setVisibility(VISIBLE);
 				liveHeartLayout.setVisibility(VISIBLE);
 				liveHorizontalList.setVisibility(VISIBLE);
@@ -236,7 +234,6 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 				isSwitch = false;
 
 			} else {
-//				liveListView.setVisibility(GONE);
 				livePerson.setVisibility(GONE);
 				liveHeartLayout.setVisibility(GONE);
 				liveHorizontalList.setVisibility(GONE);
@@ -250,8 +247,8 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 			}
 		} else if (id == liveImageView.getId()) {
             //TODO
-//			livePraiseCount ++;
-//			livePraiseCountTextView.setText(String.valueOf(livePraiseCount));
+			livePraiseCount ++;
+			livePraiseCountTextView.setText(String.valueOf(livePraiseCount));
 		}
 
 	}
